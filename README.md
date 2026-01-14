@@ -157,6 +157,7 @@ MVP では年齢軸による体験の可視化に集中します。
 
 - Rails：7.2
 - DB：PostgreSQL（NEON）
+- CSS フレームワーク :TailwindCSS
 - デプロイ先：Render
 - 認証：Devise
 - グラフ表示：Chart.js
