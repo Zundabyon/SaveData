@@ -16,25 +16,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
-
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-          <div class="position-sticky pt-3">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <%= link_to 'トップ', root_path, class: 'nav-link active', 'aria-current': 'page' %>
-                <%= link_to 'ユーザー', users_path, class: 'nav-link active', 'aria-current': 'page' %>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <%= yield %>
-        </main>
-      </div>
-    </div>
-  </body>
+    <main>
+      <%= yield %>
+    </main>
 </html>
