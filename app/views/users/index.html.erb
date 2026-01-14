@@ -2,15 +2,15 @@
 
 <% content_for :title, "Users" %>
 
-<h1>Users</h1>
+<h1>ユーザー一覧</h1>
 
 <div id="users">
   <% @users.each do |user| %>
     <%= render user %>
     <p>
-      <%= link_to "Show this user", user %>
+      <%= link_to "ユーザーの表示", user %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New user", new_user_path %>
+<%= link_to "新規ユーザー登録", new_user_path %>
