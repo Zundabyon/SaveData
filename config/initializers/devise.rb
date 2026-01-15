@@ -14,7 +14,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'e8569350abef56dbf23c15f5dc9b72049197a663a00c599d51bba09929be780cce8a25ff6bb8facd2e5fd50ad0561681f580bd777ea412c64dfbced7f1799a58'
+  # config.secret_key = 'cb9c48b1a39854444bc5583696c4dc7e5e1fd6dcb08b1993ab9e3cc6ea81c05ec0987677044994b419da045eda8285c14f4e108700c77e9e74e8c2814b8cf9ca'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -126,7 +126,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '36dff67bbd9747950bf33fdd51ff4e63a048472952fc41aab60425665fca1119d5a699a5d51c6f4c45db8ae9d5fa530ec7c4cf8cef4fe47766f9a6fed6e3cbd3'
+  # config.pepper = 'f19a1a3aa3a9ac70ae054a16080598198a01bc86570e07cd7e51691a3e9167b86ff49d67c74e4ff2d1f5482672ae859e17318b58119854dba3d88dbca85968e7'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -217,7 +217,7 @@ Devise.setup do |config|
   # config.last_attempt_warning = true
 
   # ==> Configuration for :recoverable
-  #
+
   # Defines which key will be used when recovering the password for an account
   # config.reset_password_keys = [:email]
 
@@ -304,10 +304,4 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
-
-  # ==> Configuration for :registerable
-
-  # When set to false, does not sign a user in automatically after their password is
-  # changed. Defaults to true, so a user is signed in automatically after changing a password.
-  # config.sign_in_after_change_password = true
 end

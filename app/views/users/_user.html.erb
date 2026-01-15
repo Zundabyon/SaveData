@@ -1,27 +1,40 @@
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>メールアドレス:</strong>
-    <%= user.email %>
-  </p>
+<div id="<%= dom_id user %>" class="bg-white rounded-lg shadow-md p-8">
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">
+      <%= user.name || "ユーザー情報" %>
+    </h2>
+    <p class="text-gray-600">
+      <%= user.email %>
+    </p>
+  </div>
 
-  <p>
-    <strong>名前:</strong>
-    <%= user.name %>
-  </p>
+  <div class="space-y-6">
+    <div class="border-b border-gray-200 pb-4">
+      <dt class="text-sm font-semibold text-gray-600 uppercase tracking-wide">メールアドレス</dt>
+      <dd class="mt-2 text-lg text-gray-900">
+        <%= user.email %>
+      </dd>
+    </div>
 
-  <p>
-    <strong>生年月日:</strong>
-    <%= user.birthday %>
-  </p>
+    <div class="border-b border-gray-200 pb-4">
+      <dt class="text-sm font-semibold text-gray-600 uppercase tracking-wide">名前</dt>
+      <dd class="mt-2 text-lg text-gray-900">
+        <%= user.name %>
+      </dd>
+    </div>
 
-  <p>
-    <strong>性別:</strong>
-    <%= user.gender %>
-  </p>
+    <div class="border-b border-gray-200 pb-4">
+      <dt class="text-sm font-semibold text-gray-600 uppercase tracking-wide">生年月日</dt>
+      <dd class="mt-2 text-lg text-gray-900">
+        <%= user.birthday&.strftime('%Y年%m月%d日') || 'N/A' %>
+      </dd>
+    </div>
 
-  <p>
-    <strong>パスワード:</strong>
-    <%= user.crypted_password %>
-  </p>
-
+    <div>
+      <dt class="text-sm font-semibold text-gray-600 uppercase tracking-wide">性別</dt>
+      <dd class="mt-2 text-lg text-gray-900">
+        <%= user.gender || 'N/A' %>
+      </dd>
+    </div>
+  </div>
 </div>
