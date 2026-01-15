@@ -1,10 +1,32 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@user.name} - ユーザー詳細" %>
 
-<%= render @user %>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- ナビゲーション -->
+    <div class="mb-8">
+      <%= link_to "← ユーザー一覧に戻る", users_path, class: "inline-flex items-center px-4 py-2 text-blue-600 hover:text-blue-700 font-medium transition-colors" %>
+    </div>
 
-<div>
-  <%= link_to "ユーザーの編集", edit_user_path(@user) %> |
-  <%= link_to "ユーザー一覧に戻る", users_path %>
+    <!-- ノーティス -->
+    <% if notice %>
+      <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <p class="text-green-800 font-medium"><%= notice %></p>
+      </div>
+    <% end %>
 
-  <%= button_to "このユーザーを削除", @user, method: :delete %>
+    <!-- ユーザー詳細情報 -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <%= render @user %>
+    </div>
+
+    <!-- アクションボタン -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <%= link_to "ユーザーの編集", edit_user_path(@user), class: "flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-center" %>
+      
+      <%= button_to "このユーザーを削除", @user,
+          method: :delete,
+          data: { confirm: "本当に削除しますか？" },
+          class: "flex-1 px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors text-center" %>
+    </div>
+  </div>
 </div>

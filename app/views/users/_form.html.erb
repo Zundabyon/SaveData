@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+
+
   <div>
     <%= form.label :"メールアドレス", style: "display: block" %>
     <%= form.text_field :email %>
@@ -28,15 +30,20 @@
 
   <div>
     <%= form.label :"性別", style: "display: block" %>
-    <%= form.check_box :gender %>
+    <%= form.select :gender, options_for_select([["👨男性🕺", "male"], ["🙆‍♀️女性💃", "female"]]) %>
   </div>
 
   <div>
     <%= form.label :"パスワード", style: "display: block" %>
-    <%= form.number_field :crypted_password %>
+    <%= form.password_field :crypted_password %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.label :"パスワード(再入力)", style: "display: block" %>
+    <%= form.password_field :crypted_password %>
+  </div>
+
+  <div>
+    <%= form.submit "ユーザー情報の更新" %>
   </div>
 <% end %>

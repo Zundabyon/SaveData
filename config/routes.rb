@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+  root to: "users#index"
   resources :users
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
