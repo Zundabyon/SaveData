@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_17_081530) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_17_083914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,12 +19,13 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_17_081530) do
     t.string "hardware"
     t.string "type"
     t.string "reccomended"
-    t.string "difficulty"
+    t.integer "difficulty"
     t.integer "ended_year"
     t.text "memo"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "fun"
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 

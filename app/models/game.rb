@@ -3,8 +3,9 @@
 # Table name: games
 #
 #  id          :bigint           not null, primary key
-#  difficulty  :string
+#  difficulty  :integer
 #  ended_year  :integer
+#  fun         :integer
 #  hardware    :string
 #  memo        :text
 #  reccomended :string

@@ -17,14 +17,15 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(
-      :title,
-      :hardware,
-      :type,
-      :reccomended,
-      :difficulty,
-      :ended_year,
-      :memo
+  params.require(:game).permit(
+    :title,
+    :hardware,
+    :genre,
+    :ended_year,
+    :memo,
+    :fun,
+    :difficulty
     )
   end
+
 end
