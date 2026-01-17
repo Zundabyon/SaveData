@@ -1,0 +1,40 @@
+# == Schema Information
+#
+# Table name: games
+#
+#  id          :bigint           not null, primary key
+#  difficulty  :string
+#  ended_year  :integer
+#  hardware    :string
+#  memo        :text
+#  reccomended :string
+#  title       :string
+#  type        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint           not null
+#
+# Indexes
+#
+#  index_games_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+
+one:
+  title: MyString
+  platform: MyString
+  started_year: 1
+  ended_year: 1
+  memo: MyText
+  user: one
+
+two:
+  title: MyString
+  platform: MyString
+  started_year: 1
+  ended_year: 1
+  memo: MyText
+  user: two

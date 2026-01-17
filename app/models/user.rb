@@ -21,8 +21,12 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+   has_many :games, dependent: :destroy
+# UserモデルとGameモデルの関連付けを行っています。
+# 1人のユーザーは複数のゲームを持つことができる（1対多の関係）ことを示しています。
+# dependent: :destroy オプションは、ユーザーが削除された場合に、そのユーザーに関連する全てのゲームも一緒に削除されることを意味します。
+
+
 
     validates :email, presence: true
     validates :name, presence: true
