@@ -10,22 +10,24 @@ class GamesController < ApplicationController
     if @game.save
       redirect_to root_path, notice: "ゲームを記録した"
     else
+      Rails.logger.debug @game.errors.full_messages
       render :new, status: :unprocessable_entity
-    end
+end
+
   end
 
   private
 
-  def game_params
+def game_params
   params.require(:game).permit(
     :title,
     :hardware,
     :genre,
     :ended_year,
-    :memo,
     :fun,
-    :difficulty
-    )
-  end
+    :difficulty,
+    :memo
+  )
+end
 
 end

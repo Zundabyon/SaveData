@@ -3,12 +3,24 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show ]
   # GET /users or /users.json
   def index
-    @users = User.all
+    @user = current_user
+    @games = @user.games.order(:played_year)
   end
+  # indexアクションは、現在ログインしているユーザーの情報と
+  # そのユーザーに関連するゲームの一覧を取得し、ビューに渡す役割を果たす
+  # current_userメソッドは、Deviseによって提供され、現在ログインしているユーザーを返す
+  # @user変数に現在のユーザー情報を格納し、ビューで使用できるようにする
+  # @games変数には、現在のユーザーに関連するゲームの一覧を
+  # played_year（プレイした年）で昇順に並べ替えたものを格納する
+  # これにより、ビューでユーザーのゲーム履歴を表示できるようになる 
 
   # GET /users/1 or /users/1.json
   def show
   end
+  # showアクションは、特定のユーザーの詳細情報を表示するために使用される
+  # before_actionコールバックによってset_userメソッドが実行され、
+  # @user変数に該当するユーザー情報が格納される
+  # ビューでは、この@user変数を使用してユーザーの詳細情報を表示することができる
 
   private
     def set_user

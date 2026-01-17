@@ -1,132 +1,101 @@
-<% content_for :title, "ユーザー一覧 - Savedata" %>
+<div class="min-h-screen bg-gradient-to-b from-black via-slate-900 to-black text-slate-100 px-6 py-12">
 
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-7xl mx-auto">
-    <!-- ヘッダーセクション -->
-    <div class="mb-8">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-        <div>
-          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            ユーザー一覧
-          </h1>
-          <p class="text-gray-600">
-            全ユーザー: <span class="font-semibold text-gray-900"><%= @users.count %></span>
-          </p>
-        </div>
-        <div class="mt-4 sm:mt-0">
-          <%= link_to "新規ユーザー登録", new_user_registration_path, class: "inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
-        </div>
-      </div>
-    </div>
+  <!-- タイトル -->
+  <header class="mb-16 text-center">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
+      ── 年 表 ──
+    </h1>
+    <p class="mt-2 text-sm text-slate-400">
+      記憶に刻まれたゲームたち
+    </p>
+  </header>
 
-    <!-- ノーティス -->
-    <% if notice %>
-      <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <p class="text-green-800 font-medium"><%= notice %></p>
-      </div>
-    <% end %>
+  <!-- タイムライン全体 -->
+  <div class="relative max-w-3xl mx-auto">
 
-    <!-- ユーザーが存在しない場合 -->
-    <% if @users.empty? %>
-      <div class="text-center py-16 bg-white rounded-lg shadow-sm">
-        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM6 20a9 9 0 0118 0v-2a9 9 0 00-18 0v2z" />
-        </svg>
-        <p class="text-gray-500 text-lg mb-4">登録されているユーザーはありません</p>
-        <%= link_to "最初のユーザーを登録", new_user_registration_path, class: "inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors" %>
-      </div>
-    <% else %>
-      <!-- テーブル -->
-      <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-        <!-- デスクトップ用テーブル -->
-        <div class="hidden md:block overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
-            <!-- ヘッダー -->
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 w-1/4">名前</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 w-1/3">メールアドレス</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 w-1/6">生年月日</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 w-1/6">性別</th>
-                <th class="px-6 py-4 text-right text-sm font-semibold text-gray-900">アクション</th>
-              </tr>
-            </thead>
-            <!-- ボディ -->
-            <tbody class="divide-y divide-gray-200">
-              <% @users.each do |user| %>
-                <tr class="hover:bg-gray-50 transition-colors">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">
-                      <%= user.name || "名前未設定" %>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-600">
-                      <%= user.email %>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-600">
-                      <%= user.birthday&.strftime('%Y年%m月%d日') || 'N/A' %>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-600">
-                      <%= user.gender || 'N/A' %>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-right whitespace-nowrap">
-                    <div class="flex justify-end gap-2">
-                      <%= link_to "詳細", user, class: "px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors" %>
-                      <%= link_to "編集", edit_user_path(user), class: "px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors" %>
-                      <%= button_to "削除", user, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "px-3 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors" %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+    <!-- 中央の縦線 -->
+    <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
+
+    <% @games.each do |game| %>
+      <div class="relative pl-12 pb-12">
+
+        <!-- 年のマーカー -->
+        <div class="absolute left-0 top-1 w-8 h-8 rounded-full
+                    bg-slate-900 border border-slate-500
+                    flex items-center justify-center
+                    text-xs font-bold">
+          <%= game.played_year %>
         </div>
 
-        <!-- モバイル用カード表示 -->
-        <div class="md:hidden space-y-4 p-4">
-          <% @users.each do |user| %>
-            <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-              <div class="flex justify-between items-start mb-3">
-                <div>
-                  <h3 class="text-base font-semibold text-gray-900">
-                    <%= user.name || "名前未設定" %>
-                  </h3>
-                  <p class="text-sm text-gray-600 mt-1">
-                    <%= user.email %>
-                  </p>
-                </div>
-              </div>
-              
-              <div class="grid grid-cols-2 gap-2 mb-4 text-sm">
-                <div>
-                  <p class="text-gray-500 text-xs">生年月日</p>
-                  <p class="text-gray-900 font-medium">
-                    <%= user.birthday&.strftime('%Y年%m月%d日') || 'N/A' %>
-                  </p>
-                </div>
-                <div>
-                  <p class="text-gray-500 text-xs">性別</p>
-                  <p class="text-gray-900 font-medium">
-                    <%= user.gender || 'N/A' %>
-                  </p>
-                </div>
-              </div>
+        <!-- カード -->
+        <div class="bg-slate-800/60 backdrop-blur
+                    border border-slate-700
+                    rounded-xl p-5 shadow-lg">
 
-              <div class="flex gap-2">
-                <%= link_to "詳細", user, class: "flex-1 px-3 py-2 text-sm font-medium text-center text-blue-600 hover:bg-blue-50 rounded-md transition-colors" %>
-                <%= link_to "編集", edit_user_path(user), class: "flex-1 px-3 py-2 text-sm font-medium text-center text-gray-700 hover:bg-gray-100 rounded-md transition-colors" %>
-                <%= button_to "削除", user, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "flex-1 px-3 py-2 text-sm font-medium text-center text-red-600 hover:bg-red-50 rounded-md transition-colors" %>
+          <!-- タイトル -->
+          <h2 class="text-lg font-semibold tracking-wide">
+            <%= game.title %>
+          </h2>
+
+          <!-- サブ情報 -->
+          <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
+            <% if game.hardware.present? %>
+              <span>🎮 <%= game.hardware %></span>
+            <% end %>
+
+            <% if game.genre.present? %>
+              <span>⚔️ <%= game.genre %></span>
+            <% end %>
+
+            <% if game.played_age.present? %>
+              <span>🕰 <%= game.played_age %>歳</span>
+            <% end %>
+          </div>
+
+          <!-- ステータス -->
+          <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
+            <% if game.fun.present? %>
+              <div>
+                <p class="text-slate-400">楽しさ</p>
+                <p class="font-bold"><%= "★" * game.fun %></p>
               </div>
-            </div>
+            <% end %>
+
+            <% if game.difficulty.present? %>
+              <div>
+                <p class="text-slate-400">難易度</p>
+                <p class="font-bold"><%= "★" * game.difficulty %></p>
+              </div>
+            <% end %>
+
+            <% if game.ended_year.present? %>
+              <div>
+                <p class="text-slate-400">クリア年</p>
+                <p class="font-bold"><%= game.ended_year %></p>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- メモ -->
+          <% if game.memo.present? %>
+            <p class="mt-4 text-sm text-slate-300 leading-relaxed">
+              「<%= game.memo %>」
+            </p>
           <% end %>
         </div>
       </div>
     <% end %>
+
+    <% if @games.empty? %>
+      <p class="text-center text-slate-400">
+        まだ記録はないようだ……
+      </p>
+    <% end %>
+
   </div>
 </div>
+<!-- ユーザーのゲーム履歴を年表形式で表示するビュー -->
+<!-- 背景は黒からスレートグレーへのグラデーション -->
+<!-- 各ゲームはカード形式で表示され、タイトル、ハードウェア、ジャンル、プレイ年齢、楽しさ、難易度、クリア年、メモが含まれる -->
+<!-- 年ごとにマーカーがあり、ゲームのプレイ年が表示される -->
+<!-- Tailwind CSSを使用してスタイリングされている -->

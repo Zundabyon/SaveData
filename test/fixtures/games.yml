@@ -6,11 +6,13 @@
 #  difficulty  :integer
 #  ended_year  :integer
 #  fun         :integer
+#  genre       :string
 #  hardware    :string
 #  memo        :text
+#  played_age  :integer
+#  played_year :integer
 #  reccomended :string
 #  title       :string
-#  type        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  user_id     :bigint           not null
