@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
   before_action :authenticate_user!
+  before_action :set_user, only: %i[ show ]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -10,58 +10,18 @@ class UsersController < ApplicationController
   def show
   end
 
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-
-  # POST /users or /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: "ユーザーが正常に作成されました。" }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /users/1 or /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "ユーザーが正常に更新されました。", status: :see_other }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /users/1 or /users/1.json
-  def destroy
-    @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, notice: "ユーザーが正常に削除されました。", status: :see_other }
-      format.json { head :no_content }
-    end
-  end
-
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
+    # set_userメソッドは、指定されたIDに基づいてユーザーをデータベースから取得し、
+    # @userインスタンス変数に格納する
+    # @user変数は、ビューで使用され、特定のユーザーの情報を表示するために利用される
+    # User.find(params[:id])は、URLパラメータから渡されたIDを使用して
+    # 対応するユーザーをデータベースから検索する
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:email, :name, :birthday, :gender, :crypted_password)
-    end
+    # これにより、showアクションで特定のユーザー情報を表示できるようになる
+
+    # before_actionコールバックを使用して、showアクションが実行される前に
+    # set_userメソッドが呼び出されるようにしている
 end

@@ -12,7 +12,9 @@
         子どもの頃に夢中で遊んだゲーム<br>
         学生時代に友人と語り合ったタイトル<br>
         大人になってから時間を作って遊んだ作品――<br>
-        そんな思い出の詰まったゲームx人生セーブデータを<br>
+        <br>
+        そんな思い出の詰まった<br>
+        ゲームx人生のセーブデータを<br>
         大切に保管しておける場所。<br>
       </p>
     </div>
@@ -50,26 +52,26 @@
       <div class="mb-6 text-xs text-gray-700">
         <label class="flex items-center">
           <%= f.check_box :remember_me, class: "mr-2" %>
-          このデバイスで覚えておく
+          記憶しておく
         </label>
       </div>
     <% end %>
 
     <!-- START -->
     <%= f.submit "START",
-      class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-pixel rounded-md transition" %>
+      class: "w-full py-3 bg-blue-600 hover:bg-black text-white font-pixel rounded-md transition" %>
 
   <% end %>
 
   <!-- Links -->
   <div class="mt-6 text-center text-xs space-y-2">
     <% if devise_mapping.registerable? %>
-      <%= link_to "新しくはじめる", new_registration_path(resource_name),
+      <%= link_to "セーブデータを登録する", new_registration_path(resource_name),
         class: "block text-blue-700 hover:underline" %>
     <% end %>
 
     <% if devise_mapping.recoverable? %>
-      <%= link_to "パスワードを忘れた", new_password_path(resource_name),
+      <%= link_to "パスワードをお忘れの方", new_password_path(resource_name),
         class: "block text-gray-600 hover:underline" %>
     <% end %>
   </div>
