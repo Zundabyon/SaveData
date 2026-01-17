@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get "games/new"
-  get "games/create"
   devise_for :users
   # devise_for :users は、Deviseのルーティングを自動生成するためのメソッド
   # ユーザー認証に関するルーティング（サインアップ、ログイン、ログアウト、パスワードリセットなど）を一括で設定する
@@ -33,6 +31,7 @@ Rails.application.routes.draw do
   # PWA（Progressive Web App）用のサービスワーカーファイルへのルートを定義
   # /service-worker にアクセスすると、RailsのPWAコントローラーのservice_workerアクションが呼び出される
   # これにより、PWAのオフライン機能やキャッシュ管理が可能になる
+
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # PWA用のマニフェストファイルへのルートを定義
   # /manifest にアクセスすると、RailsのPWAコントローラーのmanifestアクションが呼び出される
