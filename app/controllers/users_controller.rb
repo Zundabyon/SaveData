@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   # @user変数に現在のユーザー情報を格納し、ビューで使用できるようにする
   # @games変数には、現在のユーザーに関連するゲームの一覧を
   # played_year（プレイした年）で昇順に並べ替えたものを格納する
-  # これにより、ビューでユーザーのゲーム履歴を表示できるようになる 
+  # これにより、ビューでユーザーのゲーム履歴を表示できるようになる
 
   # GET /users/1 or /users/1.json
   def show

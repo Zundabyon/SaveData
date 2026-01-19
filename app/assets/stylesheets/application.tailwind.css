@@ -1,1 +1,89 @@
 @import "tailwindcss";
+
+
+@keyframes scanGlow {
+  0% {
+    box-shadow: 0 0 4px rgba(34,211,238,0.3);
+    opacity: 0.7;
+  }
+  50% {
+    box-shadow:
+      0 0 8px rgba(34,211,238,0.8),
+      0 0 16px rgba(34,211,238,0.4);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 4px rgba(34,211,238,0.3);
+    opacity: 0.7;
+  }
+}
+
+.animate-scan-glow {
+  animation: scanGlow 2.2s ease-in-out infinite;
+}
+/* スキャンライン */
+@keyframes scanLine {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 0.15; }
+  80% { opacity: 0.15; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.timeline-scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(56,189,248,0.15) 50%,
+    transparent 100%
+  );
+  animation: scanLine 6s linear infinite;
+}
+
+/* 年マーカー発光 */
+@keyframes markerGlow {
+  0% { box-shadow: 0 0 6px rgba(56,189,248,0.4); }
+  50% {
+    box-shadow:
+      0 0 12px rgba(56,189,248,0.9),
+      0 0 24px rgba(56,189,248,0.5);
+  }
+  100% { box-shadow: 0 0 6px rgba(56,189,248,0.4); }
+}
+
+.year-marker {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.year-marker:hover {
+  transform: scale(1.25);
+  animation: markerGlow 1.4s ease-in-out infinite;
+}
+
+/* FF7モーダル展開 */
+@keyframes ff7Open {
+  0% { transform: scaleY(0.05); opacity: 0; }
+  60% { transform: scaleY(1.05); opacity: 1; }
+  100% { transform: scaleY(1); }
+}
+
+.ff7-modal {
+  transform-origin: top;
+  animation: ff7Open 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+body {
+  background: linear-gradient(
+    to bottom,
+    #1108C0 0%,     /* 明るい青：上部 */
+    #1108C0 20%,    /* 青をしっかり残す */
+    #1108C0 40%,    /* 青をしっかり残す */
+    #0b0a2a 85%,    /* 深青ゾーンを長めに */
+    #050414 90%,    /* 黒の始まりを遅らせる */
+    #000000 100%    /* 最下部だけ完全な黒 */
+  );
+}
+
+

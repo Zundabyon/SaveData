@@ -1,101 +1,165 @@
-<div class="min-h-screen bg-gradient-to-b from-black via-slate-900 to-black text-slate-100 px-6 py-12">
+<div class="min-h-screen text-slate-100 flex">
+  <!-- 左：年表本体 -->
+  <main class="flex-1 overflow-y-scroll px-6 py-12 scroll-smooth">
 
-  <!-- タイトル -->
-  <header class="mb-16 text-center">
-    <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
-      ── 年 表 ──
-    </h1>
-    <p class="mt-2 text-sm text-slate-400">
-      記憶に刻まれたゲームたち
-    </p>
-  </header>
-
-  <!-- タイムライン全体 -->
-  <div class="relative max-w-3xl mx-auto">
-
-    <!-- 中央の縦線 -->
-    <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
-
-    <% @games.each do |game| %>
-      <div class="relative pl-12 pb-12">
-
-        <!-- 年のマーカー -->
-        <div class="absolute left-0 top-1 w-8 h-8 rounded-full
-                    bg-slate-900 border border-slate-500
-                    flex items-center justify-center
-                    text-xs font-bold">
-          <%= game.played_year %>
-        </div>
-
-        <!-- カード -->
-        <div class="bg-slate-800/60 backdrop-blur
-                    border border-slate-700
-                    rounded-xl p-5 shadow-lg">
-
-          <!-- タイトル -->
-          <h2 class="text-lg font-semibold tracking-wide">
-            <%= game.title %>
-          </h2>
-
-          <!-- サブ情報 -->
-          <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
-            <% if game.hardware.present? %>
-              <span>🎮 <%= game.hardware %></span>
-            <% end %>
-
-            <% if game.genre.present? %>
-              <span>⚔️ <%= game.genre %></span>
-            <% end %>
-
-            <% if game.played_age.present? %>
-              <span>🕰 <%= game.played_age %>歳</span>
-            <% end %>
-          </div>
-
-          <!-- ステータス -->
-          <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
-            <% if game.fun.present? %>
-              <div>
-                <p class="text-slate-400">楽しさ</p>
-                <p class="font-bold"><%= "★" * game.fun %></p>
-              </div>
-            <% end %>
-
-            <% if game.difficulty.present? %>
-              <div>
-                <p class="text-slate-400">難易度</p>
-                <p class="font-bold"><%= "★" * game.difficulty %></p>
-              </div>
-            <% end %>
-
-            <% if game.ended_year.present? %>
-              <div>
-                <p class="text-slate-400">クリア年</p>
-                <p class="font-bold"><%= game.ended_year %></p>
-              </div>
-            <% end %>
-          </div>
-
-          <!-- メモ -->
-          <% if game.memo.present? %>
-            <p class="mt-4 text-sm text-slate-300 leading-relaxed">
-              「<%= game.memo %>」
-            </p>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-
-    <% if @games.empty? %>
-      <p class="text-center text-slate-400">
-        まだ記録はないようだ……
+    <!-- タイトル -->
+    <header class="mb-16 text-center">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
+        ── 冒険の記録 ──
+      </h1>
+      <p class="mt-2 text-sm text-slate-400">
+        セーブデータを選んでください
       </p>
-    <% end %>
+    </header>
 
+    <!-- タイムライン -->
+    <div class="relative max-w-3xl mx-auto timeline-scan">
+
+      <!-- 縦線 -->
+      <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
+
+      <% @games.each do |game| %>
+        <% next if game.played_year.blank? || game.title.blank? %>
+
+        <div
+          id="year-<%= game.played_year %>"
+          class="relative pl-12 pb-12 scroll-mt-24"
+        >
+
+          <!-- 年マーカー -->
+          <div class="absolute left-0 top-1 w-8 h-8 rounded-full
+                      bg-slate-900 border border-slate-500
+                      flex items-center justify-center
+                      text-xs font-bold
+                      year-marker">
+            <%= game.played_year %>
+          </div>
+
+          <!-- カード -->
+          <div
+            class="bg-slate-800/60 backdrop-blur
+                   border border-slate-700
+                   rounded-xl p-5 shadow-lg
+                   cursor-pointer hover:border-slate-500 transition"
+            onclick="openModal(
+              '<%= j game.title %>',
+              '<%= j [game.hardware, game.genre, (game.played_age && "#{game.played_age}歳")].compact.join(" / ") %>',
+              '<%= j game.memo %>'
+            )"
+          >
+
+            <h2 class="text-lg font-semibold tracking-wide">
+              <%= game.title %>
+            </h2>
+
+            <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
+              <% if game.hardware.present? %>
+                <span>🎮 <%= game.hardware %></span>
+              <% end %>
+              <% if game.genre.present? %>
+                <span>⚔️ <%= game.genre %></span>
+              <% end %>
+              <% if game.played_age.present? %>
+                <span>🕰 <%= game.played_age %>歳</span>
+              <% end %>
+            </div>
+
+            <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
+              <% if game.fun.present? %>
+                <div>
+                  <p class="text-slate-400">楽しさ</p>
+                  <p class="font-bold"><%= "★" * game.fun %></p>
+                </div>
+              <% end %>
+              <% if game.difficulty.present? %>
+                <div>
+                  <p class="text-slate-400">難易度</p>
+                  <p class="font-bold"><%= "★" * game.difficulty %></p>
+                </div>
+              <% end %>
+              <% if game.ended_year.present? %>
+                <div>
+                  <p class="text-slate-400">クリア年</p>
+                  <p class="font-bold"><%= game.ended_year %></p>
+                </div>
+              <% end %>
+            </div>
+
+            <% if game.memo.present? %>
+              <p class="mt-4 text-sm text-slate-300 leading-relaxed line-clamp-2">
+                「<%= game.memo %>」
+              </p>
+            <% end %>
+
+          </div>
+        </div>
+      <% end %>
+
+      <% if @games.empty? %>
+        <p class="text-center text-slate-400">
+          まだ記録はないようだ……
+        </p>
+      <% end %>
+
+    </div>
+  </main>
+
+  <!-- 右：年号ナビ（固定） -->
+  <aside class="hidden md:block w-32 border-l border-slate-800 bg-black/40">
+    <ul class="sticky top-0 p-4 space-y-4 text-center">
+      <% @games.each do |game| %>
+        <% next if game.played_year.blank? %>
+        <li>
+          <a
+            href="#year-<%= game.played_year %>"
+            class="text-slate-400 text-sm tracking-wider
+                   hover:text-slate-100 transition"
+          >
+            <%= game.played_year %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
+
+</div>
+
+<!-- モーダル -->
+<div
+  id="game-modal"
+  class="fixed inset-0 bg-black/70 backdrop-blur-sm
+         hidden items-center justify-center z-50"
+>
+  <div class="bg-slate-900 border border-slate-700
+              rounded-xl max-w-lg w-full p-6 relative
+              ff7-modal">
+
+    <button
+      onclick="closeModal()"
+      class="absolute top-3 right-3 text-slate-400 hover:text-white"
+    >
+      ✕
+    </button>
+
+    <h2 id="modal-title" class="text-xl font-bold mb-2"></h2>
+    <p id="modal-meta" class="text-sm text-slate-400 mb-4"></p>
+    <p id="modal-memo" class="text-slate-300 leading-relaxed"></p>
   </div>
 </div>
-<!-- ユーザーのゲーム履歴を年表形式で表示するビュー -->
-<!-- 背景は黒からスレートグレーへのグラデーション -->
-<!-- 各ゲームはカード形式で表示され、タイトル、ハードウェア、ジャンル、プレイ年齢、楽しさ、難易度、クリア年、メモが含まれる -->
-<!-- 年ごとにマーカーがあり、ゲームのプレイ年が表示される -->
-<!-- Tailwind CSSを使用してスタイリングされている -->
+
+<script>
+  function openModal(title, meta, memo) {
+    document.getElementById("modal-title").innerText = title
+    document.getElementById("modal-meta").innerText = meta
+    document.getElementById("modal-memo").innerText = memo
+    const modal = document.getElementById("game-modal")
+    modal.classList.remove("hidden")
+    modal.classList.add("flex")
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("game-modal")
+    modal.classList.add("hidden")
+    modal.classList.remove("flex")
+  }
+</script>
