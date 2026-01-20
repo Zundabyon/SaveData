@@ -1,8 +1,11 @@
 <div class="min-h-screen text-slate-100 flex">
-  <!-- 左：年表本体 -->
-  <main class="flex-1 overflow-y-scroll px-6 py-12 scroll-smooth">
 
-    <!-- タイトル -->
+  <!-- 左：ダミー余白 -->
+  <aside class="hidden md:block w-72"></aside>
+
+  <!-- 中央：年表 -->
+  <main class="flex-1 px-6 py-12 scroll-smooth">
+
     <header class="mb-16 text-center">
       <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
         ── 冒険の記録 ──
@@ -12,35 +15,28 @@
       </p>
     </header>
 
-    <!-- タイムライン -->
     <div class="relative max-w-3xl mx-auto timeline-scan">
-
-      <!-- 縦線 -->
       <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
 
       <% @games.each do |game| %>
         <% next if game.played_year.blank? || game.title.blank? %>
 
-        <div
-          id="year-<%= game.played_year %>"
-          class="relative pl-12 pb-12 scroll-mt-24"
-        >
+        <div id="year-<%= game.played_year %>" class="relative pl-12 pb-12 scroll-mt-32">
 
           <!-- 年マーカー -->
           <div class="absolute left-0 top-1 w-8 h-8 rounded-full
                       bg-slate-900 border border-slate-500
                       flex items-center justify-center
-                      text-xs font-bold
-                      year-marker">
-            <%= game.played_year %>
+                      text-xs font-bold year-marker">
+            <%= game.played_age %>歳
           </div>
 
           <!-- カード -->
           <div
-            class="bg-slate-800/60 backdrop-blur
-                   border border-slate-700
-                   rounded-xl p-5 shadow-lg
-                   cursor-pointer hover:border-slate-500 transition"
+            class="timeline-card bg-slate-800/60 backdrop-blur
+                   border border-slate-700 rounded-xl
+                   p-5 shadow-lg cursor-pointer
+                   hover:border-slate-500 transition"
             onclick="openModal(
               '<%= j game.title %>',
               '<%= j [game.hardware, game.genre, (game.played_age && "#{game.played_age}歳")].compact.join(" / ") %>',
@@ -53,34 +49,32 @@
             </h2>
 
             <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
-              <% if game.hardware.present? %>
-                <span>🎮 <%= game.hardware %></span>
-              <% end %>
-              <% if game.genre.present? %>
-                <span>⚔️ <%= game.genre %></span>
-              <% end %>
-              <% if game.played_age.present? %>
-                <span>🕰 <%= game.played_age %>歳</span>
-              <% end %>
+              <% if game.hardware.present? %><span>🎮 <%= game.hardware %></span><% end %>
+              <% if game.genre.present? %><span>⚔️ <%= game.genre %></span><% end %>
+              <% if game.played_age.present? %><span>🕰 <%= game.played_age %>歳</span><% end %>
             </div>
 
-            <div class="mt-4 grid grid-cols-3 gap-3 text-xs">
-              <% if game.fun.present? %>
-                <div>
-                  <p class="text-slate-400">楽しさ</p>
-                  <p class="font-bold"><%= "★" * game.fun %></p>
-                </div>
-              <% end %>
+            <!-- マテリア評価 -->
+            <div class="mt-3 space-y-2 text-xs text-slate-300">
               <% if game.difficulty.present? %>
-                <div>
-                  <p class="text-slate-400">難易度</p>
-                  <p class="font-bold"><%= "★" * game.difficulty %></p>
+                <div class="flex items-center gap-2">
+                  <span class="w-14">難易度</span>
+                  <div class="flex gap-1">
+                    <% 5.times do |i| %>
+                      <span class="materia materia-red <%= 'inactive' if i >= game.difficulty %>"></span>
+                    <% end %>
+                  </div>
                 </div>
               <% end %>
-              <% if game.ended_year.present? %>
-                <div>
-                  <p class="text-slate-400">クリア年</p>
-                  <p class="font-bold"><%= game.ended_year %></p>
+
+              <% if game.fun.present? %>
+                <div class="flex items-center gap-2">
+                  <span class="w-14">面白さ</span>
+                  <div class="flex gap-1">
+                    <% 5.times do |i| %>
+                      <span class="materia materia-green <%= 'inactive' if i >= game.fun %>"></span>
+                    <% end %>
+                  </div>
                 </div>
               <% end %>
             </div>
@@ -94,72 +88,126 @@
           </div>
         </div>
       <% end %>
-
-      <% if @games.empty? %>
-        <p class="text-center text-slate-400">
-          まだ記録はないようだ……
-        </p>
-      <% end %>
-
     </div>
   </main>
 
-  <!-- 右：年号ナビ（固定） -->
-  <aside class="hidden md:block w-32 border-l border-slate-800 bg-black/40">
-    <ul class="sticky top-0 p-4 space-y-4 text-center">
-      <% @games.each do |game| %>
-        <% next if game.played_year.blank? %>
-        <li>
-          <a
-            href="#year-<%= game.played_year %>"
-            class="text-slate-400 text-sm tracking-wider
-                   hover:text-slate-100 transition"
-          >
-            <%= game.played_year %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
-  </aside>
+  <!-- 右：FF7メニュー -->
+  <aside class="hidden md:block w-72 relative">
+    <div class="sticky top-20 mr-8">
+      <div class="bg-[#0b0f2a]/90 backdrop-blur
+                  border border-blue-300/40
+                  shadow-[0_0_30px_rgba(80,120,255,0.35)]
+                  px-8 py-6 space-y-4 ff7-side-window">
 
+        <div class="text-xs tracking-widest text-blue-200 opacity-80 text-center">
+          冒険の記録
+        </div>
+
+        <% @games.each do |game| %>
+          <% next if game.played_age.blank? || game.played_year.blank? %>
+          <a href="#year-<%= game.played_year %>"
+             data-year="<%= game.played_year %>"
+             class="ff7-age-item flex items-center gap-3
+                    px-3 py-2 text-base tracking-wider transition">
+            <span class="ff7-cursor opacity-0">👉</span>
+            <span><%= game.played_age %>歳</span>
+          </a>
+        <% end %>
+      </div>
+    </div>
+  </aside>
 </div>
 
-<!-- モーダル -->
-<div
-  id="game-modal"
-  class="fixed inset-0 bg-black/70 backdrop-blur-sm
-         hidden items-center justify-center z-50"
->
-  <div class="bg-slate-900 border border-slate-700
-              rounded-xl max-w-lg w-full p-6 relative
-              ff7-modal">
+<!-- ===== FF7モーダル ===== -->
+<!-- ===== FF7 詳細モーダル ===== -->
+<div id="game-modal"
+     class="fixed inset-0 hidden items-center justify-center
+            bg-black/70 backdrop-blur-sm z-50">
 
-    <button
-      onclick="closeModal()"
-      class="absolute top-3 right-3 text-slate-400 hover:text-white"
-    >
+  <div
+    class="ff7-detail-card ff7-window
+           w-full max-w-2xl
+           p-8 relative">
+
+    <!-- タイトル -->
+    <h2 id="modal-title"
+        class="text-2xl font-bold tracking-widest text-blue-100 mb-2">
+    </h2>
+
+    <!-- メタ情報 -->
+    <p id="modal-meta"
+       class="text-sm tracking-wider text-blue-200/80 mb-6">
+    </p>
+
+    <!-- メモ本文 -->
+    <div
+      class="bg-black/30
+             border border-blue-300/30
+             rounded-md
+             p-4 mb-8
+             text-slate-200 leading-relaxed">
+      <p id="modal-memo"></p>
+    </div>
+
+    <!-- FF7コマンド -->
+    <div class="grid grid-cols-2 gap-6 text-center tracking-widest">
+      <button class="ff7-command">へんしゅう</button>
+      <button class="ff7-command text-red-300">さくじょ</button>
+    </div>
+
+    <!-- 閉じる -->
+    <button onclick="closeModal()"
+            class="absolute top-4 right-5
+                   text-slate-400 hover:text-white">
       ✕
     </button>
-
-    <h2 id="modal-title" class="text-xl font-bold mb-2"></h2>
-    <p id="modal-meta" class="text-sm text-slate-400 mb-4"></p>
-    <p id="modal-memo" class="text-slate-300 leading-relaxed"></p>
   </div>
 </div>
 
+
+<!-- ===== JS ===== -->
 <script>
+  const gameModal = document.getElementById("game-modal")
+  const modalTitle = document.getElementById("modal-title")
+  const modalMeta  = document.getElementById("modal-meta")
+  const modalMemo  = document.getElementById("modal-memo")
+
   function openModal(title, meta, memo) {
-    document.getElementById("modal-title").innerText = title
-    document.getElementById("modal-meta").innerText = meta
-    document.getElementById("modal-memo").innerText = memo
-    const modal = document.getElementById("game-modal")
-    modal.classList.remove("hidden")
-    modal.classList.add("flex")
+    modalTitle.innerText = title
+    modalMeta.innerText = meta
+    modalMemo.innerText = memo || "……"
+    gameModal.classList.remove("hidden")
+    gameModal.classList.add("flex")
   }
 
   function closeModal() {
-    const modal = document.getElementById("game-modal")
-    modal.classList.add("hidden")
-    modal.classList.remove("flex")
+    gameModal.classList.add("hidden")
+    gameModal.classList.remove("flex")
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const ageItems = document.querySelectorAll(".ff7-age-item")
+    const yearSections = document.querySelectorAll("[id^='year-']")
+
+    function activateYear(year) {
+      ageItems.forEach(item => {
+        const active = item.dataset.year === year
+        item.classList.toggle("active", active)
+        item.querySelector(".ff7-cursor")
+            .classList.toggle("opacity-0", !active)
+      })
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          activateYear(entry.target.id.replace("year-", ""))
+          entry.target.querySelector(".timeline-card")
+            ?.classList.add("is-visible")
+        }
+      })
+    }, { threshold: 0.6 })
+
+    yearSections.forEach(section => observer.observe(section))
+  })
 </script>
