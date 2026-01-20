@@ -1,3 +1,4 @@
+<%= render 'devise/shared/header' %>
 <div class="min-h-screen text-slate-100 flex">
 
   <!-- 左：ダミー余白 -->
@@ -8,7 +9,7 @@
 
     <header class="mb-16 text-center">
       <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
-        ── 冒険の記録 ──
+        ── <%= @user.name %> の冒険の記録 ──
       </h1>
       <p class="mt-2 text-sm text-slate-400">
         セーブデータを選んでください
