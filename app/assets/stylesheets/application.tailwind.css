@@ -79,11 +79,293 @@ body {
     to bottom,
     #1108C0 0%,     /* 明るい青：上部 */
     #1108C0 20%,    /* 青をしっかり残す */
-    #1108C0 40%,    /* 青をしっかり残す */
-    #0b0a2a 85%,    /* 深青ゾーンを長めに */
-    #050414 90%,    /* 黒の始まりを遅らせる */
+    #1108C0 70%,    /* 青をしっかり残す */
+    #0b0a2a 95%,    /* 深青ゾーンを長めに */
     #000000 100%    /* 最下部だけ完全な黒 */
   );
 }
 
+/* FF7メニュー：選択中 */
+.ff7-age-item.active {
+  color: #9cc7ff;
+  background: rgba(80,120,255,0.15);
+}
 
+.ff7-age-item.active .ff7-cursor {
+  opacity: 1;
+}
+.ff7-age-item.active {
+  transform: translateX(4px);
+}
+
+/* FF7メニュー：選択中の文字発光 */
+.ff7-age-item.active {
+  color: #c7d8ff;
+  text-shadow:
+    0 0 6px rgba(120,160,255,0.8),
+    0 0 14px rgba(80,120,255,0.6);
+}
+
+/* 年表カード：初期状態 */
+.timeline-card {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out;
+}
+
+/* 画面に入ったら表示 */
+.timeline-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-card:hover {
+  border-color: rgba(120,160,255,0.8);
+  box-shadow: 0 0 12px rgba(80,120,255,0.35);
+}
+
+/* ===== マテリア共通 ===== */
+.materia {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  box-shadow:
+    inset 0 0 2px rgba(255,255,255,0.6),
+    0 0 6px currentColor;
+  transition: opacity 0.3s ease;
+}
+
+/* 非アクティブ */
+.materia.inactive {
+  opacity: 0.2;
+  box-shadow: none;
+}
+
+/* ===== 色 ===== */
+.materia-red {
+  color: rgb(255, 100, 100);
+  background: radial-gradient(circle at 30% 30%,
+    #ffd6d6,
+    #ff4a4a 60%,
+    #9b0000
+  );
+}
+
+.materia-green {
+  color: rgb(120, 255, 160);
+  background: radial-gradient(circle at 30% 30%,
+    #d6ffe8,
+    #3bff8f 60%,
+    #007a3d
+  );
+}
+
+.ff7-window {
+  font-family: monospace;
+}
+
+.ff7-command {
+  border: 3px solid rgba(220,235,255,0.95);
+  padding: 12px 0;
+
+  background: linear-gradient(
+    180deg,
+    #223a8f 0%,
+    #1a2b66 100%
+  );
+
+  box-shadow:
+    inset 0 0 0 2px rgba(120,170,255,0.9),
+    0 4px 0 rgba(0,0,0,0.6);
+
+  border-radius: 8px;
+
+  font-weight: bold;
+  letter-spacing: 0.15em;
+  color: #eaf4ff;
+
+  transition: all 0.15s ease;
+}
+
+
+.ff7-command:hover {
+  background: linear-gradient(
+    180deg,
+    #2f52cc 0%,
+    #203b8f 100%
+  );
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.9),
+    0 0 18px rgba(120,180,255,0.9);
+
+  transform: translateY(1px);
+}
+
+
+.ff7-input {
+  background: rgba(10, 20, 60, 0.9);
+  border: 1px solid rgba(120, 160, 255, 0.4);
+  color: #e0e7ff;
+  padding: 6px 8px;
+}
+
+.data-delete {
+  animation: ff7-delete 0.9s steps(6) forwards;
+}
+
+@keyframes ff7-delete {
+  0%   { opacity: 1; filter: none; }
+  40%  { opacity: 0.6; filter: blur(1px); }
+  70%  { opacity: 0.3; filter: blur(3px); }
+  100% { opacity: 0; transform: scaleY(0.2); }
+}
+
+/* ===== FF7風 タイムラインカード ===== */
+
+.timeline-card {
+  position: relative;
+
+  /* 太め白フチ */
+  border: 2px solid rgba(230, 240, 255, 0.95);
+
+  /* 中身：青グラデーション */
+  background: linear-gradient(
+    180deg,
+    #1b2a6b 0%,
+    #152050 45%,
+    #0b1435 100%
+  );
+
+  /* FF7っぽい立体感 */
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.6) inset,
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(80, 120, 255, 0.35);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* hover時：ほんのり強調 */
+.timeline-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(160, 200, 255, 0.9) inset,
+    0 14px 36px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(120, 170, 255, 0.55);
+}
+
+/* 角のシャープさを強調（FF7感） */
+.timeline-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* ===== FF7 右サイドメニュー（カードと同系統） ===== */
+
+.ff7-side-window {
+  border: 3px solid rgba(230, 240, 255, 0.95);
+
+  background: linear-gradient(
+    180deg,
+    #1b2a6b 0%,
+    #152050 45%,
+    #0b1435 100%
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.6) inset,
+    0 0 30px rgba(80, 120, 255, 0.45),
+    0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* ===== FF7 年齢コマンド ===== */
+
+.ff7-age-item {
+  border-radius: 6px;
+  color: #e0e7ff;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ff7-age-item:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(80,120,255,0.25),
+    rgba(80,120,255,0.05)
+  );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(160,200,255,0.6),
+    0 0 12px rgba(80,120,255,0.35);
+
+  transform: translateX(4px);
+}
+
+/* 選択中（スクロール同期） */
+.ff7-age-item.active {
+  background: linear-gradient(
+    90deg,
+    rgba(120,160,255,0.35),
+    rgba(80,120,255,0.1)
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(200,220,255,0.9),
+    0 0 16px rgba(120,170,255,0.8);
+
+  transform: translateX(6px);
+}
+
+.ff7-age-item.active .ff7-cursor {
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(160,200,255,1);
+}
+/* ===== FF7 詳細カード（年表カード拡張） ===== */
+
+.ff7-detail-card {
+  position: relative;
+
+  /* ← ここが重要：太い白フチ */
+  border: 4px solid #e6f2ff;
+
+  background: linear-gradient(
+    180deg,
+    #1b2a6b 0%,
+    #152050 45%,
+    #0b1435 100%
+  );
+
+  box-shadow:
+    inset 0 0 0 2px rgba(120, 170, 255, 0.9),
+    0 0 0 1px rgba(255,255,255,0.6),
+    0 20px 50px rgba(0,0,0,0.75),
+    0 0 60px rgba(80,120,255,0.6);
+
+  border-radius: 14px;
+
+  animation: ff7Open 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* 内側ハイライト */
+.ff7-detail-card::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+}
