@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   # これにより、ユーザー認証機能を迅速に実装できる
   # 詳細なカスタマイズも可能で、必要に応じてオプションを追加することもできる
 
-  root to: "users#index"
-  # アプリケーションのルートURL（/）にアクセスした際に、Usersコントローラーのindexアクションを呼び出す設定
+  root to: "sessions#new"
+  # アプリケーションのルートURL（/）にアクセスした際に、Sessionsコントローラーのnewアクションを呼び出す設定
 
   resources :users, only: %i[index show]
   # usersリソースに対して、indexとshowアクションのルーティングを自動生成する設定
