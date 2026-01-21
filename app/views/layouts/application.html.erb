@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
+<% if user_signed_in? %>
+  <p style="background: yellow; padding: 10px;">
+    デバッグ: ログイン中です（User ID: <%= current_user.id %>）
+  </p>
+<% else %>
+  <p style="background: lightblue; padding: 10px;">
+    デバッグ: 未ログインです
+  </p>
+<% end %>
   <head>
     <title><%= content_for(:title) || "Myapp" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">

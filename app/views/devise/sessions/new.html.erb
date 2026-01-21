@@ -1,82 +1,92 @@
 <% content_for :title, "ログイン - Savedata" %>
 
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 px-4">
-  <div class="w-full max-w-md">
+<div class="min-h-screen flex">
+  <!-- 左側デコレーション -->
+  <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center p-8">
+    <div class="text-center">
+    <h1 class="text-5xl font-bold text-white mb-4 font-pixel">Savedata</h1>
+       <p class="text-lg leading-relaxed text-gray-300">
+         Savedataは、ゲームの思い出を「年齢 × 時間軸」で記録するアプリです。</p>
 
-    <!-- ロゴ / 世界観 -->
-    <div class="text-center mb-10">
-      <h1 class="text-5xl font-bold text-white mb-4 font-pixel">
-        Savedata
-      </h1>
-      <p class="text-sm text-blue-100 leading-relaxed">
-        子どもの頃に夢中で遊んだゲーム<br>
-        学生時代に友人と語り合ったタイトル<br>
-        大人になってから時間を作って遊んだ作品――<br>
-        <br>
-        そんな思い出の詰まった<br>
-        ゲームx人生のセーブデータを<br>
-        大切に保管しておける場所。<br>
-      </p>
+       <p class="mt-6 text-sm text-white">
+         あの頃のプレイ体験を、感動を人生の年表として残そう。</p>
     </div>
 
-    <!-- メモリーカード風 UI -->
-  <div class="relative bg-gray-300 border border-gray-400 rounded-xl shadow-md px-8 py-10">
-
-  <!-- ヘッダー -->
-  <div class="text-center mb-8">
-    <h2 class="text-2xl font-pixel text-gray-800 mb-2">
-      LOGIN
-    </h2>
-    <p class="text-xs text-gray-600">
-      セーブデータ管理スロット
-    </p>
   </div>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
-
-    <!-- Email -->
-    <div class="mb-5">
-      <%= f.label :email, "メールアドレス", class: "block text-xs font-semibold text-gray-700 mb-2" %>
-      <%= f.email_field :email,
-        class: "w-full px-4 py-3 bg-gray-100 border border-gray-400 rounded-md focus:ring-2 focus:ring-blue-500 outline-none" %>
-    </div>
-
-    <!-- Password -->
-    <div class="mb-6">
-      <%= f.label :password, "パスワード", class: "block text-xs font-semibold text-gray-700 mb-2" %>
-      <%= f.password_field :password,
-        class: "w-full px-4 py-3 bg-gray-100 border border-gray-400 rounded-md focus:ring-2 focus:ring-blue-500 outline-none" %>
-    </div>
-
-    <% if devise_mapping.rememberable? %>
-      <div class="mb-6 text-xs text-gray-700">
-        <label class="flex items-center">
-          <%= f.check_box :remember_me, class: "mr-2" %>
-          記憶しておく
-        </label>
+  <!-- 右側フォーム -->
+  <div class="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md">
+      <!-- ヘッダー -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2 font-pixel">LOGIN</h2>
+        <p class="text-gray-600">セーブデータ管理システムへようこそ</p>
       </div>
-    <% end %>
 
-    <!-- START -->
-    <%= f.submit "START",
-      class: "w-full py-3 bg-blue-600 hover:bg-black text-white font-pixel rounded-md transition" %>
+      <!-- フォーム -->
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+        <% if resource.errors.any? %>
+          <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <h2 class="text-sm font-semibold text-red-800 mb-2">
+              <%= pluralize(resource.errors.count, "error") %> prohibited this from being saved:
+            </h2>
+            <ul class="list-disc list-inside text-sm text-red-700 space-y-1">
+              <% resource.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  <% end %>
+        <!-- メールアドレス入力 -->
+        <div class="mb-5">
+          <%= f.label :email, "メールアドレス", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <%= f.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "your@example.com",
+              class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" %>
+        </div>
 
-  <!-- Links -->
-  <div class="mt-6 text-center text-xs space-y-2">
-    <% if devise_mapping.registerable? %>
-      <%= link_to "セーブデータを登録する", new_registration_path(resource_name),
-        class: "block text-blue-700 hover:underline" %>
-    <% end %>
+        <!-- パスワード入力 -->
+        <div class="mb-5">
+          <%= f.label :password, "パスワード", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <%= f.password_field :password,
+              autocomplete: "current-password",
+              placeholder: "••••••••",
+              class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" %>
+        </div>
 
-    <% if devise_mapping.recoverable? %>
-      <%= link_to "パスワードをお忘れの方", new_password_path(resource_name),
-        class: "block text-gray-600 hover:underline" %>
-    <% end %>
-  </div>
+        <!-- Remember Me チェックボックス -->
+        <% if devise_mapping.rememberable? %>
+          <div class="mb-6">
+            <label class="flex items-center">
+              <%= f.check_box :remember_me, class: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-500" %>
+              <span class="ml-3 text-sm text-gray-700">このデバイスで覚えておく</span>
+            </label>
+          </div>
+        <% end %>
 
-</div>
+        <!-- ログインボタン -->
+        <div class="mb-6">
+          <%= f.submit "START", class: "w-full px-4 py-3 bg-blue-600 text-white font-pixel rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+        </div>
+      <% end %>
 
+      <!-- リンク -->
+      <div class="space-y-3 text-center text-sm">
+        <% if devise_mapping.registerable? %>
+          <div>
+            <%= link_to "アカウントを新規作成", new_registration_path(resource_name), class: "text-blue-600 hover:text-blue-700 font-medium" %>
+          </div>
+        <% end %>
+
+        <% if devise_mapping.recoverable? %>
+          <div>
+            <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-gray-600 hover:text-gray-700" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
