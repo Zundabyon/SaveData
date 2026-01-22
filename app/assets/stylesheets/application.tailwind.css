@@ -107,12 +107,10 @@ body {
 }
 
 /* 年表カード：初期状態 */
+
 .timeline-card {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* 画面に入ったら表示 */
@@ -368,4 +366,22 @@ body {
   pointer-events: none;
 }
 
+/* 右サイド：ユーザー情報と現在の章ブロック */
+.ff7-side-window .side-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* 上下の間隔 */
+  text-align: center;
+}
+
+/* 名前・職業ブロック */
+.side-block .user-info {
+  border-bottom: 1px solid rgba(80,120,255,0.2);
+  padding-bottom: 1rem;
+}
+
+/* 現在の章ブロック */
+.side-block .current-chapter {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(80,120,255,0.2);
 }

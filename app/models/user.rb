@@ -8,6 +8,7 @@
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  gender                 :boolean
+#  job                    :string
 #  name                   :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -22,10 +23,26 @@
 #
 class User < ApplicationRecord
    has_many :games, dependent: :destroy
-# UserモデルとGameモデルの関連付けを行っています。
-# 1人のユーザーは複数のゲームを持つことができる（1対多の関係）ことを示しています。
-# dependent: :destroy オプションは、ユーザーが削除された場合に、そのユーザーに関連する全てのゲームも一緒に削除されることを意味します。
+ CHAPTERS = [
+    { min: 0,  max: 5,  title: "序章",   label: "はじまりの記録" },
+    { min: 6,  max: 12, title: "第一章", label: "目覚め" },
+    { min: 13, max: 18, title: "第二章", label: "熱狂" },
+    { min: 19, max: 25, title: "第三章", label: "旅立ち" },
+    { min: 26, max: 35, title: "第四章", label: "試練" },
+    { min: 36, max: 45, title: "第五章", label: "深化" },
+    { min: 46, max: 55, title: "第六章", label: "継承" },
+    { min: 56, max: 65, title: "第七章", label: "円熟" },
+    { min: 66, max: 75, title: "第八章", label: "回想" },
+    { min: 76, max: 85, title: "第九章", label: "余韻" },
+    { min: 86, max: 99, title: "終章",   label: "セーブデータ" }
+  ]
 
+  def current_chapter
+    max_age = games.where.not(played_age: nil).maximum(:played_age)
+    return nil unless max_age
+
+    CHAPTERS.find { |c| max_age.between?(c[:min], c[:max]) }
+  end
 
 
     validates :email, presence: true
@@ -43,4 +60,18 @@ class User < ApplicationRecord
 # この記述のほかに、マイグレーションファイルの作成とビューの設定が必要です。
 # また、device.rbの初期設定ファイルも編集しています。(config/initializers/devise.rb)
 
+end
+# パスワードなしでユーザー情報を更新
+def update_without_current_password(params, *options)
+  params.delete(:current_password)
+
+  # パスワードが空なら削除
+  if params[:password].blank? && params[:password_confirmation].blank?
+    params.delete(:password)
+    params.delete(:password_confirmation)
+  end
+
+  result = update(params, *options)
+  clean_up_passwords
+  result
 end

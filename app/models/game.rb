@@ -30,7 +30,7 @@ class Game < ApplicationRecord
 
 
   validates :title, presence: true
-  validates :played_year, presence: true
+  validates :played_age, presence: true
 
 end
 # GameモデルとUserモデルの関連付けを行っています。

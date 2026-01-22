@@ -1,7 +1,9 @@
 <header>
   <nav class='navbar navbar-expand-lg navigation navbar-light bg-light'>
-    <%= link_to new_user_session_path, class: 'navbar-brand' do %>
-      <%= image_tag 'logo.png' %>
+    <% if user_signed_in? %>
+     <%= link_to 'ログアウト', destroy_user_session_path, class: 'navbar-brand' ,data: { turbo_method: :delete }  %>
+    <% else %>
+     <%= link_to 'ログイン', new_user_session_path, class: 'navbar-brand' %>
     <% end %>
     <button class='navbar-toggler' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'
       aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
@@ -11,7 +13,7 @@
     <div class='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul class='navbar-nav ms-auto main-nav align-items-center'>
         <li class='nav-item'>
-          <%= link_to 'ブックマーク一覧', '#', class: 'nav-link' %>
+          <%= link_to 'ゲーム登録画面', new_game_path, class: 'nav-link' %>
         </li>
       </ul>
     </div>
