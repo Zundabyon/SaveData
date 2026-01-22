@@ -3,7 +3,7 @@ class DashboardsController < ApplicationController
 
   def show
     @user  = current_user
-    @games = @user.games.order(:played_year)
+    @games = @user.games.where.not(played_age: nil).order(:played_age)
     @can_edit = true
   end
 end

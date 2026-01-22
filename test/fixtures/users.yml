@@ -8,6 +8,7 @@
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  gender                 :boolean
+#  job                    :string
 #  name                   :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime

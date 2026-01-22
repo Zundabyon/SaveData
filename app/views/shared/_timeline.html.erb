@@ -20,9 +20,9 @@
       <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
 
       <% @games.each do |game| %>
-        <% next if game.played_year.blank? || game.title.blank? %>
+        <% next if game.title.blank? || game.played_age.blank? %>
 
-        <div id="year-<%= game.played_year %>" class="relative pl-12 pb-12 scroll-mt-32">
+        <div id="age-<%= game.played_age %>" class="relative pl-12 pb-12 scroll-mt-32">
 
           <!-- 年マーカー -->
           <div class="absolute left-0 top-1 w-8 h-8 rounded-full
@@ -92,31 +92,52 @@
     </div>
   </main>
 
-  <!-- 右：FF7メニュー -->
-  <aside class="hidden md:block w-72 relative">
-    <div class="sticky top-20 mr-8">
-      <div class="bg-[#0b0f2a]/90 backdrop-blur
-                  border border-blue-300/40
-                  shadow-[0_0_30px_rgba(80,120,255,0.35)]
-                  px-8 py-6 space-y-4 ff7-side-window">
+<!-- 右：FF7メニュー -->
+<aside class="hidden md:block w-72 relative">
+  <div class="sticky top-20 mr-8">
+    <div class="bg-[#0b0f2a]/90 backdrop-blur
+          border border-blue-300/40
+          shadow-[0_0_30px_rgba(80,120,255,0.35)]
+          px-8 py-6 space-y-6 ff7-side-window">
 
-        <div class="text-xs tracking-widest text-blue-200 opacity-80 text-center">
-          冒険の記録
-        </div>
+  <div class="space-y-8 text-center side-block">
 
-        <% @games.each do |game| %>
-          <% next if game.played_age.blank? || game.played_year.blank? %>
-          <a href="#year-<%= game.played_year %>"
-             data-year="<%= game.played_year %>"
-             class="ff7-age-item flex items-center gap-3
-                    px-3 py-2 text-base tracking-wider transition">
-            <span class="ff7-cursor opacity-0">👉</span>
-            <span><%= game.played_age %>歳</span>
-          </a>
-        <% end %>
-      </div>
+    <!-- MENU 見出し -->
+    <div class="text-lg tracking-widest text-blue-200 opacity-80 font-pixel">
+      MENU
     </div>
-  </aside>
+
+    <!-- 名前・職業ブロック -->
+    <div class="user-info space-y-2">
+      <div class="text-xs tracking-widest text-blue-200 opacity-80">プレイヤー</div>
+      <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.name.presence || "名無しの冒険者" %></div>
+
+      <div class="text-xs tracking-widest text-blue-200 opacity-80">しょくぎょう</div>
+      <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.job.presence || "ナイトオブながネギ" %></div>
+    </div>
+
+    <!-- 現在の章ブロック -->
+    <% if (chapter = @user.current_chapter) %>
+      <div class="current-chapter space-y-2">
+        <div class="text-xs tracking-widest text-blue-200 opacity-80">現在の章</div>
+        <div class="text-lg font-bold text-blue-100 tracking-widest"><%= chapter[:title] %></div>
+        <div class="text-xs text-blue-300"><%= chapter[:label] %></div>
+      </div>
+    <% end %>
+
+    <!-- コマンドボタン -->
+  <div class="flex flex-col gap-3">
+    <%= link_to "ゲーム登録", new_game_path, class: "ff7-command text-center" %>
+    <%= link_to "ユーザー編集", edit_user_registration_path, class: "ff7-command text-center" %>
+  </div>
+
+
+  </div>
+</div>
+
+  </div>
+</aside>
+
 </div>
 
 <!-- ===== FF7モーダル ===== -->
@@ -198,16 +219,6 @@
             .classList.toggle("opacity-0", !active)
       })
     }
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          activateYear(entry.target.id.replace("year-", ""))
-          entry.target.querySelector(".timeline-card")
-            ?.classList.add("is-visible")
-        }
-      })
-    }, { threshold: 0.6 })
 
     yearSections.forEach(section => observer.observe(section))
   })
