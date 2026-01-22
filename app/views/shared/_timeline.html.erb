@@ -129,6 +129,12 @@
   <div class="flex flex-col gap-3">
     <%= link_to "ゲーム登録", new_game_path, class: "ff7-command text-center" %>
     <%= link_to "ユーザー編集", edit_user_registration_path, class: "ff7-command text-center" %>
+
+    <% if user_signed_in? %>
+     <%= link_to 'ログアウト', destroy_user_session_path, class: 'ff7-command text-center bg-red-700', data: { turbo_method: :delete }  %>
+    <% else %>
+     <%= link_to 'ログイン', new_user_session_path, class: 'ff7-command text-center bg-red-700' %>
+    <% end %>
   </div>
 
 
