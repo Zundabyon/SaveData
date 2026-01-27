@@ -31,5 +31,8 @@
   <main class="font-sans">
     <%= yield %>
   </main>
+  <%= turbo_frame_tag "modal" %>
 </body>
+<!-- モーダル用フレーム（常駐） -->
+  <turbo-frame id="modal"></turbo-frame>
 </html>

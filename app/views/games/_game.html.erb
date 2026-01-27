@@ -1,0 +1,66 @@
+<div id="age-<%= game.played_age %>" class="relative pl-12 pb-12 scroll-mt-32">
+
+          <!-- 年マーカー -->
+          <div class="absolute left-0 top-1 w-8 h-8 rounded-full
+                      bg-slate-900 border border-slate-500
+                      flex items-center justify-center
+                      text-xs font-bold year-marker">
+            <%= game.played_age %>歳
+          </div>
+
+          <!-- カード -->
+          <div
+            class="timeline-card bg-slate-800/60 backdrop-blur
+                   border border-slate-700 rounded-xl
+                   p-5 shadow-lg cursor-pointer
+                   hover:border-slate-500 transition"
+            onclick="openModal(
+              '<%= j game.title %>',
+              '<%= j [game.hardware, game.genre, (game.played_age && "#{game.played_age}歳")].compact.join(" / ") %>',
+              '<%= j game.memo %>'
+            )"
+          >
+
+            <h2 class="text-lg font-semibold tracking-wide">
+              <%= game.title %>
+            </h2>
+
+            <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
+              <% if game.hardware.present? %><span>🎮 <%= game.hardware %></span><% end %>
+              <% if game.genre.present? %><span>⚔️ <%= game.genre %></span><% end %>
+              <% if game.played_age.present? %><span>🕰 <%= game.played_age %>歳</span><% end %>
+            </div>
+
+            <!-- マテリア評価 -->
+            <div class="mt-3 space-y-2 text-xs text-slate-300">
+              <% if game.difficulty.present? %>
+                <div class="flex items-center gap-2">
+                  <span class="w-14">難易度</span>
+                  <div class="flex gap-1">
+                    <% 5.times do |i| %>
+                      <span class="materia materia-red <%= 'inactive' if i >= game.difficulty %>"></span>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+
+              <% if game.fun.present? %>
+                <div class="flex items-center gap-2">
+                  <span class="w-14">面白さ</span>
+                  <div class="flex gap-1">
+                    <% 5.times do |i| %>
+                      <span class="materia materia-green <%= 'inactive' if i >= game.fun %>"></span>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <% if game.memo.present? %>
+              <p class="mt-4 text-sm text-slate-300 leading-relaxed line-clamp-2">
+                「<%= game.memo %>」
+              </p>
+            <% end %>
+
+          </div>
+        </div>
