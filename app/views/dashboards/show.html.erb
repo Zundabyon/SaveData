@@ -1,4 +1,174 @@
-<%= render "shared/timeline",
-           user: @user,
-           games: @games,
-           can_edit: @can_edit %>
+<%= render 'shared/header' %>
+<div class="min-h-screen text-slate-100 flex">
+
+  <!-- 左：ダミー余白 -->
+  <aside class="hidden md:block w-72"></aside>
+
+  <!-- 中央：年表 -->
+  <main class="flex-1 px-6 py-12 scroll-smooth">
+
+    <header class="mb-16 text-center">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
+        ── <%= @user.name %> の冒険の記録 ──
+      </h1>
+      <p class="mt-2 text-sm text-slate-400">
+        セーブデータを選んでください
+      </p>
+    </header>
+
+    <div class="relative max-w-3xl mx-auto timeline-scan">
+      <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
+
+      <% @games.each do |game| %>
+        <% next if game.title.blank? || game.played_age.blank? %>
+         <div class=timeline-item>
+              onclick="openModal('<%= game.title %>', '<%= game.played_age %>歳', '<%= game.memo %>', <%= game.id %>)">
+         </div>
+      <% end %>
+    </div>
+  </main>
+
+<!-- 右：FF7メニュー -->
+<aside class="hidden md:block w-72 relative">
+  <div class="sticky top-20 mr-8">
+    <div class="bg-[#0b0f2a]/90 backdrop-blur
+          border border-blue-300/40
+          shadow-[0_0_30px_rgba(80,120,255,0.35)]
+          px-8 py-6 space-y-6 ff7-side-window">
+
+  <div class="space-y-8 text-center side-block">
+
+    <!-- MENU 見出し -->
+    <div class="text-lg tracking-widest text-blue-200 opacity-80 font-pixel">
+      MENU
+    </div>
+
+    <!-- 名前・職業ブロック -->
+    <div class="user-info space-y-2">
+      <div class="text-xs tracking-widest text-blue-200 opacity-80">プレイヤー</div>
+      <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.name.presence || "名無しの冒険者" %></div>
+
+      <div class="text-xs tracking-widest text-blue-200 opacity-80">しょくぎょう</div>
+      <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.job.presence || "ナイトオブながネギ" %></div>
+    </div>
+
+    <!-- 現在の章ブロック -->
+    <% if (chapter = @user.current_chapter) %>
+      <div class="current-chapter space-y-2">
+        <div class="text-xs tracking-widest text-blue-200 opacity-80">現在の章</div>
+        <div class="text-lg font-bold text-blue-100 tracking-widest"><%= chapter[:title] %></div>
+        <div class="text-xs text-blue-300"><%= chapter[:label] %></div>
+      </div>
+    <% end %>
+
+    <!-- コマンドボタン -->
+  <div class="flex flex-col gap-3">
+    <%= link_to "ゲーム登録", new_game_path, class: "ff7-command text-center" %>
+    <%= link_to "ユーザー編集", edit_user_registration_path, class: "ff7-command text-center" %>
+
+    <% if user_signed_in? %>
+     <%= link_to 'ログアウト', destroy_user_session_path, class: 'ff7-command text-center bg-red-700', data: { turbo_method: :delete }  %>
+    <% else %>
+     <%= link_to 'ログイン', new_user_session_path, class: 'ff7-command text-center bg-red-700' %>
+    <% end %>
+  </div>
+
+
+  </div>
+</div>
+
+  </div>
+</aside>
+
+</div>
+
+<!-- ===== FF7モーダル ===== -->
+<!-- ===== FF7 詳細モーダル ===== -->
+<div id="game-modal"
+     class="fixed inset-0 hidden items-center justify-center
+            bg-black/70 backdrop-blur-sm z-50">
+
+  <div
+    class="ff7-detail-card ff7-window
+           w-full max-w-2xl
+           p-8 relative">
+
+    <!-- タイトル -->
+    <h2 id="modal-title"
+        class="text-2xl font-bold tracking-widest text-blue-100 mb-2">
+    </h2>
+
+    <!-- メタ情報 -->
+    <p id="modal-meta"
+       class="text-sm tracking-wider text-blue-200/80 mb-6">
+    </p>
+
+    <!-- メモ本文 -->
+    <div
+      class="bg-black/30
+             border border-blue-300/30
+             rounded-md
+             p-4 mb-8
+             text-slate-200 leading-relaxed">
+      <p id="modal-memo"></p>
+    </div>
+
+    <!-- FF7コマンド -->
+   <div class="mt-4 grid grid-cols-2 gap-6 text-center tracking-widest">
+      <%= link_to "へんしゅう",
+            edit_game_path(game),
+            data: { turbo_frame: "modal" } %>
+
+      <%= link_to "さくじょ",
+            confirm_destroy_game_path(game),
+            data: { turbo_frame: "modal" },
+            class: "ff7-command text-red-300" %>
+    </div>
+
+
+    <!-- 閉じる -->
+    <button onclick="closeModal()"
+            class="absolute top-4 right-5 text-4xl
+                   text-slate-400 hover:text-white">
+      ✕
+    </button>
+  </div>
+</div>
+
+
+<!-- ===== JS ===== -->
+<script>
+  const gameModal = document.getElementById("game-modal")
+  const modalTitle = document.getElementById("modal-title")
+  const modalMeta  = document.getElementById("modal-meta")
+  const modalMemo  = document.getElementById("modal-memo")
+
+  function openModal(title, meta, memo) {
+    modalTitle.innerText = title
+    modalMeta.innerText = meta
+    modalMemo.innerText = memo || "……"
+    gameModal.classList.remove("hidden")
+    gameModal.classList.add("flex")
+  }
+
+  function closeModal() {
+    gameModal.classList.add("hidden")
+    gameModal.classList.remove("flex")
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const ageItems = document.querySelectorAll(".ff7-age-item")
+    const yearSections = document.querySelectorAll("[id^='year-']")
+
+    function activateYear(year) {
+      ageItems.forEach(item => {
+        const active = item.dataset.year === year
+        item.classList.toggle("active", active)
+        item.querySelector(".ff7-cursor")
+            .classList.toggle("opacity-0", !active)
+      })
+    }
+
+    yearSections.forEach(section => observer.observe(section))
+  })
+</script>

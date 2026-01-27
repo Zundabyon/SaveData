@@ -1,62 +1,38 @@
 <!DOCTYPE html>
 <html>
-<% if user_signed_in? %>
-  <p style="background: yellow; padding: 10px;">
-    デバッグ: ログイン中です（User ID: <%= current_user.id %>）
-  </p>
-<% else %>
-  <p style="background: lightblue; padding: 10px;">
-    デバッグ: 未ログインです
-  </p>
-<% end %>
   <head>
     <title><%= content_for(:title) || "Myapp" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!-- app/views/layouts/application.html.erb -->
-
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
-
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Press+Start+2P&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
 <body>
+  <!-- Flash メッセージ -->
+  <%= render "layouts/flash" %>
+  <!-- メインコンテンツ -->
   <main class="font-sans">
     <%= yield %>
   </main>
-<% if notice %>
-  <div class="bg-green-600 text-white px-4 py-2 rounded mb-4">
-    <%= notice %>
-  </div>
-<% end %>
-
-<% if alert %>
-  <div class="bg-red-600 text-white px-4 py-2 rounded mb-4">
-    <%= alert %>
-  </div>
-<% end %>
-
+  <%= turbo_frame_tag "modal" %>
 </body>
+<!-- モーダル用フレーム（常駐） -->
+  <turbo-frame id="modal"></turbo-frame>
+</html>
