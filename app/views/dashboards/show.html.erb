@@ -19,12 +19,10 @@
     <div class="relative max-w-3xl mx-auto timeline-scan">
       <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
 
-      <% @games.each do |game| %>
-        <% next if game.title.blank? || game.played_age.blank? %>
-         <div class=timeline-item>
-              onclick="openModal('<%= game.title %>', '<%= game.played_age %>歳', '<%= game.memo %>', <%= game.id %>)">
-         </div>
-      <% end %>
+        <% @games.each do |game| %>
+          <% next if game.title.blank? || game.played_age.blank? %>
+          <%= render 'games/game', game: game %>
+        <% end %>
     </div>
   </main>
 
@@ -32,7 +30,7 @@
 <aside class="hidden md:block w-72 relative">
   <div class="sticky top-20 mr-8">
     <div class="bg-[#0b0f2a]/90 backdrop-blur
-          border border-blue-300/40
+          border border-slate-700 rounded-xl
           shadow-[0_0_30px_rgba(80,120,255,0.35)]
           px-8 py-6 space-y-6 ff7-side-window">
 
@@ -82,8 +80,7 @@
 
 </div>
 
-<!-- ===== FF7モーダル ===== -->
-<!-- ===== FF7 詳細モーダル ===== -->
+<!-- ===== 詳細モーダル ===== -->
 <div id="game-modal"
      class="fixed inset-0 hidden items-center justify-center
             bg-black/70 backdrop-blur-sm z-50">
@@ -113,20 +110,14 @@
       <p id="modal-memo"></p>
     </div>
 
-    <!-- FF7コマンド -->
+    <!-- 掲示板のゲーム内での編集、削除コマンド --
    <div class="mt-4 grid grid-cols-2 gap-6 text-center tracking-widest">
-      <%= link_to "へんしゅう",
-            edit_game_path(game),
-            data: { turbo_frame: "modal" } %>
+      <a id="edit-link" href="#" class="ff7-command">へんしゅう</a>
+      <a id="delete-link" href="#" class="ff7-command text-red-300">さくじょ</a>
+   </div>
+    <!-- ここはあえてhref="#" のままにして、JSで動的にURLをセットする -->
 
-      <%= link_to "さくじょ",
-            confirm_destroy_game_path(game),
-            data: { turbo_frame: "modal" },
-            class: "ff7-command text-red-300" %>
-    </div>
-
-
-    <!-- 閉じる -->
+    <!-- 閉じるボタン -->
     <button onclick="closeModal()"
             class="absolute top-4 right-5 text-4xl
                    text-slate-400 hover:text-white">
@@ -136,21 +127,28 @@
 </div>
 
 
-<!-- ===== JS ===== -->
+<!-- ===== JSはここに書く ===== -->
 <script>
   const gameModal = document.getElementById("game-modal")
   const modalTitle = document.getElementById("modal-title")
   const modalMeta  = document.getElementById("modal-meta")
   const modalMemo  = document.getElementById("modal-memo")
 
-  function openModal(title, meta, memo) {
-    modalTitle.innerText = title
-    modalMeta.innerText = meta
-    modalMemo.innerText = memo || "……"
-    gameModal.classList.remove("hidden")
-    gameModal.classList.add("flex")
-  }
+function openModal(title, meta, memo, gameId) {
+  modalTitle.innerText = title
+  modalMeta.innerText = meta
+  modalMemo.innerText = memo || "……"
 
+  // リンクのURLを動的に設定
+  const editLink = document.getElementById("edit-link")
+  const deleteLink = document.getElementById("delete-link")
+
+  editLink.href = `/games/${gameId}/edit`
+  deleteLink.href = `/games/${gameId}/confirm_destroy`
+
+  gameModal.classList.remove("hidden")
+  gameModal.classList.add("flex")
+}
   function closeModal() {
     gameModal.classList.add("hidden")
     gameModal.classList.remove("flex")

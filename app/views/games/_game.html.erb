@@ -16,8 +16,9 @@
                    hover:border-slate-500 transition"
             onclick="openModal(
               '<%= j game.title %>',
-              '<%= j [game.hardware, game.genre, (game.played_age && "#{game.played_age}歳")].compact.join(" / ") %>',
-              '<%= j game.memo %>'
+              '<%= j [game.hardware, game.genre, (game.played_age && "{game.played_age}歳")].compact.join(" / ") %>',
+              '<%= j game.memo %>',
+              <%= game.id %>
             )"
           >
 
