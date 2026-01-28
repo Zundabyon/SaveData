@@ -9,18 +9,16 @@
           </div>
 
           <!-- カード -->
-          <div
-            class="timeline-card bg-slate-800/60 backdrop-blur
-                   border border-slate-700 rounded-xl
-                   p-5 shadow-lg cursor-pointer
-                   hover:border-slate-500 transition"
-            onclick="openModal(
-              '<%= j game.title %>',
-              '<%= j [game.hardware, game.genre, (game.played_age && "{game.played_age}歳")].compact.join(" / ") %>',
-              '<%= j game.memo %>',
-              <%= game.id %>
-            )"
-          >
+<div
+  class="timeline-card bg-slate-800/60 backdrop-blur
+         border border-slate-700 rounded-xl
+         p-5 shadow-lg cursor-pointer
+         hover:border-slate-500 transition"
+  onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age && "#{game.played_age}歳")].compact.join(" / ") %>', '<%= j game.memo %>', <%= game.id %>)"
+>
+
+
+
 
             <h2 class="text-lg font-semibold tracking-wide">
               <%= game.title %>

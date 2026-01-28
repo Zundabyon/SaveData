@@ -127,46 +127,39 @@
 </div>
 
 
-<!-- ===== JSはここに書く ===== -->
+<!-- ===== JS: モーダル制御 ===== -->
 <script>
+document.addEventListener("DOMContentLoaded", () => {
   const gameModal = document.getElementById("game-modal")
   const modalTitle = document.getElementById("modal-title")
   const modalMeta  = document.getElementById("modal-meta")
   const modalMemo  = document.getElementById("modal-memo")
-
-function openModal(title, meta, memo, gameId) {
-  modalTitle.innerText = title
-  modalMeta.innerText = meta
-  modalMemo.innerText = memo || "……"
-
-  // リンクのURLを動的に設定
-  const editLink = document.getElementById("edit-link")
+  const editLink   = document.getElementById("edit-link")
   const deleteLink = document.getElementById("delete-link")
 
-  editLink.href = `/games/${gameId}/edit`
-  deleteLink.href = `/games/${gameId}/confirm_destroy`
+  // モーダル開く関数
+  window.openModal = (title, meta, memo, gameId) => {
+    modalTitle.innerText = title
+    modalMeta.innerText = meta
+    modalMemo.innerText  = memo || "……"
 
-  gameModal.classList.remove("hidden")
-  gameModal.classList.add("flex")
-}
-  function closeModal() {
+    // 動的リンク設定
+    editLink.href   = `/games/${gameId}/edit`
+    deleteLink.href = `/games/${gameId}/confirm_destroy`
+
+    gameModal.classList.remove("hidden")
+    gameModal.classList.add("flex")
+  }
+
+  // モーダル閉じる関数
+  window.closeModal = () => {
     gameModal.classList.add("hidden")
     gameModal.classList.remove("flex")
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const ageItems = document.querySelectorAll(".ff7-age-item")
-    const yearSections = document.querySelectorAll("[id^='year-']")
-
-    function activateYear(year) {
-      ageItems.forEach(item => {
-        const active = item.dataset.year === year
-        item.classList.toggle("active", active)
-        item.querySelector(".ff7-cursor")
-            .classList.toggle("opacity-0", !active)
-      })
-    }
-
-    yearSections.forEach(section => observer.observe(section))
+  // モーダル外クリックで閉じる
+  gameModal.addEventListener("click", (e) => {
+    if (e.target === gameModal) closeModal()
   })
+})
 </script>
