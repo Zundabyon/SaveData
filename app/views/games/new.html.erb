@@ -1,16 +1,8 @@
-<% content_for :title, "ゲーム記録 - Savedata" %>
+<%= render "shared/memory_card",
+      title: "NEW DATA",
+      subtitle: "SAVE DATA REGISTER",
+      description: "新しい冒険の記録を保存" do %>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-900 px-4">
-  <div class="relative w-full max-w-md bg-[#d6d6d6] border border-gray-400 rounded-xl shadow-xl p-6">
+  <%= render "form" %>
 
-    <!-- タイトル -->
-    <div class="text-center mb-6">
-      <h1 class="font-pixel text-lg text-gray-800">SAVE DATA</h1>
-      <p class="text-xs text-gray-600 mt-1">ゲームの記憶を刻む</p>
-    </div>
-
-    <!-- 👇 ここに form を差し込む -->
-    <%= render "form", game: @game %>
-
-  </div>
-</div>
+<% end %>

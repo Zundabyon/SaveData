@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
   resources :users, only: :show
 
-  # ゲーム（CRUD + 削除確認モーダル）
-  resources :games, only: %i[new create edit update destroy] do
+  # ゲーム（index / show は使わない設計）
+  resources :games, except: [:index, :show] do
     member do
       get :confirm_destroy
     end

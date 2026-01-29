@@ -1,8 +1,8 @@
-<turbo-frame id="modal">
-  <div class="fixed inset-0 bg-black/40 flex items-center justify-center">
-    <div class="bg-white p-6 rounded w-96">
-      <h2 class="mb-4 font-bold">編集</h2>
-      <%= render "form", game: @game %>
-    </div>
-  </div>
-</turbo-frame>
+<%= render "shared/memory_card",
+      title: "EDIT DATA",
+      subtitle: "SAVE DATA EDIT",
+      description: "セーブデータを更新" do %>
+
+  <%= render "form" %>
+
+<% end %>
