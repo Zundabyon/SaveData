@@ -15,10 +15,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_22_073232) do
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title"
     t.string "hardware"
-    t.string "genre"
-    t.string "recommended"
+    t.string "reccomended"
     t.integer "difficulty"
     t.integer "ended_year"
     t.text "memo"
@@ -28,6 +27,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_22_073232) do
     t.integer "fun"
     t.integer "played_year"
     t.integer "played_age"
+    t.string "genre"
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 
