@@ -1,55 +1,52 @@
+# app/controllers/games_controller.rb
 class GamesController < ApplicationController
-  def create
-    @game = Game.new(game_params)
+  before_action :set_game, only: %i[edit update destroy]
 
+  def new
+    @game = Game.new
+  end
+
+  def edit
+  end
+
+  def create
+    @game = current_user.games.new(game_params)
     if @game.save
-      render turbo_stream: turbo_stream.prepend(
-        "games",
-        partial: "games/game",
-        locals: { game: @game }
-      )
+      redirect_to dashboard_path, notice: "セーブしました"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    @game = Game.find(params[:id])
-
     if @game.update(game_params)
-      flash.now[:notice] = "更新しました"
-
-      render turbo_stream: [
-        turbo_stream.replace(@game,
-          partial: "games/game",
-          locals: { game: @game }
-        ),
-        turbo_stream.update("modal", "")
-      ]
+      redirect_to dashboard_path, notice: "更新セーブしました", status: :see_other
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  def confirm_destroy
-    @game = Game.find(params[:id])
-  end
-
   def destroy
-    @game = Game.find(params[:id])
     @game.destroy
-
-    flash.now[:notice] = "削除しました"
-
-    render turbo_stream: [
-      turbo_stream.remove(@game),
-      turbo_stream.update("modal", "")
-    ]
+    redirect_to dashboard_path, notice: "削除しました"
   end
 
   private
 
-  def game_params
-    params.require(:game).permit(:title, :genre, :hardware, :played_age, :fun, :difficulty, :memo)
+  def set_game
+    @game = Game.find(params[:id])
   end
+
+  def game_params
+    params.require(:game).permit(
+      :title,
+      :hardware,
+      :genre,
+      :played_age,
+      :memo,
+      :difficulty,
+      :fun
+    )
+  end
+
 end

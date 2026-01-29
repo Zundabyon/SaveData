@@ -1,4 +1,5 @@
 <%= render 'shared/header' %>
+
 <div class="min-h-screen text-slate-100 flex">
 
   <!-- 左：ダミー余白 -->
@@ -11,73 +12,58 @@
       <h1 class="text-3xl md:text-4xl font-bold tracking-widest">
         ── <%= @user.name %> の冒険の記録 ──
       </h1>
-      <p class="mt-2 text-sm text-slate-400">
-        セーブデータを選んでください
-      </p>
+      <p class="mt-2 text-sm text-slate-400">セーブデータを選んでください</p>
     </header>
 
     <div class="relative max-w-3xl mx-auto timeline-scan">
       <div class="absolute left-4 top-0 h-full w-px bg-slate-700"></div>
 
-        <% @games.each do |game| %>
-          <% next if game.title.blank? || game.played_age.blank? %>
-          <%= render 'games/game', game: game %>
-        <% end %>
+      <% @games.each do |game| %>
+        <% next if game.title.blank? || game.played_age.blank? %>
+        <%= render 'games/game', game: game %>
+      <% end %>
     </div>
   </main>
 
-<!-- 右：FF7メニュー -->
-<aside class="hidden md:block w-72 relative">
-  <div class="sticky top-20 mr-8">
-    <div class="bg-[#0b0f2a]/90 backdrop-blur
-          border border-slate-700 rounded-xl
-          shadow-[0_0_30px_rgba(80,120,255,0.35)]
-          px-8 py-6 space-y-6 ff7-side-window">
+  <!-- 右：FF7メニュー -->
+  <aside class="hidden md:block w-72 relative">
+    <div class="sticky top-20 mr-8">
+      <div class="bg-[#0b0f2a]/90 backdrop-blur border border-slate-700 rounded-xl
+                  shadow-[0_0_30px_rgba(80,120,255,0.35)] px-8 py-6 space-y-6 ff7-side-window">
 
-  <div class="space-y-8 text-center side-block">
+        <div class="space-y-8 text-center side-block">
+          <div class="text-lg tracking-widest text-blue-200 opacity-80 font-pixel">MENU</div>
 
-    <!-- MENU 見出し -->
-    <div class="text-lg tracking-widest text-blue-200 opacity-80 font-pixel">
-      MENU
-    </div>
+          <div class="user-info space-y-2">
+            <div class="text-xs tracking-widest text-blue-200 opacity-80">プレイヤー</div>
+            <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.name.presence || "名無しの冒険者" %></div>
 
-    <!-- 名前・職業ブロック -->
-    <div class="user-info space-y-2">
-      <div class="text-xs tracking-widest text-blue-200 opacity-80">プレイヤー</div>
-      <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.name.presence || "名無しの冒険者" %></div>
+            <div class="text-xs tracking-widest text-blue-200 opacity-80">しょくぎょう</div>
+            <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.job.presence || "むしょく" %></div>
+          </div>
 
-      <div class="text-xs tracking-widest text-blue-200 opacity-80">しょくぎょう</div>
-      <div class="text-lg font-bold text-blue-100 tracking-wider"><%= @user.job.presence || "ナイトオブながネギ" %></div>
-    </div>
+          <% if (chapter = @user.current_chapter) %>
+            <div class="current-chapter space-y-2">
+              <div class="text-xs tracking-widest text-blue-200 opacity-80">現在の章</div>
+              <div class="text-lg font-bold text-blue-100 tracking-widest"><%= chapter[:title] %></div>
+              <div class="text-xs text-blue-300"><%= chapter[:label] %></div>
+            </div>
+          <% end %>
 
-    <!-- 現在の章ブロック -->
-    <% if (chapter = @user.current_chapter) %>
-      <div class="current-chapter space-y-2">
-        <div class="text-xs tracking-widest text-blue-200 opacity-80">現在の章</div>
-        <div class="text-lg font-bold text-blue-100 tracking-widest"><%= chapter[:title] %></div>
-        <div class="text-xs text-blue-300"><%= chapter[:label] %></div>
+          <div class="flex flex-col gap-3">
+            <%= link_to "ゲーム登録", new_game_path, class: "ff7-command text-center" %>
+            <%= link_to "ユーザー編集", edit_user_registration_path, class: "ff7-command text-center" %>
+            <% if user_signed_in? %>
+              <%= link_to 'ログアウト', destroy_user_session_path, class: 'ff7-command text-center bg-red-700', data: { turbo_method: :delete } %>
+            <% else %>
+              <%= link_to 'ログイン', new_user_session_path, class: 'ff7-command text-center bg-red-700' %>
+            <% end %>
+          </div>
+
+        </div>
       </div>
-    <% end %>
-
-    <!-- コマンドボタン -->
-  <div class="flex flex-col gap-3">
-    <%= link_to "ゲーム登録", new_game_path, class: "ff7-command text-center" %>
-    <%= link_to "ユーザー編集", edit_user_registration_path, class: "ff7-command text-center" %>
-
-    <% if user_signed_in? %>
-     <%= link_to 'ログアウト', destroy_user_session_path, class: 'ff7-command text-center bg-red-700', data: { turbo_method: :delete }  %>
-    <% else %>
-     <%= link_to 'ログイン', new_user_session_path, class: 'ff7-command text-center bg-red-700' %>
-    <% end %>
-  </div>
-
-
-  </div>
-</div>
-
-  </div>
-</aside>
-
+    </div>
+  </aside>
 </div>
 
 <!-- ===== 詳細モーダル ===== -->
@@ -85,51 +71,28 @@
      class="fixed inset-0 hidden items-center justify-center
             bg-black/70 backdrop-blur-sm z-50">
 
-  <div
-    class="ff7-detail-card ff7-window
-           w-full max-w-2xl
-           p-8 relative">
+  <div class="ff7-detail-card ff7-window w-full max-w-2xl p-8 relative">
 
-    <!-- タイトル -->
-    <h2 id="modal-title"
-        class="text-2xl font-bold tracking-widest text-blue-100 mb-2">
-    </h2>
+    <h2 id="modal-title" class="text-2xl font-bold tracking-widest text-blue-100 mb-2"></h2>
+    <p id="modal-meta" class="text-sm tracking-wider text-blue-200/80 mb-6"></p>
 
-    <!-- メタ情報 -->
-    <p id="modal-meta"
-       class="text-sm tracking-wider text-blue-200/80 mb-6">
-    </p>
-
-    <!-- メモ本文 -->
-    <div
-      class="bg-black/30
-             border border-blue-300/30
-             rounded-md
-             p-4 mb-8
-             text-slate-200 leading-relaxed">
+    <div class="bg-black/30 border border-blue-300/30 rounded-md p-4 mb-8 text-slate-200 leading-relaxed">
       <p id="modal-memo"></p>
     </div>
 
-    <!-- 掲示板のゲーム内での編集、削除コマンド --
-   <div class="mt-4 grid grid-cols-2 gap-6 text-center tracking-widest">
-      <a id="edit-link" href="#" class="ff7-command">へんしゅう</a>
-      <a id="delete-link" href="#" class="ff7-command text-red-300">さくじょ</a>
-   </div>
-    <!-- ここはあえてhref="#" のままにして、JSで動的にURLをセットする -->
+    <div class="mt-4 grid grid-cols-2 gap-6 text-center tracking-widest">
+     <a id="edit-link" href="#" class="ff7-command" data-turbo="false">へんしゅう</a>
+     <a id="delete-link" href="#" class="ff7-command text-red-300" data-turbo-method="delete" data-turbo-confirm="本当に削除しますか？">さくじょ</a>
+    </div>
 
-    <!-- 閉じるボタン -->
     <button onclick="closeModal()"
-            class="absolute top-4 right-5 text-4xl
-                   text-slate-400 hover:text-white">
-      ✕
-    </button>
+            class="absolute top-4 right-5 text-4xl text-slate-400 hover:text-white">✕</button>
   </div>
 </div>
 
-
 <!-- ===== JS: モーダル制御 ===== -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbo:load", () => {
   const gameModal = document.getElementById("game-modal")
   const modalTitle = document.getElementById("modal-title")
   const modalMeta  = document.getElementById("modal-meta")
@@ -137,28 +100,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const editLink   = document.getElementById("edit-link")
   const deleteLink = document.getElementById("delete-link")
 
-  // モーダル開く関数
+  // ★ ここが②の本体
   window.openModal = (title, meta, memo, gameId) => {
-    modalTitle.innerText = title
-    modalMeta.innerText = meta
-    modalMemo.innerText  = memo || "……"
+    modalTitle.textContent = title
+    modalMeta.textContent  = meta
+    modalMemo.textContent  = memo || "……"
 
-    // 動的リンク設定
+    // ★ game.id を使ってリンクを書き換える
     editLink.href   = `/games/${gameId}/edit`
-    deleteLink.href = `/games/${gameId}/confirm_destroy`
+    deleteLink.href = `/games/${gameId}`
 
     gameModal.classList.remove("hidden")
     gameModal.classList.add("flex")
   }
 
-  // モーダル閉じる関数
   window.closeModal = () => {
     gameModal.classList.add("hidden")
     gameModal.classList.remove("flex")
   }
 
-  // モーダル外クリックで閉じる
-  gameModal.addEventListener("click", (e) => {
+  gameModal.addEventListener("click", e => {
     if (e.target === gameModal) closeModal()
   })
 })
