@@ -11,7 +11,7 @@
        <p class="mt-6 text-sm text-white">
          あの頃のプレイ体験を、感動を人生の年表として残そう。</p>
     </div>
-
+    <%= link_to "使い方", how_to_path, class: "link link-hover text-xs md:text-base transition-opacity hover:opacity-80" %>
   </div>
 
   <!-- 右側フォーム -->
@@ -68,7 +68,7 @@
         <% end %>
 
         <!-- ログインボタン -->
-        <div class="mb-6">
+        < class="mb-6">
           <%= f.submit "START", class: "w-full px-4 py-3 bg-blue-600 text-white font-pixel rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
         </div>
       <% end %>
@@ -76,7 +76,7 @@
       <!-- リンク -->
       <div class="space-y-3 text-center text-sm">
         <% if devise_mapping.registerable? %>
-          <div>
+          <>
             <%= link_to "アカウントを新規作成", new_registration_path(resource_name), class: "text-blue-600 hover:text-blue-700 font-medium" %>
           </div>
         <% end %>
@@ -85,8 +85,15 @@
           <div>
             <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-gray-600 hover:text-gray-700" %>
           </div>
+          <div>
+            <%= link_to "プライバシーポリシー", new_password_path(resource_name), class: "text-gray-600 hover:text-gray-700" %>
+          </div>
+          <>
+            <%= link_to "利用規約", new_password_path(resource_name), class: "text-gray-600 hover:text-gray-700" %>
+          </div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+<%= render "shared/footer" %>

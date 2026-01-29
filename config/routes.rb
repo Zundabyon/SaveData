@@ -9,11 +9,16 @@ Rails.application.routes.draw do
   resources :users, only: :show
 
   # ゲーム（index / show は使わない設計）
-  resources :games, except: [ :index, :show ] do
+  resources :games, except: [:index, :show] do
     member do
       get :confirm_destroy
     end
   end
+
+  # 静的ページ
+  get "/terms", to: "pages#terms", as: :terms
+  get "/privacy_policy", to: "pages#privacy_policy", as: :privacy_policy
+  get "/how_to", to: "pages#how_to", as: :how_to
 
   # ログイン済みユーザーの root
   authenticated :user do
