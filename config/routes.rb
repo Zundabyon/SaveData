@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: :show
 
   # ゲーム（index / show は使わない設計）
-  resources :games, except: [:index, :show] do
+  resources :games, except: [ :index, :show ] do
     member do
       get :confirm_destroy
     end

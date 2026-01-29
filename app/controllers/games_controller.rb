@@ -48,5 +48,4 @@ class GamesController < ApplicationController
       :fun
     )
   end
-
 end
