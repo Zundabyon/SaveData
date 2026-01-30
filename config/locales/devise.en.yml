@@ -1,71 +1,71 @@
 ja:
   devise:
     confirmations:
-      confirmed: "クリスタルの導きにより、メールアドレスは正しく認証された。"
-      send_instructions: "認証のための導きが、まもなくあなたの元へ届くだろう。"
-      send_paranoid_instructions: "登録されている場合、認証の導きがまもなく届く。"
+      confirmed: "メールアドレスは正常に認証されました。"
+      send_instructions: "認証用のメールがまもなく届きます。"
+      send_paranoid_instructions: "登録されている場合、認証メールがまもなく届きます。"
 
     failure:
-      already_authenticated: "すでにログインしている。"
-      inactive: "このセーブデータは、まだ目覚めていない。"
-      invalid: "%{authentication_keys} またはパスワードが違う。"
-      locked: "このアカウントは封印されている。"
-      last_attempt: "残り1回だ。失敗すれば封印が完成する。"
-      not_found_in_database: "%{authentication_keys} またはパスワードが違う。"
-      timeout: "時間切れだ。再びログインし直そう。"
-      unauthenticated: "この操作にはログインが必要だ。"
-      unconfirmed: "まだメール認証が完了していない。"
+      already_authenticated: "すでにログインされています。"
+      inactive: "このアカウントはまだ有効化されていません。"
+      invalid: "%{authentication_keys} またはパスワードが正しくありません。"
+      locked: "このアカウントはロックされています。"
+      last_attempt: "残り1回の試行です。失敗するとロックされます。"
+      not_found_in_database: "%{authentication_keys} またはパスワードが正しくありません。"
+      timeout: "セッションが期限切れです。再度ログインしてください。"
+      unauthenticated: "この操作にはログインが必要です。"
+      unconfirmed: "メール認証がまだ完了していません。"
 
     mailer:
       confirmation_instructions:
-        subject: "【SaveData】認証の導き"
+        subject: "【SaveData】メール認証のご案内"
       reset_password_instructions:
-        subject: "【SaveData】記憶再構築の導き"
+        subject: "【SaveData】パスワード再設定のご案内"
       unlock_instructions:
-        subject: "【SaveData】封印解除の導き"
+        subject: "【SaveData】アカウントロック解除のご案内"
       email_changed:
         subject: "【SaveData】登録メール変更のお知らせ"
       password_change:
         subject: "【SaveData】パスワード更新のお知らせ"
 
     omniauth_callbacks:
-      failure: "%{kind} の力を借りることができなかった（理由：%{reason}）"
-      success: "%{kind} の加護を受け、ログインに成功した。"
+      failure: "%{kind} アカウントで認証できませんでした（理由：%{reason}）"
+      success: "%{kind} アカウントでログインに成功しました。"
 
     passwords:
-      no_token: "正規の導きなしでは、この先へ進めない。"
-      send_instructions: "記憶を取り戻すための導きが、まもなく届く。"
-      send_paranoid_instructions: "登録されている場合、再設定の導きが届くだろう。"
-      updated: "パスワードは更新された。再び旅を続けよう。"
-      updated_not_active: "パスワードは更新された。"
+      no_token: "正規のリンクなしでは、このページにアクセスできません。"
+      send_instructions: "パスワード再設定の案内がまもなく届きます。"
+      send_paranoid_instructions: "登録されている場合、再設定用のメールが届きます。"
+      updated: "パスワードは更新されました。再度ログインしてご利用ください。"
+      updated_not_active: "パスワードは更新されました。"
 
     registrations:
-      destroyed: "セーブデータは消去された。また会える日を待っている。"
-      signed_up: "ようこそ、SaveDataの世界へ。"
-      signed_up_but_inactive: "登録は完了したが、まだ目覚めていない。"
-      signed_up_but_locked: "登録は完了したが、封印されている。"
-      signed_up_but_unconfirmed: "認証の導きが送られた。確認してほしい。"
-      update_needs_confirmation: "データは更新された。新たな認証が必要だ。"
-      updated: "セーブデータを更新した。"
-      updated_but_not_signed_in: "更新は完了したが、再ログインが必要だ。"
+      destroyed: "アカウントは削除されました。またのご利用をお待ちしております。"
+      signed_up: "登録が完了しました。ようこそSaveDataへ。"
+      signed_up_but_inactive: "登録は完了しましたが、まだアカウントは有効化されていません。"
+      signed_up_but_locked: "登録は完了しましたが、アカウントはロックされています。"
+      signed_up_but_unconfirmed: "確認用メールを送信しました。内容をご確認ください。"
+      update_needs_confirmation: "アカウントは更新されました。新しいメールアドレスの確認が必要です。"
+      updated: "アカウント情報は更新されました。"
+      updated_but_not_signed_in: "更新は完了しましたが、再ログインが必要です。"
 
     sessions:
-      signed_in: "ログイン成功。冒険を再開しよう。"
-      signed_out: "ログアウトした。また会おう。"
-      already_signed_out: "すでにログアウトしている。"
+      signed_in: "ログインに成功しました。"
+      signed_out: "ログアウトしました。またのご利用をお待ちしております。"
+      already_signed_out: "すでにログアウトされています。"
 
     unlocks:
-      send_instructions: "封印解除の導きが、まもなく届く。"
-      send_paranoid_instructions: "該当する場合、解除の導きが送られる。"
-      unlocked: "封印は解かれた。再びログインしよう。"
+      send_instructions: "アカウントロック解除の案内がまもなく届きます。"
+      send_paranoid_instructions: "該当する場合、解除用のメールが届きます。"
+      unlocked: "アカウントはロック解除されました。再度ログインしてください。"
 
   errors:
     messages:
-      already_confirmed: "すでに認証されている。"
-      confirmation_period_expired: "認証の期限が切れている。再度導きを受けよ。"
-      expired: "有効期限が切れている。"
-      not_found: "見つからなかった。"
-      not_locked: "封印されていない。"
+      already_confirmed: "すでに認証されています。"
+      confirmation_period_expired: "認証の有効期限が切れています。再度メールをご確認ください。"
+      expired: "有効期限が切れています。"
+      not_found: "見つかりませんでした。"
+      not_locked: "ロックされていません。"
       not_saved:
-        one: "1つの問題により、セーブに失敗した。"
-        other: "%{count} 個の問題により、セーブに失敗した。"
+        one: "1件のエラーにより、ユーザーデータの保存に失敗しました。"
+        other: "%{count} 件のエラーにより、ユーザーデータの保存に失敗しました。"

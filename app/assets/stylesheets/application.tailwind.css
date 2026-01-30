@@ -393,3 +393,13 @@ main {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+@layer utilities {
+  @keyframes fill {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+  .animate-fill {
+    animation: fill 10s linear infinite;
+  }
+}
+
