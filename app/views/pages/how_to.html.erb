@@ -1,0 +1,85 @@
+<% content_for :title, "使い方 - SaveData" %>
+
+<div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800">
+  <!-- ヘッダー -->
+  <div class="py-16 text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-pixel text-white mb-4">
+      HOW TO USE
+    </h1>
+    <p class="text-blue-100 max-w-2xl mx-auto leading-relaxed">
+      SaveDataは、ゲームの思い出やプレイ履歴を
+      人生の時間軸として残すためのアプリです。
+    </p>
+  </div>
+
+  <!-- コンテンツ -->
+  <div class="max-w-5xl mx-auto px-4 pb-24">
+    <div class="grid gap-8 md:grid-cols-3">
+
+      <!-- STEP 1 -->
+      <div
+        class="bg-white/10 backdrop-blur rounded-xl p-6 text-white shadow-lg
+               transform transition-all duration-300
+               hover:-translate-y-2 hover:shadow-2xl hover:bg-white/15">
+        <div class="text-4xl mb-4">🎮</div>
+        <div class="text-blue-200 text-sm mb-2 font-semibold">
+          STEP 01
+        </div>
+        <h2 class="text-xl font-bold mb-3 font-pixel">
+          アカウント作成
+        </h2>
+        <p class="text-sm leading-relaxed text-blue-100">
+          SaveDataにアクセスし、新規登録を行います。
+          メールアドレスとパスワードを入力してください。
+        </p>
+      </div>
+
+      <!-- STEP 2 -->
+      <div
+        class="bg-white/10 backdrop-blur rounded-xl p-6 text-white shadow-lg
+               transform transition-all duration-300
+               hover:-translate-y-2 hover:shadow-2xl hover:bg-white/15">
+        <div class="text-4xl mb-4">💾</div>
+        <div class="text-blue-200 text-sm mb-2 font-semibold">
+          STEP 02
+        </div>
+        <h2 class="text-xl font-bold mb-3 font-pixel">
+          セーブデータ登録
+        </h2>
+        <p class="text-sm leading-relaxed text-blue-100">
+          プレイしたゲームの情報や思い出を登録。
+          あの頃の時間を記録として残せます。
+        </p>
+      </div>
+
+      <!-- STEP 3 -->
+      <div
+        class="bg-white/10 backdrop-blur rounded-xl p-6 text-white shadow-lg
+               transform transition-all duration-300
+               hover:-translate-y-2 hover:shadow-2xl hover:bg-white/15">
+        <div class="text-4xl mb-4">🕒</div>
+        <div class="text-blue-200 text-sm mb-2 font-semibold">
+          STEP 03
+        </div>
+        <h2 class="text-xl font-bold mb-3 font-pixel">
+          管理・振り返り
+        </h2>
+        <p class="text-sm leading-relaxed text-blue-100">
+          マイページで一覧管理。
+          ゲーム人生を年表として振り返れます。
+        </p>
+      </div>
+
+    </div>
+
+    <!-- 戻るボタン -->
+    <div class="mt-16 text-center">
+      <%= link_to "ログイン画面へ戻る",
+        new_user_session_path,
+        class: "inline-block px-8 py-3 bg-white/10 text-white font-semibold rounded-lg
+                 hover:bg-white/20 transition-colors backdrop-blur" %>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/footer" %>
