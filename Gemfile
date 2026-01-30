@@ -39,3 +39,4 @@ group :test do
   gem "faker"
 end
 gem "sassc-rails"
+gem "importmap-rails"
