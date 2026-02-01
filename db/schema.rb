@@ -15,9 +15,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_22_073232) do
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "hardware"
-    t.string "reccomended"
+    t.string "genre"
+    t.string "recommended"
     t.integer "difficulty"
     t.integer "ended_year"
     t.text "memo"
@@ -27,7 +28,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_22_073232) do
     t.integer "fun"
     t.integer "played_year"
     t.integer "played_age"
-    t.string "genre"
     t.index ["user_id"], name: "index_games_on_user_id"
   end
 
@@ -35,15 +35,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_22_073232) do
     t.string "email"
     t.string "name"
     t.date "birthday"
-    t.boolean "gender"
+    t.integer "gender"
     t.integer "crypted_password"
+    t.string "job"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "job"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -4,9 +4,11 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
 
-  # ダッシュボード
+  # ダッシュボード（ログイン後の拠点）
   resource :dashboard, only: :show
-  resources :users, only: :show
+
+  # ❌ users#show は使わないので削除
+  # resources :users, only: :show
 
   # ゲーム（index / show は使わない設計）
   resources :games, except: [:index, :show] do

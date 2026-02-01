@@ -1,24 +1,97 @@
-<h1>Terms of Service</h1>
-<p>SaveData（以下、「当社」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）に関する利用規約（以下、「本規約」といいます。）を定めます。</p>
-<h2>第1条（適用範囲）</h2>
-<p>本規約は、当社が提供するすべてのサービスに適用されます。</p>
-<h2>第2条（利用登録）</h2>
-<p>利用者は、当社が定める方法により、利用登録を申請し、当社がその申請を承認することによって、本サービスの利用資格を取得します。</p>
-<h2>第3条（禁止事項）</h2>
-<p>利用者は、以下の行為を行ってはなりません。</p>
-<ul>
-<li>法令または公序良俗に違反する行為</li>
-<li>当社または第三者の知的財産権を侵害する行為</li>
-<li>当社または第三者の名誉または信用を毀損する行為</li>
-<li>当社または第三者の財産を侵害する行為</li>
-<li>他の利用者または第三者に不快感を与える行為</li>
-<li>他の利用者または第三者に損害を与える行為</li>
-<li>他の利用者または第三者の個人情報を無断で収集・公開・送信する行為</li>
-<li>本サービスの運営を妨害する行為</li>
-<li>本サービスの運営に支障を与える行為</li>
-<li>その他、当社が不適切と判断する行為</li>
-</ul>
-<h2>第4条（サービスの変更・中断・終了）</h2>
-<p>当社は、利用者に事前に通知することなく、本サービスの内容を変更、中断、終了することができます。</p>
-<h2>第5条（免責事項）</h2>
-<p>当社は、本サービスの利用により生じた利用者または第三者の損害について、一切の責任を負いません。</p>
+<% content_for :title, "利用規約 - SaveData" %>
+
+<div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 px-4 py-12">
+  <div class="mx-auto w-full max-w-3xl">
+
+    <!-- カード -->
+    <div class="rounded-2xl bg-white/95 shadow-xl p-8 md:p-10">
+
+      <!-- タイトル -->
+      <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+        利用規約
+      </h1>
+
+      <!-- 本文 -->
+      <div class="space-y-6 text-gray-700 leading-relaxed">
+
+        <p>
+          SaveData（以下、「当社」といいます。）は、本ウェブサイト上で提供するサービス
+          （以下、「本サービス」といいます。）に関する利用規約（以下、「本規約」といいます。）を
+          定めます。
+        </p>
+
+        <section>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">
+            第1条（適用範囲）
+          </h2>
+          <p>
+            本規約は、当社が提供するすべてのサービスに適用されます。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">
+            第2条（利用登録）
+          </h2>
+          <p>
+            利用者は、当社が定める方法により利用登録を申請し、
+            当社がその申請を承認することによって、本サービスの利用資格を取得します。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">
+            第3条（禁止事項）
+          </h2>
+          <p class="mb-2">
+            利用者は、以下の行為を行ってはなりません。
+          </p>
+          <ul class="list-disc list-inside space-y-1">
+            <li>法令または公序良俗に違反する行為</li>
+            <li>当社または第三者の知的財産権を侵害する行為</li>
+            <li>当社または第三者の名誉または信用を毀損する行為</li>
+            <li>当社または第三者の財産を侵害する行為</li>
+            <li>他の利用者または第三者に不快感を与える行為</li>
+            <li>他の利用者または第三者に損害を与える行為</li>
+            <li>個人情報を無断で収集・公開・送信する行為</li>
+            <li>本サービスの運営を妨害する行為</li>
+            <li>本サービスの運営に支障を与える行為</li>
+            <li>その他、当社が不適切と判断する行為</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">
+            第4条（サービスの変更・中断・終了）
+          </h2>
+          <p>
+            当社は、利用者に事前に通知することなく、
+            本サービスの内容を変更・中断・終了することができます。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">
+            第5条（免責事項）
+          </h2>
+          <p>
+            当社は、本サービスの利用により生じた利用者または第三者の損害について、
+            一切の責任を負いません。
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- フッター戻る導線（任意） -->
+    <div class="mt-8 flex justify-center">
+      <%= link_to "トップへ戻る",root_path,
+      class: "inline-flex items-center justify-center
+              rounded-xl bg-blue-600 px-6 py-3
+              text-white font-semibold
+              shadow-md
+              hover:bg-blue-700
+              transition" %>
+    </div>
+  </div>
+</div>

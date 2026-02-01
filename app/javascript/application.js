@@ -1,30 +1,28 @@
-// Entry point for the build script in your package.json
 import "@hotwired/turbo-rails"
 import "./controllers"
 
-// モーダルを開く
 window.openModal = function(title, meta, memo, gameId) {
-  const modal = document.getElementById('game-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalMeta = document.getElementById('modal-meta');
-  const modalMemo = document.getElementById('modal-memo');
-  const editLink = document.getElementById('edit-link');
-  const deleteLink = document.getElementById('delete-link');
+  const modal = document.getElementById("game-modal")
+  if (!modal) return
 
-  modalTitle.textContent = title;
-  modalMeta.textContent = meta;
-  modalMemo.textContent = memo || "……";
-  
-  editLink.href = `/games/${gameId}/edit`;
-  deleteLink.href = `/games/${gameId}/confirm_destroy`;
+  document.body.classList.add("overflow-hidden")
 
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-};
+  document.getElementById("modal-title").textContent = title
+  document.getElementById("modal-meta").textContent = meta
+  document.getElementById("modal-memo").textContent = memo || "……"
 
-// モーダルを閉じる
+  document.getElementById("edit-link").href = `/games/${gameId}/edit`
+  document.getElementById("delete-link").href = `/games/${gameId}/confirm_destroy`
+
+  modal.classList.remove("hidden")
+  modal.classList.add("flex")
+}
+
 window.closeModal = function() {
-  const modal = document.getElementById('game-modal');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
-};
+  const modal = document.getElementById("game-modal")
+  if (!modal) return
+
+  document.body.classList.remove("overflow-hidden")
+  modal.classList.add("hidden")
+  modal.classList.remove("flex")
+}

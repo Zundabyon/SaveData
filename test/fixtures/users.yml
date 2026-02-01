@@ -7,7 +7,7 @@
 #  crypted_password       :integer
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
-#  gender                 :boolean
+#  gender                 :integer
 #  job                    :string
 #  name                   :string
 #  remember_created_at    :datetime
