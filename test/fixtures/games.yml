@@ -11,8 +11,8 @@
 #  memo        :text
 #  played_age  :integer
 #  played_year :integer
-#  reccomended :string
-#  title       :string
+#  recommended :string
+#  title       :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  user_id     :bigint           not null

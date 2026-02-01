@@ -25,16 +25,15 @@
 
   </head>
 
-  <body>
-    <!-- Flash メッセージ -->
-    <%= render "layouts/flash" %>
+<body class="m-0">
+  <!-- Flash メッセージ -->
+  <%= render "layouts/flash" %>
 
-    <!-- メインコンテンツ -->
-    <main class="font-sans">
-      <%= yield %>
-    </main>
+  <!-- メインコンテンツ -->
+  <main class="font-sans">
+    <%= yield %>
+  </main>
 
-    <!-- モーダル用 turbo-frame（必要なら） -->
-    <%= turbo_frame_tag "modal" %>
-  </body>
+  <%= turbo_frame_tag "modal" %>
+</body>
 </html>
