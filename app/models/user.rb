@@ -69,11 +69,12 @@ class User < ApplicationRecord
     { min: 30, max: 99, title: "最終章",   label: "SAVEDATA" }
   ].freeze
 
+  # 登録ゲーム数に応じて現在の章を返す
+  # ※ 0本でも「序章」
   def current_chapter
-    max_age = games.where.not(played_age: nil).maximum(:played_age)
-    return nil unless max_age
+    game_count = games.count
 
-    CHAPTERS.find { |c| max_age.between?(c[:min], c[:max]) }
+    CHAPTERS.find { |c| game_count.between?(c[:min], c[:max]) }
   end
 
   # =========================
