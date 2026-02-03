@@ -93,4 +93,8 @@ class User < ApplicationRecord
     clean_up_passwords
     result
   end
+
+  def level
+    [games.count, 1].max
+  end
 end
