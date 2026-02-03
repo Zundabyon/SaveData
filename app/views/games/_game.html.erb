@@ -1,66 +1,64 @@
-<div id="age-<%= game.played_age %>" class="relative pl-12 pb-12 scroll-mt-32">
-
-  <!-- 年マーカー -->
-  <div class="absolute left-0 top-1 w-8 h-8 rounded-full
-              bg-slate-900 border border-slate-500
+<div class="relative pl-12 pb-12 cursor-pointer"
+     data-action="click->game-modal#open"
+     data-game-modal-title-value="<%= game.title %>"
+     data-game-modal-age-value="<%= game.played_age %>"
+     data-game-modal-hardware-value="<%= game.hardware %>"
+     data-game-modal-genre-value="<%= game.genre %>"
+     data-game-modal-memo-value="<%= game.memo %>"
+     data-game-modal-edit-path-value="<%= edit_game_path(game) %>"
+     data-game-modal-delete-path-value="<%= game_path(game) %>">
+  
+  <!-- 年齢マーカー（黄色マテリア・大きめ） -->
+  <div class="absolute left-0 top-0 w-12 h-12 -ml-6 rounded-full
+              border-4 border-slate-900
               flex items-center justify-center
-              text-xs font-bold year-marker">
-    <%= game.played_age %>歳
+              text-base font-bold
+              year-marker">
+    <%= game.played_age %>
   </div>
 
-  <!-- カード -->
-<div
-  class="timeline-card bg-slate-800/60 backdrop-blur
-         border border-slate-700 rounded-xl
-         p-5 shadow-lg cursor-pointer
-         hover:border-slate-500 transition"
-  data-title="<%= game.title %>"
-  data-meta='<%= [game.hardware, game.genre, "#{game.played_age}歳"].compact.join(" / ") %>'
-  data-memo="<%= game.memo.to_s %>"
-  data-game-id="<%= game.id %>"
-  onclick="openModalFromElement(this)"
->
-
-    <h2 class="text-lg font-semibold tracking-wide">
+  <!-- カード本体 -->
+  <div class="rpg-side-window rounded-lg p-6 
+              hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20
+              transition-all duration-300">
+    
+    <h3 class="text-xl font-bold mb-3 text-cyan-100 tracking-wider">
       <%= game.title %>
-    </h2>
+    </h3>
 
-    <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
-      <% if game.hardware.present? %><span>🎮 <%= game.hardware %></span><% end %>
-      <% if game.genre.present? %><span>⚔️ <%= game.genre %></span><% end %>
-      <% if game.played_age.present? %><span>🕰 <%= game.played_age %>歳</span><% end %>
+    <div class="flex gap-4 text-sm text-slate-300 mb-4">
+      <span><%= game.hardware %></span>
+      <span class="text-slate-500">|</span>
+      <span><%= game.genre %></span>
     </div>
 
-    <!-- マテリア評価 -->
-    <div class="mt-3 space-y-2 text-xs text-slate-300">
-      <% if game.difficulty.present? %>
-        <div class="flex items-center gap-2">
-          <span class="w-14">難易度</span>
-          <div class="flex gap-1">
-            <% 5.times do |i| %>
-              <span class="materia materia-red <%= 'inactive' if i >= game.difficulty %>"></span>
-            <% end %>
-          </div>
+    <!-- マテリア表示 -->
+    <div class="flex gap-4 items-center">
+      <!-- 難易度（赤） -->
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-400">難易度</span>
+        <div class="flex gap-1">
+          <% 5.times do |i| %>
+            <div class="materia materia-red <%= i < (game.difficulty || 0) ? '' : 'inactive' %>"></div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
 
-      <% if game.fun.present? %>
-        <div class="flex items-center gap-2">
-          <span class="w-14">面白さ</span>
-          <div class="flex gap-1">
-            <% 5.times do |i| %>
-              <span class="materia materia-green <%= 'inactive' if i >= game.fun %>"></span>
-            <% end %>
-          </div>
+      <!-- 面白さ（緑） -->
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-400">面白さ</span>
+        <div class="flex gap-1">
+          <% 5.times do |i| %>
+            <div class="materia materia-green <%= i < (game.fun || 0) ? '' : 'inactive' %>"></div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
 
     <% if game.memo.present? %>
-      <p class="mt-4 text-sm text-slate-300 leading-relaxed line-clamp-2">
-        「<%= game.memo %>」
+      <p class="mt-4 text-sm text-slate-400 line-clamp-2">
+        <%= game.memo.truncate(100) %>
       </p>
     <% end %>
-
   </div>
 </div>

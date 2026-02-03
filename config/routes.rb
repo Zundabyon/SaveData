@@ -7,13 +7,10 @@ Rails.application.routes.draw do
   # ダッシュボード（ログイン後の拠点）
   resource :dashboard, only: :show
 
-  # ❌ users#show は使わないので削除
-  # resources :users, only: :show
-
-  # ゲーム（index / show は使わない設計）
-  resources :games, except: [:index, :show] do
+  # ゲーム管理
+  resources :games, except: :index do
     member do
-      get :confirm_destroy
+      get :confirm_destroy  # 削除確認画面
     end
   end
 
