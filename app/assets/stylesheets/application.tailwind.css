@@ -43,37 +43,71 @@
   animation: scanLine 6s linear infinite;
 }
 
-/* 年マーカー発光 */
+/* 年マーカー発光（黄色マテリア） */
 @keyframes markerGlow {
-  0% { box-shadow: 0 0 6px rgba(56,189,248,0.4); }
+  0% { box-shadow: 
+    inset 0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(255, 215, 0, 0.4);
+  }
   50% {
     box-shadow:
-      0 0 12px rgba(56,189,248,0.9),
-      0 0 24px rgba(56,189,248,0.5);
+      inset 0 0 12px rgba(255, 255, 255, 1),
+      0 0 20px rgba(255, 215, 0, 1),
+      0 0 35px rgba(255, 215, 0, 0.7),
+      0 0 50px rgba(255, 215, 0, 0.4);
   }
-  100% { box-shadow: 0 0 6px rgba(56,189,248,0.4); }
+  100% { box-shadow: 
+    inset 0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(255, 215, 0, 0.4);
+  }
 }
 
 .year-marker {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  /* マテリアと同じ発光設定 */
+  box-shadow:
+    inset 0 0 3px rgba(255, 255, 255, 0.9),
+    0 0 8px rgb(255, 215, 0),
+    0 0 12px rgb(255, 215, 0);
+  
+  /* 黄色マテリアと同じグラデーション + 透明感 */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 249, 196, 0.95),
+    rgba(255, 215, 0, 0.9) 60%,
+    rgba(184, 134, 11, 0.85)
+  ) !important;
+  
+  /* 文字を黒くしてコントラストを強く */
+  color: #1a1a1a !important;
+  font-weight: 900;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+  
+  transition: transform 0.25s ease;
 }
 
 .year-marker:hover {
-  transform: scale(1.25);
-  animation: markerGlow 1.4s ease-in-out infinite;
+  transform: scale(1.3);
+  box-shadow:
+    inset 0 0 4px rgba(255, 255, 255, 1),
+    0 0 12px rgb(255, 215, 0),
+    0 0 20px rgb(255, 215, 0),
+    0 0 28px rgb(255, 215, 0);
 }
 
-/* FF7モーダル展開 */
-@keyframes ff7Open {
+/* RPGモーダル展開 */
+@keyframes rpgOpen {
   0% { transform: scaleY(0.05); opacity: 0; }
   60% { transform: scaleY(1.05); opacity: 1; }
   100% { transform: scaleY(1); }
 }
 
-.ff7-modal {
+.rpg-modal {
   transform-origin: top;
-  animation: ff7Open 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: rpgOpen 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
+
 body {
   background: linear-gradient(
     to bottom,
@@ -85,21 +119,21 @@ body {
   );
 }
 
-/* FF7メニュー：選択中 */
-.ff7-age-item.active {
+/* RPGメニュー：選択中 */
+.rpg-age-item.active {
   color: #9cc7ff;
   background: rgba(80,120,255,0.15);
 }
 
-.ff7-age-item.active .ff7-cursor {
+.rpg-age-item.active .rpg-cursor {
   opacity: 1;
 }
-.ff7-age-item.active {
+.rpg-age-item.active {
   transform: translateX(4px);
 }
 
-/* FF7メニュー：選択中の文字発光 */
-.ff7-age-item.active {
+/* RPGメニュー：選択中の文字発光 */
+.rpg-age-item.active {
   color: #c7d8ff;
   text-shadow:
     0 0 6px rgba(120,160,255,0.8),
@@ -126,8 +160,8 @@ body {
 
 /* ===== マテリア共通 ===== */
 .materia {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 9999px;
   box-shadow:
     inset 0 0 2px rgba(255,255,255,0.6),
@@ -160,11 +194,11 @@ body {
   );
 }
 
-.ff7-window {
+.rpg-window {
   font-family: monospace;
 }
 
-.ff7-command {
+.rpg-command {
   border: 3px solid rgba(220,235,255,0.95);
   padding: 12px 0;
 
@@ -188,7 +222,7 @@ body {
 }
 
 
-.ff7-command:hover {
+.rpg-command:hover {
   background: linear-gradient(
     180deg,
     #2f52cc 0%,
@@ -203,7 +237,7 @@ body {
 }
 
 
-.ff7-input {
+.rpg-input {
   background: rgba(10, 20, 60, 0.9);
   border: 1px solid rgba(120, 160, 255, 0.4);
   color: #e0e7ff;
@@ -211,17 +245,17 @@ body {
 }
 
 .data-delete {
-  animation: ff7-delete 0.9s steps(6) forwards;
+  animation: rpg-delete 0.9s steps(6) forwards;
 }
 
-@keyframes ff7-delete {
+@keyframes rpg-delete {
   0%   { opacity: 1; filter: none; }
   40%  { opacity: 0.6; filter: blur(1px); }
   70%  { opacity: 0.3; filter: blur(3px); }
   100% { opacity: 0; transform: scaleY(0.2); }
 }
 
-/* ===== FF7風 タイムラインカード ===== */
+/* ===== RPG風 タイムラインカード ===== */
 
 .timeline-card {
   position: relative;
@@ -237,7 +271,7 @@ body {
     #0b1435 100%
   );
 
-  /* FF7っぽい立体感 */
+  /* RPGっぽい立体感 */
   box-shadow:
     0 0 0 1px rgba(120, 170, 255, 0.6) inset,
     0 10px 30px rgba(0, 0, 0, 0.6),
@@ -254,7 +288,7 @@ body {
     0 0 40px rgba(120, 170, 255, 0.55);
 }
 
-/* 角のシャープさを強調（FF7感） */
+/* 角のシャープさを強調（RPG感） */
 .timeline-card::before {
   content: "";
   position: absolute;
@@ -265,9 +299,9 @@ body {
     inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
-/* ===== FF7 右サイドメニュー（カードと同系統） ===== */
+/* ===== RPG 右サイドメニュー（カードと同系統） ===== */
 
-.ff7-side-window {
+.rpg-side-window {
   border: 3px solid rgba(230, 240, 255, 0.95);
 
   background: linear-gradient(
@@ -283,9 +317,9 @@ body {
     0 20px 40px rgba(0, 0, 0, 0.7);
 }
 
-/* ===== FF7 年齢コマンド ===== */
+/* ===== RPG 年齢コマンド ===== */
 
-.ff7-age-item {
+.rpg-age-item {
   border-radius: 6px;
   color: #e0e7ff;
 
@@ -295,7 +329,7 @@ body {
     box-shadow 0.2s ease;
 }
 
-.ff7-age-item:hover {
+.rpg-age-item:hover {
   background: linear-gradient(
     90deg,
     rgba(80,120,255,0.25),
@@ -310,7 +344,7 @@ body {
 }
 
 /* 選択中（スクロール同期） */
-.ff7-age-item.active {
+.rpg-age-item.active {
   background: linear-gradient(
     90deg,
     rgba(120,160,255,0.35),
@@ -326,13 +360,13 @@ body {
   transform: translateX(6px);
 }
 
-.ff7-age-item.active .ff7-cursor {
+.rpg-age-item.active .rpg-cursor {
   opacity: 1;
   text-shadow: 0 0 8px rgba(160,200,255,1);
 }
-/* ===== FF7 詳細カード（年表カード拡張） ===== */
+/* ===== RPG 詳細カード（年表カード拡張） ===== */
 
-.ff7-detail-card {
+.rpg-detail-card {
   position: relative;
 
   /* ← ここが重要：太い白フチ */
@@ -353,11 +387,11 @@ body {
 
   border-radius: 14px;
 
-  animation: ff7Open 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: rpgOpen 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* 内側ハイライト */
-.ff7-detail-card::before {
+.rpg-detail-card::before {
   content: "";
   position: absolute;
   inset: 6px;
@@ -367,7 +401,7 @@ body {
 }
 
 /* 右サイド：ユーザー情報と現在の章ブロック */
-.ff7-side-window .side-block {
+.rpg-side-window .side-block {
   display: flex;
   flex-direction: column;
   gap: 1.5rem; /* 上下の間隔 */
@@ -402,4 +436,3 @@ main {
     animation: fill 10s linear infinite;
   }
 }
-
