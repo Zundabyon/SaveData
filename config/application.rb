@@ -11,7 +11,7 @@ module Myapp
     # 日本語化
     config.i18n.default_locale = :ja
     # 念のため
-    config.i18n.available_locales = [:ja, :en]
+    config.i18n.available_locales = [ :ja, :en ]
     # lib 以下を autoload_paths に追加
     config.autoload_lib(ignore: %w[assets tasks])
   end
