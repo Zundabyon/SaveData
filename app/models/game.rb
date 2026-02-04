@@ -5,7 +5,7 @@ class Game < ApplicationRecord
 
   validates :title, presence: true
   validates :cover_image,
-            content_type: ["image/png", "image/jpeg", "image/gif", "image/webp"],
+            content_type: [ "image/png", "image/jpeg", "image/gif", "image/webp" ],
             size: { less_than: 5.megabytes, message: "5MB以下にしてください" }
 
   # 仮想属性を追加
@@ -18,13 +18,13 @@ class Game < ApplicationRecord
   # サムネイルURLをキャッシュ
   def thumbnail_url(size: 300)
     return unless cover_image.attached?
-    
+
     Rails.cache.fetch(
-      ["game_thumbnail", id, cover_image.blob.checksum, size],
+      [ "game_thumbnail", id, cover_image.blob.checksum, size ],
       expires_in: 1.day
     ) do
       cover_image.variant(
-        resize_to_fill: [size, size],
+        resize_to_fill: [ size, size ],
         format: :webp
       ).processed.url
     end
@@ -33,13 +33,13 @@ class Game < ApplicationRecord
   # カバー画像URLをキャッシュ
   def cover_url
     return unless cover_image.attached?
-    
+
     Rails.cache.fetch(
-      ["game_cover", id, cover_image.blob.checksum],
+      [ "game_cover", id, cover_image.blob.checksum ],
       expires_in: 1.day
     ) do
       cover_image.variant(
-        resize_to_fill: [800, 600],
+        resize_to_fill: [ 800, 600 ],
         format: :webp
       ).processed.url
     end

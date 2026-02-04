@@ -19,13 +19,13 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.games.new(game_params)
-    
+
     # デバッグ用ログ
     Rails.logger.info "===== CREATE DEBUG ====="
     Rails.logger.info "Raw params: #{params[:game].inspect}"
     Rails.logger.info "Game params: #{game_params.inspect}"
     Rails.logger.info "Cover image present: #{params[:game][:cover_image].present?}"
-    
+
     if @game.save
       Rails.logger.info "Game saved! ID: #{@game.id}, Image attached: #{@game.cover_image.attached?}"
       redirect_to dashboard_path, notice: "ゲームのおもいでをセーブしました"
@@ -42,10 +42,10 @@ class GamesController < ApplicationController
     Rails.logger.info "Game params: #{game_params.inspect}"
     Rails.logger.info "Cover image present: #{params[:game][:cover_image].present?}"
     Rails.logger.info "Remove cover image: #{params[:game][:remove_cover_image]}"
-    
+
     # チェックボックスで削除フラグが立っている場合
     @game.cover_image.purge if params[:game][:remove_cover_image] == "1"
-    
+
     if @game.update(game_params)
       Rails.logger.info "Game updated! Image attached: #{@game.cover_image.attached?}"
       redirect_to dashboard_path, notice: "ゲームの思い出を更新しました"

@@ -106,5 +106,5 @@ group :test do
   gem "faker"
 end
 # === 画像処理・Active Storage拡張機能 ===
-gem 'image_processing', '~> 1.2'
-gem 'active_storage_validations'
+gem "image_processing", "~> 1.2"
+gem "active_storage_validations"
