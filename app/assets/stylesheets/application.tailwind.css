@@ -404,20 +404,20 @@ body {
 .rpg-side-window .side-block {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* 上下の間隔 */
+  gap: 1.5rem;
   text-align: center;
 }
 
 /* 名前・職業ブロック */
 .side-block .user-info {
-  border-bottom: 1px solid rgba(80,120,255,0.2);
-  padding-bottom: 1rem;
+  /* border-bottom を削除 */
+  padding-bottom: 0.5rem;
 }
 
 /* 現在の章ブロック */
 .side-block .current-chapter {
-  padding-top: 1rem;
-  border-top: 1px solid rgba(80,120,255,0.2);
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(80,120,255,0.2); /* 1本だけ残す */
 }
 
 main::-webkit-scrollbar {
@@ -436,3 +436,4 @@ main {
     animation: fill 10s linear infinite;
   }
 }
+

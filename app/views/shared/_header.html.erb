@@ -1,8 +1,10 @@
 <header>
   <nav class='navbar navbar-expand-lg navigation navbar-light bg-light'>
     <% if user_signed_in? %>
-     <%= link_to 'ログアウト', destroy_user_session_path, class: 'navbar-brand' ,data: { turbo_method: :delete }  %>
-    <% else %>
+    <%= button_to destroy_user_session_path, method: :delete, class: 'navbar-brand' do %>
+       <%= image_tag 'logo.png', size: "40x40", alt: 'ログアウト' %>
+    <% end %>
+     <% else %>
      <%= link_to 'ログイン', new_user_session_path, class: 'navbar-brand' %>
     <% end %>
     <button class='navbar-toggler' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'

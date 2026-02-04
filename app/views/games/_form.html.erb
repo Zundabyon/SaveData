@@ -1,72 +1,168 @@
-<%= form_with model: @game, local: true do |f| %>
-<!-- タイトル -->
-      <div class="mb-4">
-        <%= f.label :title, "ゲームタイトル", class: "block text-xs text-gray-700 mb-1" %>
-        <%= f.text_field :title,
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm focus:outline-none focus:ring-2 focus:ring-gray-500" %>
-      </div>
+<%= form_with model: game, local: true, html: { multipart: true } do |f| %>
+  <!-- ↑ multipart: true が重要 -->
+  <!-- エラー表示 -->
+  <% if game.errors.any? %>
+    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <p class="font-bold"><%= pluralize(game.errors.count, "error") %> がありました:</p>
+      <ul class="list-disc list-inside mt-2">
+        <% game.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-      <!-- ハード -->
-      <div class="mb-4">
-        <%= f.label :hardware, "ハード", class: "block text-xs text-gray-700 mb-1" %>
-        <%= f.text_field :hardware,
-              placeholder: "PS / SFC / PC など",
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
-      </div>
-
-      <!-- ジャンル -->
-      <div class="mb-4">
-        <%= f.label :genre, "ジャンル", class: "block text-xs text-gray-700 mb-1" %>
-        <%= f.text_field :genre,
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
-      </div>
-
-      <!-- プレイした年 -->
-      <div class="mb-4">
-        <%= f.label :played_age, "何歳くらいにプレイした？", class: "block text-xs text-gray-700 mb-1" %>
-        <%= f.number_field :played_age ,
-              placeholder: "例: 15",
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
-      </div>
-<div class="mb-5">
-  <p class="text-xs text-gray-700 mb-1">ゲームの楽しさ</p>
-  <div class="flex flex-row-reverse justify-center gap-1">
-    <% 5.downto(1) do |i| %>
-      <%= f.radio_button :fun, i, id: "fun_#{i}", class: "hidden peer" %>
-      <label for="fun_<%= i %>"
-        class="cursor-pointer text-gray-400 peer-checked:text-yellow-500 text-xl">
-        ★
-      </label>
-    <% end %>
+  <!-- タイトル -->
+  <div class="mb-4">
+    <%= f.label :title, "ゲームタイトル", class: "block text-xs text-gray-700 mb-1" %>
+    <%= f.text_field :title,
+          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm focus:outline-none focus:ring-2 focus:ring-gray-500" %>
   </div>
-</div>
-<div class="mb-6">
-  <p class="text-xs text-gray-700 mb-1">ゲームの難しさ</p>
-  <div class="flex flex-row-reverse justify-center gap-1">
-    <% 5.downto(1) do |i| %>
-      <%= f.radio_button :difficulty, i, id: "difficulty_#{i}", class: "hidden peer" %>
-      <label for="difficulty_<%= i %>"
-        class="cursor-pointer text-gray-400 peer-checked:text-gray-800 text-xl">
-        ★
-      </label>
-    <% end %>
+
+  <!-- ハード -->
+  <div class="mb-4">
+    <%= f.label :hardware, "ハード", class: "block text-xs text-gray-700 mb-1" %>
+    <%= f.text_field :hardware,
+          placeholder: "PS / SFC / PC など",
+          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
   </div>
-</div>
 
-      <!-- メモ -->
-      <div class="mb-6">
-        <%= f.label :memo, "ひとことメモ", class: "block text-xs text-gray-700 mb-1" %>
-        <%= f.text_area :memo,
-              rows: 3,
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
+  <!-- ジャンル -->
+  <div class="mb-4">
+    <%= f.label :genre, "ジャンル", class: "block text-xs text-gray-700 mb-1" %>
+    <%= f.text_field :genre,
+          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
+  </div>
+
+  <!-- プレイした年齢 -->
+  <div class="mb-4">
+    <%= f.label :played_age, "何歳くらいにプレイした？", class: "block text-xs text-gray-700 mb-1" %>
+    <%= f.number_field :played_age,
+          placeholder: "例: 15",
+          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
+  </div>
+
+  <!-- ゲームの楽しさ -->
+  <div class="mb-5">
+    <p class="text-xs text-gray-700 mb-1">ゲームの楽しさ</p>
+    <div class="flex flex-row-reverse justify-center gap-1">
+      <% 5.downto(1) do |i| %>
+        <%= f.radio_button :fun, i, id: "fun_#{i}", class: "hidden peer" %>
+        <label for="fun_<%= i %>"
+          class="cursor-pointer text-gray-400 peer-checked:text-yellow-500 text-xl">
+          ★
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- ゲームの難しさ -->
+  <div class="mb-6">
+    <p class="text-xs text-gray-700 mb-1">ゲームの難しさ</p>
+    <div class="flex flex-row-reverse justify-center gap-1">
+      <% 5.downto(1) do |i| %>
+        <%= f.radio_button :difficulty, i, id: "difficulty_#{i}", class: "hidden peer" %>
+        <label for="difficulty_<%= i %>"
+          class="cursor-pointer text-gray-400 peer-checked:text-gray-800 text-xl">
+          ★
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- メモ -->
+  <div class="mb-6">
+    <%= f.label :memo, "ひとことメモ", class: "block text-xs text-gray-700 mb-1" %>
+    <%= f.text_area :memo,
+          rows: 3,
+          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded text-sm" %>
+  </div>
+
+  <!-- カバー画像 -->
+  <div class="mb-6">
+    <%= f.label :cover_image, "カバー画像", class: "block text-xs text-gray-700 mb-1" %>
+    
+    <!-- 既存画像の表示とチェックボックス削除 -->
+    <% if game.persisted? && game.cover_image.attached? %>
+      <div class="mb-3 bg-gray-100 p-4 rounded-lg border border-gray-300">
+        <p class="text-xs text-gray-600 mb-2">現在の画像:</p>
+        <%= image_tag game.cover_image.variant(resize_to_limit: [300, 300]),
+            class: "rounded-lg border border-gray-300 shadow-sm mb-2" %>
+        
+        <div class="mt-3 flex items-center">
+          <%= f.check_box :remove_cover_image, class: "mr-2" %>
+          <%= f.label :remove_cover_image, "この画像を削除する", class: "text-xs text-red-600 cursor-pointer" %>
+        </div>
       </div>
+    <% end %>
+    
+    <!-- ファイル選択 -->
+    <div class="border-2 border-dashed border-gray-400 rounded-lg p-4 text-center bg-gray-50 hover:bg-gray-100 transition">
+      <%= f.file_field :cover_image,
+          accept: "image/png,image/jpeg,image/gif,image/webp",
+          class: "block w-full text-sm text-gray-600
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded file:border-0
+                  file:text-xs file:font-semibold
+                  file:bg-blue-600 file:text-white
+                  hover:file:bg-blue-700
+                  file:cursor-pointer cursor-pointer",
+          id: "cover_image_input",
+          data: { action: "change->preview#show" } %>
+      
+      <p class="text-xs text-gray-500 mt-2">PNG, JPG, GIF, WebP (最大5MB)</p>
+    </div>
+    
+    <!-- プレビュー表示エリア -->
+    <div id="image-preview" class="mt-4" style="display: none;">
+      <p class="text-xs text-gray-600 mb-2">プレビュー:</p>
+      <img id="preview-img" src="" class="rounded-lg border border-gray-300 shadow-sm max-w-xs">
+    </div>
+  </div>
 
-      <!-- 保存ボタン -->
- <div class="text-center flex justify-center gap-4">
-    <%= f.submit " SAVE ",
+  <!-- 保存ボタン -->
+  <div class="text-center flex justify-center gap-4">
+    <%= f.submit "SAVE",
           class: "font-pixel px-6 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 transition" %>
 
     <%= link_to "CANCEL", dashboard_path,
           class: "font-pixel px-6 py-2 bg-red-700 text-white rounded hover:bg-red-800 transition" %>
   </div>
 <% end %>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setupImagePreview();
+  });
+
+  document.addEventListener('turbo:load', function() {
+    setupImagePreview();
+  });
+
+  function setupImagePreview() {
+    const fileInput = document.getElementById('cover_image_input');
+    const previewContainer = document.getElementById('image-preview');
+    const previewImg = document.getElementById('preview-img');
+    
+    if (!fileInput || !previewContainer || !previewImg) {
+      console.log('Preview elements not found');
+      return;
+    }
+    
+    fileInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewContainer.style.display = 'block';
+        };
+        
+        reader.readAsDataURL(file);
+      } else {
+        previewContainer.style.display = 'none';
+      }
+    });
+  }
+</script>

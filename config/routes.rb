@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :games, except: :index do
     member do
       get :confirm_destroy  # 削除確認画面
+      delete :remove_cover_image  # カバー画像削除
     end
   end
 

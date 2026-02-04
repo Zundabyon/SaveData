@@ -1,94 +1,110 @@
 source "https://rubygems.org"
 
-# Railsフレームワーク本体（バージョン7.2.3系）
+# === コアフレームワーク ===
+# Rails本体：Webアプリを作るための基盤
 gem "rails", "~> 7.2.3"
 
-# アセットパイプライン（CSS/JSの管理）
-gem "sprockets-rails"
-
-# PostgreSQLデータベースアダプター
-gem "pg", "~> 1.1"
-
-# アプリケーションサーバー（高速・並行処理対応）
-gem "puma", ">= 5.0"
-
-# JavaScriptをバンドル管理（webpackやesbuild等と連携）
-gem "jsbundling-rails"
-
-# Hotwire Turbo（ページ遷移の高速化・SPA風の動作）
-gem "turbo-rails"
-
-# Hotwire Stimulus（軽量なJavaScriptフレームワーク）
-gem "stimulus-rails"
-
-# CSSをバンドル管理（PostCSSやSass等と連携）
-gem "cssbundling-rails"
-
-# JSON API構築用のテンプレートエンジン
-gem "jbuilder"
-
-# タイムゾーンデータ（Windows/JRuby環境で必要）
-gem "tzinfo-data", platforms: %i[ windows jruby ]
-
-# 起動速度を向上させるキャッシュ機構
+# アプリの起動を速くする
 gem "bootsnap", require: false
 
-# Tailwind CSSをRailsで簡単に利用
+# 日時の処理に必要（WindowsやJRuby使用時）
+gem "tzinfo-data", platforms: %i[ windows jruby ]
+
+# === データベース ===
+# PostgreSQLに接続するためのツール
+gem "pg", "~> 1.1"
+
+# === サーバー ===
+# アプリを動かすWebサーバー
+gem "puma", ">= 5.0"
+
+# === フロントエンド（JavaScript） ===
+# JavaScriptファイルをまとめて管理
+gem "jsbundling-rails"
+
+# JavaScriptを読み込む（Rails 7の標準方式）
+gem "importmap-rails"
+
+# 画面の動きを簡単に作れる（ボタンクリック等）
+gem "stimulus-rails"
+
+# ページ移動を高速化（画面全体を再読み込みしない）
+gem "turbo-rails"
+
+# === フロントエンド（CSS） ===
+# CSSファイルをまとめて管理
+gem "cssbundling-rails"
+
+# Tailwind CSS：見た目を簡単に作れるツール
 gem "tailwindcss-rails"
 
-# ユーザー認証機能（ログイン・サインアップ等）
+# Sass/SCSS：CSSを書きやすくする言語
+gem "sassc-rails"
+
+# CSS/JSファイルを配信する仕組み
+gem "sprockets-rails"
+
+# === API・ビュー ===
+# JSON形式のデータを作る（API作成時に便利）
+gem "jbuilder"
+
+# === 認証・管理 ===
+# ユーザー登録・ログイン機能
 gem "devise"
 
-# 管理画面を自動生成（CRUD操作を簡単に）
+# 管理画面を自動で作る（データの編集・削除等）
 gem "rails_admin"
 
-# 日時でのグループ化集計を簡単に（年・月・日別集計等）
+# === ファイルストレージ ===
+# 画像や動画をクラウドに保存するサービス
+gem "cloudinary"
+
+# RailsとCloudinaryをつなぐ
+gem "activestorage-cloudinary-service"
+
+# === ユーティリティ ===
+# 日付や時間でデータを集計（月別売上等）
 gem "groupdate"
 
+# === 環境変数管理 ===
+# パスワードやAPIキーを安全に管理
+gem "dotenv-rails", groups: [ :development, :test ]
+
+# === 開発・テスト環境 ===
 group :development, :test do
-  # デバッグ用ツール（ブレークポイント設置可能）
+  # コードの途中で止めて確認できる
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
-  # セキュリティ脆弱性スキャンツール
+  # セキュリティの問題を自動チェック
   gem "brakeman", require: false
 
-  # Railsプロジェクト向けコード品質チェッカー
+  # コードの書き方をチェック（品質向上）
   gem "rubocop-rails-omakase", require: false
 end
 
+# === 開発環境のみ ===
 group :development do
-  # ブラウザ上でデバッグコンソールを表示
+  # ブラウザでエラー内容を詳しく見れる
   gem "web-console"
 
-  # モデルにスキーマ情報をコメントとして自動追加
+  # データベース構造をコードに自動記入
   gem "annotate"
 end
 
+# === テスト環境のみ ===
 group :test do
-  # E2Eテスト（ブラウザ操作シミュレーション）
+  # ブラウザ操作を自動テスト
   gem "capybara"
 
-  # ブラウザ自動操作用ドライバー
+  # テスト用のブラウザを動かす
   gem "selenium-webdriver"
 
-  # テストデータ作成を簡単に（ファクトリパターン）
+  # テストデータを簡単に作る
   gem "factory_bot_rails"
 
-  # ダミーデータ生成（名前・メールアドレス等）
+  # ダミーの名前やメールアドレスを生成
   gem "faker"
 end
-
-# Sass（SCSS）のコンパイル機能
-gem "sassc-rails"
-
-# JavaScriptモジュールをimportで管理（Rails 7デフォルト）
-gem "importmap-rails"
-
-# 画像・動画ホスティングサービスCloudinaryのSDK
-gem "cloudinary"
-
-# Active StorageとCloudinaryを連携させるアダプター
-gem "activestorage-cloudinary-service"
-
-# 環境変数を.envファイルから読み込む（API KEY等の管理に便利）
-gem "dotenv-rails", groups: [ :development, :test ]
+# === 画像処理・Active Storage拡張機能 ===
+gem 'image_processing', '~> 1.2'
+gem 'active_storage_validations'
