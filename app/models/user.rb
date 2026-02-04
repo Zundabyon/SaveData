@@ -95,6 +95,6 @@ class User < ApplicationRecord
   end
 
   def level
-    [games.count, 1].max
+    [ games.count, 1 ].max
   end
 end
