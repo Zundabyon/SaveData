@@ -26,8 +26,13 @@ services:
       - .:/myapp
       - bundle_data:/usr/local/bundle:cached
       - node_modules:/myapp/node_modules
+      - storage_data:/myapp/storage  # ← 追加
+      - tmp_data:/myapp/tmp          # ← 追加（オプション）
     environment:
       TZ: Asia/Tokyo
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}  # ← 追加（オプション）
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}        # ← 追加（オプション）
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}  # ← 追加（オプション）
     ports:
       - "3000:3000"
     depends_on:
@@ -37,3 +42,5 @@ volumes:
   bundle_data:
   postgresql_data:
   node_modules:
+  storage_data:  # ← 追加
+  tmp_data:      # ← 追加（オプション）

@@ -1,9 +1,12 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_game, only: %i[show edit update destroy confirm_destroy]
-  before_action :authorize_user!, only: %i[show edit update destroy confirm_destroy]
+  before_action :set_game, only: %i[show edit update destroy confirm_destroy remove_cover_image]
+  before_action :authorize_user!, only: %i[show edit update destroy confirm_destroy remove_cover_image]
 
-  # 詳細画面
+  def index
+    @games = Game.with_images.order(created_at: :desc)
+  end
+
   def show
   end
 
@@ -16,23 +19,42 @@ class GamesController < ApplicationController
 
   def create
     @game = current_user.games.new(game_params)
+
+    # デバッグ用ログ
+    Rails.logger.info "===== CREATE DEBUG ====="
+    Rails.logger.info "Raw params: #{params[:game].inspect}"
+    Rails.logger.info "Game params: #{game_params.inspect}"
+    Rails.logger.info "Cover image present: #{params[:game][:cover_image].present?}"
+
     if @game.save
+      Rails.logger.info "Game saved! ID: #{@game.id}, Image attached: #{@game.cover_image.attached?}"
       redirect_to dashboard_path, notice: "ゲームのおもいでをセーブしました"
     else
+      Rails.logger.error "Game save failed: #{@game.errors.full_messages}"
       render :new, status: :unprocessable_entity
     end
   end
 
-def update
-  if @game.update(game_params)
-    redirect_to dashboard_path, notice: "ゲームの思い出を更新しました"
-  else
-    render :edit, status: :unprocessable_entity
+  def update
+    # デバッグ用ログ
+    Rails.logger.info "===== UPDATE DEBUG ====="
+    Rails.logger.info "Raw params: #{params[:game].inspect}"
+    Rails.logger.info "Game params: #{game_params.inspect}"
+    Rails.logger.info "Cover image present: #{params[:game][:cover_image].present?}"
+    Rails.logger.info "Remove cover image: #{params[:game][:remove_cover_image]}"
+
+    # チェックボックスで削除フラグが立っている場合
+    @game.cover_image.purge if params[:game][:remove_cover_image] == "1"
+
+    if @game.update(game_params)
+      Rails.logger.info "Game updated! Image attached: #{@game.cover_image.attached?}"
+      redirect_to dashboard_path, notice: "ゲームの思い出を更新しました"
+    else
+      Rails.logger.error "Game update failed: #{@game.errors.full_messages}"
+      render :edit, status: :unprocessable_entity
+    end
   end
-end
 
-
-  # 削除確認画面
   def confirm_destroy
   end
 
@@ -41,13 +63,17 @@ end
     redirect_to dashboard_path, notice: "ゲームのおもいでを削除しました", status: :see_other
   end
 
+  def remove_cover_image
+    @game.cover_image.purge
+    redirect_to edit_game_path(@game), notice: "カバー画像を削除しました"
+  end
+
   private
 
   def set_game
     @game = Game.find(params[:id])
   end
 
-  # 自分のゲームかチェック
   def authorize_user!
     unless @game.user_id == current_user.id
       redirect_to dashboard_path, alert: "アクセス権限がありません"
@@ -61,8 +87,10 @@ end
       :genre,
       :played_age,
       :memo,
+      :cover_image,
       :difficulty,
-      :fun
+      :fun,
+      :remove_cover_image
     )
   end
 end
