@@ -12,7 +12,8 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Press+Start+2P&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+    <!-- DotGothic16とPress Start 2Pだけ残す -->
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
@@ -29,10 +30,9 @@
   <%= render "layouts/flash" %>
 
   <!-- メインコンテンツ -->
-  <main class="font-sans">
+  <main>
     <%= yield %>
   </main>
 </body>
-
 
 </html>

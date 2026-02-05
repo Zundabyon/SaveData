@@ -1,9 +1,9 @@
-# app/models/game.rb
 class Game < ApplicationRecord
   belongs_to :user
   has_one_attached :cover_image
 
   validates :title, presence: true
+  validates :played_age, presence: true
   validates :cover_image,
             content_type: [ "image/png", "image/jpeg", "image/gif", "image/webp" ],
             size: { less_than: 5.megabytes, message: "5MB以下にしてください" }
