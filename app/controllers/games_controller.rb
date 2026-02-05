@@ -4,8 +4,9 @@ class GamesController < ApplicationController
   before_action :authorize_user!, only: %i[show edit update destroy confirm_destroy remove_cover_image]
 
   def index
-    @games = Game.with_images.order(created_at: :desc)
+    @games = current_user.games.order(created_at: :desc)
   end
+
 
   def show
   end
@@ -55,8 +56,11 @@ class GamesController < ApplicationController
     end
   end
 
-  def confirm_destroy
-  end
+def confirm_destroy
+  @game = current_user.games.find(params[:id])
+  @mode = :confirm_delete
+end
+
 
   def destroy
     @game.destroy!
@@ -71,8 +75,9 @@ class GamesController < ApplicationController
   private
 
   def set_game
-    @game = Game.find(params[:id])
+    @game = current_user.games.find(params[:id])
   end
+
 
   def authorize_user!
     unless @game.user_id == current_user.id

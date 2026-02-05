@@ -1,20 +1,36 @@
-<turbo-frame id="modal">
-  <div class="fixed inset-0 bg-black/40 flex items-center justify-center">
-    <div class="bg-white p-6 rounded w-80">
-      <p class="mb-4">「<%= @game.title %>」を削除しますか？</p>
+<style>
+  html, body {
+    background-color: #0b0f2a !important;
+    margin: 0;
+    height: 100%;
+  }
+</style>
 
-      <div class="flex justify-end gap-3">
-        <%= button_to "削除する",
-            game_path(@game),
-            method: :delete,
-            data: { turbo_confirm: false },
-            class: "bg-red-600 text-white px-4 py-2 rounded" %>
+<div class="fixed inset-0 z-50
+            bg-[#0b0f2a]
+            flex items-center justify-center">
 
-        <%= link_to "キャンセル",
-            "#",
-            data: { action: "turbo:frame-missing->this.remove" },
-            class: "px-4 py-2 border rounded" %>
-      </div>
-    </div>
+  <div class="w-full max-w-2xl
+              bg-[#0b0f2a]/90 backdrop-blur
+              border border-slate-700 rounded-xl
+              shadow-[0_0_30px_rgba(80,120,255,0.35)]
+              px-10 py-8 space-y-8">
+
+    <h2 class="text-2xl text-center tracking-widest text-blue-100">
+      「<%= @game.title %>」を削除しますか？
+    </h2>
+
+<div class="flex justify-center gap-6 pt-6">
+  <%= link_to "キャンセル",
+        dashboard_path,
+        class: "rpg-command w-48 text-center" %>
+
+  <%= link_to "さくじょ",
+        game_path(@game),
+        data: { turbo_method: :delete },
+        class: "rpg-command w-48 text-center bg-red-700" %>
+</div>
+
+
   </div>
-</turbo-frame>
+</div>

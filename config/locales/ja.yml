@@ -1,0 +1,59 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        name: プレイヤー名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+        birthday: 誕生日
+        gender: 性別
+        job: 職業
+
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "はすでに使用されています"
+              blank: "を入力してください"
+              invalid: "の形式が正しくありません"
+            password:
+              blank: "を入力してください"
+              too_short: "は%{count}文字以上で入力してください"
+            password_confirmation:
+              confirmation: "が一致しません"
+            name:
+              blank: "を入力してください"
+            birthday:
+              blank: "を入力してください"
+            gender:
+              blank: "を選択してください"
+            job:
+              blank: "を選択してください"
+
+  errors:
+    format: "%{attribute}%{message}"
+
+    messages:
+      blank: "を入力してください"
+      too_short: "%{count}文字以上で入力してください"
+      too_long: "%{count}文字以内で入力してください"
+      invalid: "が正しくありません"
+      confirmation: "が一致しません"
+      taken: "はすでに使用されています"
+      required: "を入力してください"
+
+  devise:
+    failure:
+      invalid: "メールアドレスまたはパスワードが違います"
+      not_found_in_database: "メールアドレスまたはパスワードが違います"
+      unauthenticated: "ログインしてください"
+    registrations:
+      signed_up: "アカウントを作成しました"
+      updated: "アカウント情報を更新しました"
+    sessions:
+      signed_in: "ログインしました"
+      signed_out: "ログアウトしました"
