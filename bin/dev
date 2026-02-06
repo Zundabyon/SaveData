@@ -6,11 +6,8 @@ if ! gem list foreman -i --silent; then
 fi
 
 # Default to port 3000 if not specified
-export PORT="${PORT:-3000}"
-
-# Let the debug gem allow remote connections,
-# but avoid loading until `debugger` is called
-export RUBY_DEBUG_OPEN="true"
-export RUBY_DEBUG_LAZY="true"
-
-exec foreman start -f Procfile.dev "$@"
+cat > Procfile.dev << 'EOF'
+web: env RUBY_DEBUG_OPEN=true bin/rails server -b 0.0.0.0 -p 3000
+js: yarn build --watch
+css: yarn build:css --watch
+EOF
