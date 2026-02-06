@@ -88,8 +88,8 @@ body {
 
 /* 年マーカー発光（黄色マテリア） */
 @keyframes markerGlow {
-  0% { 
-    box-shadow: 
+  0% {
+    box-shadow:
       inset 0 0 8px rgba(255, 255, 255, 0.8),
       0 0 12px rgba(255, 215, 0, 0.6),
       0 0 20px rgba(255, 215, 0, 0.4);
@@ -101,8 +101,8 @@ body {
       0 0 35px rgba(255, 215, 0, 0.7),
       0 0 50px rgba(255, 215, 0, 0.4);
   }
-  100% { 
-    box-shadow: 
+  100% {
+    box-shadow:
       inset 0 0 8px rgba(255, 255, 255, 0.8),
       0 0 12px rgba(255, 215, 0, 0.6),
       0 0 20px rgba(255, 215, 0, 0.4);
@@ -117,7 +117,7 @@ body {
 
   /* ===== レイアウト ===== */
   position: absolute !important;
-  left: 2rem !important;              /* ← 内側に安全地帯を確保 */
+  left: 2rem !important;
   transform: translateX(-50%);
   transform-origin: center;
 
@@ -432,7 +432,7 @@ body {
 
 header {
   position: relative;
-  left: 144px; /* 右に144px移動 */
+  left: 144px;
 }
 
 @media (max-width: 768px) {
@@ -456,11 +456,11 @@ header {
   padding: 48px 32px;
 }
 
-/* メッセージを少し上に */
+
 .confirm-text {
   text-align: center;
   font-size: 1.1rem;
-  margin-bottom: 32px; /* ← ここが肝 */
+  margin-bottom: 32px;
 }
 
 /* 横並びボタン */

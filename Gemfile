@@ -39,7 +39,7 @@ gem "cssbundling-rails"
 gem "tailwindcss-rails"
 
 # Sass/SCSS：CSSを書きやすくする言語
-gem "sassc-rails"
+gem "dartsass-rails"
 
 # CSS/JSファイルを配信する仕組み
 gem "sprockets-rails"
