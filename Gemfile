@@ -58,7 +58,6 @@ gem "rails_admin"
 # === ファイルストレージ ===
 # 画像や動画をクラウドに保存するサービス
 gem "cloudinary"
-
 # RailsとCloudinaryをつなぐ
 gem "activestorage-cloudinary-service"
 
