@@ -36,7 +36,8 @@ gem "turbo-rails"
 gem "cssbundling-rails"
 
 # Tailwind CSS：見た目を簡単に作れるツール
-gem "tailwindcss-rails"
+gem "tailwindcss-rails", "~> 2.7"
+
 
 # Sass/SCSS：CSSを書きやすくする言語
 gem "dartsass-rails"

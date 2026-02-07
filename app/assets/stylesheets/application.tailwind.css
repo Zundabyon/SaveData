@@ -1,18 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* ===== スクロールバー完全削除 ===== */
-* {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-*::-webkit-scrollbar {
-  display: none;
+@layer base {
+  body {
+    font-family: 'DotGothic16', monospace !important;
+    overflow-x: hidden;
+    background: linear-gradient(
+      to bottom,
+      #1108C0 0%,
+      #1108C0 20%,
+      #1108C0 70%,
+      #0b0a2a 95%,
+      #000000 100%
+    ) !important;
+  }
+  
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  *::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-/* Press Start 2P適用箇所（優先度高く） */
 .font-pixel {
   font-family: 'Press Start 2P', monospace !important;
 }
@@ -27,7 +43,6 @@
   letter-spacing: 0.18em;
 }
 
-/* スキャン発光アニメーション */
 @keyframes scanGlow {
   0% {
     box-shadow: 0 0 4px rgba(34,211,238,0.3);
@@ -49,7 +64,6 @@
   animation: scanGlow 2.2s ease-in-out infinite;
 }
 
-/* スキャンライン */
 @keyframes scanLine {
   0% { transform: translateY(-100%); opacity: 0; }
   20% { opacity: 0.15; }
@@ -71,7 +85,6 @@
   animation: scanLine 6s linear infinite;
 }
 
-/* 年マーカー発光（黄色マテリア） */
 @keyframes markerGlow {
   0% {
     box-shadow:
@@ -95,46 +108,35 @@
 }
 
 .year-marker {
-  /* ===== サイズ ===== */
   width: 32px !important;
   height: 32px !important;
   border-radius: 9999px !important;
-
-  /* ===== レイアウト ===== */
   position: absolute !important;
   left: 2rem !important;
   transform: translateX(-50%);
   transform-origin: center;
-
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-
-  /* ===== 見た目 ===== */
   background: radial-gradient(
     circle at 30% 30%,
     rgba(255, 249, 196, 0.95),
     rgba(255, 215, 0, 0.9) 60%,
     rgba(184, 134, 11, 0.85)
   ) !important;
-
   border: none !important;
-
   box-shadow:
     inset 0 0 3px rgba(255, 255, 255, 0.9),
     0 0 8px rgba(255, 215, 0, 0.9),
     0 0 12px rgba(255, 215, 0, 0.9);
-
   color: #1a1a1a !important;
   font-weight: 900;
   font-size: 0.75rem;
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
-
   z-index: 10;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* RPGモーダル展開 */
 @keyframes rpgOpen {
   0% { transform: scaleY(0.05); opacity: 0; }
   60% { transform: scaleY(1.05); opacity: 1; }
@@ -146,7 +148,6 @@
   animation: rpgOpen 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-/* RPGメニュー：選択中 */
 .rpg-age-item.active {
   color: #9cc7ff;
   background: rgba(80,120,255,0.15);
@@ -160,13 +161,11 @@
   opacity: 1;
 }
 
-/* 年表カード：初期状態 */
 .timeline-card {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* 画面に入ったら表示 */
 .timeline-card.is-visible {
   opacity: 1;
   transform: translateY(0);
@@ -177,7 +176,6 @@
   box-shadow: 0 0 12px rgba(80,120,255,0.35);
 }
 
-/* ===== マテリア共通 ===== */
 .materia {
   width: 14px;
   height: 14px;
@@ -188,13 +186,11 @@
   transition: opacity 0.3s ease;
 }
 
-/* 非アクティブ */
 .materia.inactive {
   opacity: 0.2;
   box-shadow: none;
 }
 
-/* ===== 色 ===== */
 .materia-red {
   color: rgb(255, 100, 100);
   background: radial-gradient(circle at 30% 30%,
@@ -220,23 +216,18 @@
 .rpg-command {
   border: 3px solid rgba(220,235,255,0.95);
   padding: 12px 0;
-
   background: linear-gradient(
     180deg,
     #223a8f 0%,
     #1a2b66 100%
   );
-
   box-shadow:
     inset 0 0 0 2px rgba(120,170,255,0.9),
     0 4px 0 rgba(0,0,0,0.6);
-
   border-radius: 8px;
-
   font-weight: bold;
   letter-spacing: 0.15em;
   color: #eaf4ff;
-
   transition: all 0.15s ease;
 }
 
@@ -246,11 +237,9 @@
     #2f52cc 0%,
     #203b8f 100%
   );
-
   box-shadow:
     inset 0 0 0 2px rgba(255,255,255,0.9),
     0 0 18px rgba(120,180,255,0.9);
-
   transform: translateY(1px);
 }
 
@@ -272,7 +261,6 @@
   100% { opacity: 0; transform: scaleY(0.2); }
 }
 
-/* ===== RPG風 タイムラインカード ===== */
 .timeline-card {
   position: relative;
   border: 2px solid rgba(230, 240, 255, 0.95);
@@ -306,7 +294,6 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
-/* ===== RPG 右サイドメニュー ===== */
 .rpg-side-window {
   border: 3px solid rgba(230, 240, 255, 0.95);
   background: linear-gradient(
@@ -321,7 +308,6 @@
     0 20px 40px rgba(0, 0, 0, 0.7);
 }
 
-/* ===== RPG 年齢コマンド ===== */
 .rpg-age-item {
   border-radius: 6px;
   color: #e0e7ff;
@@ -361,7 +347,6 @@
   text-shadow: 0 0 8px rgba(160,200,255,1);
 }
 
-/* ===== RPG 詳細カード ===== */
 .rpg-detail-card {
   position: relative;
   border: 4px solid #e6f2ff;
@@ -426,7 +411,6 @@ header {
   }
 }
 
-/* 背景中央寄せ */
 .confirm-wrapper {
   min-height: 100vh;
   display: flex;
@@ -434,7 +418,6 @@ header {
   align-items: center;
 }
 
-/* カード */
 .confirm-card {
   width: 100%;
   max-width: 720px;
@@ -447,13 +430,11 @@ header {
   margin-bottom: 32px;
 }
 
-/* 横並びボタン */
 .confirm-actions {
   display: flex;
   gap: 16px;
 }
 
-/* dashboard共通ボタン */
 .dashboard-btn {
   flex: 1;
   padding: 16px 0;
@@ -514,23 +495,4 @@ header {
 .modal-actions {
   display: flex;
   gap: 24px;
-}
-
-/* ===== 最優先フォント設定（Tailwind CSS v4の後に適用） ===== */
-:root {
-  font-family: 'DotGothic16', monospace;
-}
-
-html,
-body {
-  font-family: 'DotGothic16', monospace !important;
-  overflow-x: hidden;
-  background: linear-gradient(
-    to bottom,
-    #1108C0 0%,
-    #1108C0 20%,
-    #1108C0 70%,
-    #0b0a2a 95%,
-    #000000 100%
-  ) !important;
 }
