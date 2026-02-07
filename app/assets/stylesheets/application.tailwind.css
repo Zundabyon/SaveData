@@ -3,6 +3,11 @@
 
 @import "tailwindcss";
 
+@layer base {
+  body {
+    font-family: 'DotGothic16', monospace !important;
+  }
+}
 /* ===== スクロールバー完全削除 ===== */
 * {
   scrollbar-width: none;
