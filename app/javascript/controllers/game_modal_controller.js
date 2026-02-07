@@ -2,45 +2,28 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["modal", "title", "meta", "memo", "editLink", "deleteLink"]
+  static targets = ["modal", "title", "meta", "memo", "edit", "delete"]
 
   open(event) {
-    event.preventDefault()
-    const card = event.currentTarget
+    const button = event.currentTarget
+    const title = button.dataset.title
+    const meta = button.dataset.meta
+    const memo = button.dataset.memo
+    const gameId = button.dataset.gameId
 
-    // データ属性から情報を取得
-    const title = card.dataset.gameTitle
-    const age = card.dataset.gameAge
-    const hardware = card.dataset.gameHardware
-    const genre = card.dataset.gameGenre
-    const difficulty = card.dataset.gameDifficulty
-    const fun = card.dataset.gameFun
-    const memo = card.dataset.gameMemo
-    const editPath = card.dataset.gameEditPath
-    const deletePath = card.dataset.gameDeletePath
+    this.titleTarget.innerText = title
+    this.metaTarget.innerText = meta
+    this.memoTarget.innerText = memo || "……"
 
-    // モーダルに情報を設定
-    this.titleTarget.textContent = title
-    this.metaTarget.textContent = `${age}歳 | ${hardware} | ${genre}`
-    this.memoTarget.textContent = memo || "感想が記録されていません"
-    this.editLinkTarget.href = editPath
-    this.deleteLinkTarget.href = deletePath
+    this.editTarget.href = `/games/${gameId}/edit`
+    this.deleteTarget.href = `/games/${gameId}/confirm_destroy`
 
-    // モーダルを表示
     this.modalTarget.classList.remove("hidden")
     this.modalTarget.classList.add("flex")
   }
 
-  close(event) {
-    event.preventDefault()
+  close() {
     this.modalTarget.classList.add("hidden")
     this.modalTarget.classList.remove("flex")
-  }
-
-  // モーダル外クリックで閉じる
-  closeOnBackdrop(event) {
-    if (event.target === this.modalTarget) {
-      this.close(event)
-    }
   }
 }
