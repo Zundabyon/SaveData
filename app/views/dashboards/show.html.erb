@@ -229,3 +229,42 @@
   </div>
 </div>
 </div>
+<script>
+  document.addEventListener('turbo:load', initGameModal)
+  document.addEventListener('DOMContentLoaded', initGameModal)
+
+  function initGameModal() {
+    const modalElement = document.querySelector('[data-game-modal-target="modal"]')
+    if (!modalElement) return
+
+    // モーダルを開く
+    document.querySelectorAll('[data-action*="game-modal#open"]').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault()
+        const title = this.dataset.title
+        const meta = this.dataset.meta
+        const memo = this.dataset.memo
+        const gameId = this.dataset.gameId
+
+        document.querySelector('[data-game-modal-target="title"]').innerText = title
+        document.querySelector('[data-game-modal-target="meta"]').innerText = meta
+        document.querySelector('[data-game-modal-target="memo"]').innerText = memo || "……"
+        document.querySelector('[data-game-modal-target="edit"]').href = `/games/${gameId}/edit`
+        document.querySelector('[data-game-modal-target="delete"]').href = `/games/${gameId}/confirm_destroy`
+
+        modalElement.classList.remove('hidden')
+        modalElement.classList.add('flex')
+      })
+    })
+
+    // モーダルを閉じる
+    const closeButton = document.querySelector('[data-action*="game-modal#close"]')
+    if (closeButton) {
+      closeButton.addEventListener('click', function(e) {
+        e.preventDefault()
+        modalElement.classList.add('hidden')
+        modalElement.classList.remove('flex')
+      })
+    }
+  }
+</script>
