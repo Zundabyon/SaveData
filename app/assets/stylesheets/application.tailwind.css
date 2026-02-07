@@ -3,11 +3,6 @@
 
 @import "tailwindcss";
 
-@layer base {
-  body {
-    font-family: 'DotGothic16', monospace !important;
-  }
-}
 /* ===== スクロールバー完全削除 ===== */
 * {
   scrollbar-width: none;
@@ -17,18 +12,20 @@
   display: none;
 }
 
-/* ===== デフォルトはDotGothic16（!important削除） ===== */
-body {
-  font-family: 'DotGothic16', monospace;
-  overflow-x: hidden;
-  background: linear-gradient(
-    to bottom,
-    #1108C0 0%,
-    #1108C0 20%,
-    #1108C0 70%,
-    #0b0a2a 95%,
-    #000000 100%
-  );
+/* ===== デフォルトはDotGothic16 ===== */
+@layer base {
+  body {
+    font-family: 'DotGothic16', monospace !important;
+    overflow-x: hidden;
+    background: linear-gradient(
+      to bottom,
+      #1108C0 0%,
+      #1108C0 20%,
+      #1108C0 70%,
+      #0b0a2a 95%,
+      #000000 100%
+    );
+  }
 }
 
 /* Press Start 2P適用箇所（優先度高く） */
