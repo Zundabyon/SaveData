@@ -3,7 +3,6 @@
 
 @import "tailwindcss";
 
-
 /* ===== スクロールバー完全削除 ===== */
 * {
   scrollbar-width: none;
@@ -11,22 +10,6 @@
 }
 *::-webkit-scrollbar {
   display: none;
-}
-
-/* ===== デフォルトはDotGothic16 ===== */
-@layer base {
-  body {
-    font-family: 'DotGothic16', monospace !important;
-    overflow-x: hidden;
-    background: linear-gradient(
-      to bottom,
-      #1108C0 0%,
-      #1108C0 20%,
-      #1108C0 70%,
-      #0b0a2a 95%,
-      #000000 100%
-    ) !important;
-  }
 }
 
 /* Press Start 2P適用箇所（優先度高く） */
@@ -458,7 +441,6 @@ header {
   padding: 48px 32px;
 }
 
-
 .confirm-text {
   text-align: center;
   font-size: 1.1rem;
@@ -487,6 +469,7 @@ header {
 .dashboard-btn.secondary {
   background: #34495e;
 }
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -531,4 +514,23 @@ header {
 .modal-actions {
   display: flex;
   gap: 24px;
+}
+
+/* ===== 最優先フォント設定（Tailwind CSS v4の後に適用） ===== */
+:root {
+  font-family: 'DotGothic16', monospace;
+}
+
+html,
+body {
+  font-family: 'DotGothic16', monospace !important;
+  overflow-x: hidden;
+  background: linear-gradient(
+    to bottom,
+    #1108C0 0%,
+    #1108C0 20%,
+    #1108C0 70%,
+    #0b0a2a 95%,
+    #000000 100%
+  ) !important;
 }
