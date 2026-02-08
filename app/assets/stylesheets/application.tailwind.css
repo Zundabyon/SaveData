@@ -496,3 +496,33 @@ header {
   display: flex;
   gap: 24px;
 }
+
+/* カード位置調整 */
+.card-float-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* 浮遊アニメーション */
+.card-float {
+  width: 120px;
+  animation: floatCard 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* 浮いてゆらゆら */
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(6deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(-6deg);
+  }
+}
+.card-float-wrapper {
+  margin-bottom: -10px;
+}
