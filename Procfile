@@ -1,17 +1,2 @@
-{
-  "name": "savedata",
-  "private": true,
-  "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
-    "precompile": "yarn build:css && yarn build"
-  },
-  "dependencies": {
-    "@hotwired/stimulus": "^3.2.1",
-    "@hotwired/turbo-rails": "^7.3.0",
-    "esbuild": "^0.17.19"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.4.1"
-  }
-}
+web: bin/rails server -b 0.0.0.0 -p ${PORT:-3000}
+release: bin/rails assets:precompile
