@@ -12,12 +12,13 @@ RUN bundle install
 COPY . .
 
 # Build assets with environment-aware settings
+RUN mkdir -p public/images && cp -R app/assets/images/* public/images/ || true
 RUN export RAILS_ENV=production && \
     export NODE_ENV=production && \
     yarn install && \
     yarn build:css && \
     yarn build && \
-    bundle exec rake assets:precompile || true
+    bundle exec rake assets:precompile
 
 EXPOSE 3000
 
