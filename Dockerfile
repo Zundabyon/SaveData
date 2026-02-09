@@ -11,12 +11,8 @@ RUN bundle install
 
 COPY . .
 
-# ===== ここが超重要 =====
-
-ENV RAILS_ENV=production
-RUN bundle exec rails assets:precompile
-
-# =========================
+# Note: Assets precompilation handled by Render's buildCommand (render.yaml)
+# in production. For local Docker development, use: docker compose up
 
 EXPOSE 3000
 
