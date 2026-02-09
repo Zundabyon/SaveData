@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: savedata
+    runtime: ruby
+    plan: free
+    buildCommand: ./bin/render-build.sh
+    startCommand: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RAILS_ENV:-production}
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_LOG_TO_STDOUT
+        value: true
+    preDeployCommand: bundle exec rake db:migrate
