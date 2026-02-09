@@ -143,12 +143,15 @@
 
     </div>
   </div>
-　　　<!-- 戻るボタン（センター） -->
-    <div class="mb-8 flex justify-center">
-      <%= link_to "ログインページに戻る", "javascript:history.back()",
-              class: "w-full px-4 py-3 bg-blue-600 text-white font-pixel rounded-lg
-                     hover:bg-blue-700 focus:outline-none focus:ring-2
-                     focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
-    </div>
 
+    <!-- 戻るボタン -->
+    <div class="mt-8 flex justify-center">
+      <%= link_to "トップへ戻る",root_path,
+      class: "inline-flex items-center justify-center
+              rounded-xl bg-blue-600 px-6 py-3
+              text-white font-semibold
+              shadow-md
+              hover:bg-blue-700
+              transition" %>
+    </div>
 </div>

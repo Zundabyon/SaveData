@@ -4,32 +4,32 @@ class Game < ApplicationRecord
 
   # タイトルのバリデーション
   validates :title, presence: true, length: { maximum: 100 }
-  
+
   # プレイした年齢（必須、0〜120歳）
-  validates :played_age, 
+  validates :played_age,
             presence: true,
-            numericality: { 
+            numericality: {
               only_integer: true,                    # 整数のみ
               greater_than_or_equal_to: 0,           # 0以上
               less_than_or_equal_to: 120             # 120以下
             }
-  
+
   # 楽しさ（任意、1〜10の整数）
-  validates :fun, 
-            numericality: { 
+  validates :fun,
+            numericality: {
               only_integer: true,
               greater_than_or_equal_to: 1,
               less_than_or_equal_to: 10
-            }, 
+            },
             allow_nil: true
-  
+
   # 難しさ（任意、1〜10の整数）
-  validates :difficulty, 
-            numericality: { 
+  validates :difficulty,
+            numericality: {
               only_integer: true,
               greater_than_or_equal_to: 1,
               less_than_or_equal_to: 10
-            }, 
+            },
             allow_nil: true
 
   # その他のフィールド（任意）
@@ -39,7 +39,7 @@ class Game < ApplicationRecord
 
   # カバー画像のバリデーション
   validates :cover_image,
-            content_type: ["image/png", "image/jpeg", "image/gif", "image/webp"],
+            content_type: [ "image/png", "image/jpeg", "image/gif", "image/webp" ],
             size: { less_than: 5.megabytes, message: "5MB以下にしてください" }
 
   # 仮想属性を追加

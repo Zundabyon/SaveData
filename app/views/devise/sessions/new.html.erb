@@ -1,139 +1,147 @@
 <% content_for :title, "ログイン - Savedata" %>
 
 <div class="min-h-screen flex">
+
   <!-- ================= 左カラム（装飾） ================= -->
   <div
     class="hidden lg:flex lg:w-1/2
            bg-gradient-to-br from-blue-600 to-blue-800
            items-center justify-center p-8"
   >
-　<div class="relative text-center">
+    <div class="relative text-center">
 
-  <!-- 浮いてるカード -->
-<div class="card-float-wrapper">
-  <%= image_tag "dragon_card.png",
-        class: "card-float",
-        alt: "dragon card" %>
-</div>
+      <!-- 浮いてるカード -->
+      <div class="card-float-wrapper">
+        <%= image_tag "dragon_card.png",
+              class: "card-float",
+              alt: "dragon card" %>
+      </div>
 
-  <!-- ロゴ -->
-  <h1 class="text-5xl font-bold text-white mb-2 font-pixel">
-    Savedata
-  </h1>
+      <!-- ロゴ -->
+      <h1 class="text-5xl font-bold text-white mb-2 font-pixel">
+        Savedata
+      </h1>
 
+      <!-- 外枠 -->
+      <div class="mb-12 flex justify-center">
+        <div class="w-72 h-5 bg-black border-4 border-white rounded overflow-hidden">
+          <div class="h-full bg-pink-400 animate-fill w-0"></div>
+        </div>
+      </div>
 
+      <div class="mt-16">
+        <p class="text-lg leading-relaxed text-gray-300">
+          Savedataは、ゲームの思い出を「年齢 × 時間軸」で<br>
+          記録するアプリです。
+        </p>
 
-  <!-- 外枠 -->
-  <div class="mb-12 flex justify-center">
-    <div class="w-72 h-5 bg-black border-4 border-white rounded overflow-hidden">
-      <div class="h-full bg-pink-400 animate-fill w-0"></div>
-    </div>
-  </div>
+        <p class="text-l leading-relaxed text-gray-300 mt-2">
+          あの頃のプレイ体験を、感動を人生の年表として残そう。
+        </p>
 
-  <div class="mt-16">
-    <p class="text-lg leading-relaxed text-gray-300">
-      Savedataは、ゲームの思い出を「年齢 × 時間軸」で<br>
-      記録するアプリです。
-    </p>
+        <div class="mt-8">
+          <%= link_to "使い方",
+                how_to_path,
+                class: "inline-block px-6 py-3 bg-white/10 text-white font-semibold rounded-lghover:bg-white/20 transition-colors backdrop-blur" %>
+        </div>
+      </div>
 
-    <p class="text-l leading-relaxed text-gray-300 mt-2">
-      あの頃のプレイ体験を、感動を人生の年表として残そう。
-    </p>
-
-    <div class="mt-8">
-       <%= link_to "使い方", how_to_path,class: "inline-block px-6 py-3 bg-white/10 text-white font-semibold rounded-lghover:bg-white/20 transition-colors backdrop-blur" %></div>
-    </div>
     </div>
   </div>
 
   <!-- ================= 右カラム（ログインフォーム） ================= -->
-<div
-  class="w-full lg:w-1/2
-         flex items-center justify-center
-         bg-gray-300 px-4 py-12 sm:px-6 lg:px-8"
->
-  <div class="w-full max-w-md mt-12">
+  <div
+    class="w-full lg:w-1/2
+           flex items-center justify-center
+           bg-gray-300 px-4 py-12 sm:px-6 lg:px-8"
+  >
+    <div class="w-full max-w-md mt-12">
 
-    <!-- ヘッダー -->
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-pixel text-gray-900 mb-2">
-        LOGIN
-      </h2>
-      <p class="text-xs text-gray-600">
-        セーブデータ管理システムへようこそ
-      </p>
-    </div>
-
-    <!-- フォーム -->
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
-
-      <% if resource.errors.any? %>
-        <div class="mb-6 p-4 bg-red-100 border border-red-400 rounded-md text-xs">
-          <ul class="space-y-1 text-red-700">
-            <% resource.errors.full_messages.each do |message| %>
-              <li>・<%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <!-- メールアドレス -->
-      <div class="mb-5">
-        <%= f.label :email, "メールアドレス",
-          class: "block text-xs font-semibold text-gray-700 mb-1" %>
-        <%= f.email_field :email,
-          autofocus: true,
-          autocomplete: "email",
-          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      <!-- ヘッダー -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-pixel text-gray-900 mb-2">
+          LOGIN
+        </h2>
+        <p class="text-xs text-gray-600">
+          セーブデータ管理システムへようこそ
+        </p>
       </div>
 
-      <!-- パスワード -->
-      <div class="mb-5">
-        <%= f.label :password, "パスワード",
-          class: "block text-xs font-semibold text-gray-700 mb-1" %>
-        <%= f.password_field :password,
-          autocomplete: "current-password",
-          class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-      </div>
+      <!-- フォーム -->
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
 
-      <!-- Remember me -->
-      <% if devise_mapping.rememberable? %>
-        <div class="mb-6">
-          <label class="flex items-center">
-            <%= f.check_box :remember_me,
-              class: "w-4 h-4 border-gray-400 rounded" %>
-            <span class="ml-2 text-xs text-gray-700">
-              このデバイスで覚えておく
-            </span>
-          </label>
+        <% if resource.errors.any? %>
+          <div class="mb-6 p-4 bg-red-100 border border-red-400 rounded-md text-xs">
+            <ul class="space-y-1 text-red-700">
+              <% resource.errors.full_messages.each do |message| %>
+                <li>・<%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- メールアドレス -->
+        <div class="mb-5">
+          <%= f.label :email, "メールアドレス",
+                class: "block text-xs font-semibold text-gray-700 mb-1" %>
+          <%= f.email_field :email,
+                autofocus: true,
+                autocomplete: "email",
+                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
         </div>
+
+        <!-- パスワード -->
+        <div class="mb-5">
+          <%= f.label :password, "パスワード",
+                class: "block text-xs font-semibold text-gray-700 mb-1" %>
+          <%= f.password_field :password,
+                autocomplete: "current-password",
+                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+        </div>
+
+        <!-- Remember me -->
+        <% if devise_mapping.rememberable? %>
+          <div class="mb-6">
+            <label class="flex items-center">
+              <%= f.check_box :remember_me,
+                    class: "w-4 h-4 border-gray-400 rounded" %>
+              <span class="ml-2 text-xs text-gray-700">
+                このデバイスで覚えておく
+              </span>
+            </label>
+          </div>
+        <% end %>
+
+        <!-- ログインボタン -->
+        <%= f.submit "START",
+              class: "w-full py-3 bg-blue-600 hover:bg-blue-700
+                     text-white font-pixel rounded-md transition" %>
+
       <% end %>
 
-      <!-- ログインボタン -->
-      <%= f.submit "START",
-        class: "w-full py-3 bg-blue-600 hover:bg-blue-700
-               text-white font-pixel rounded-md transition" %>
-    <% end %>
+      <!-- 下部リンク -->
+      <div class="mt-6 space-y-2 text-center text-xs">
+        <%= link_to "アカウントを新規作成",
+              new_registration_path(resource_name),
+              class: "text-blue-700 hover:underline block" %>
 
-    <!-- 下部リンク -->
-    <div class="mt-6 space-y-2 text-center text-xs">
-      <%= link_to "アカウントを新規作成",
-        new_registration_path(resource_name),
-        class: "text-blue-700 hover:underline block" %>
+        <%= link_to "パスワードをお忘れですか？",
+              new_password_path(resource_name),
+              class: "text-gray-600 hover:underline block" %>
+      </div>
 
-      <%= link_to "パスワードをお忘れですか？",
-        new_password_path(resource_name),
-        class: "text-gray-600 hover:underline block" %>
+      <!-- 利用規約・プライバシーポリシー -->
+      <div class="mt-6 text-center text-xs text-gray-600 opacity-80">
+        <%= link_to "利用規約",
+              terms_path,
+              class: "underline hover:opacity-100" %>
+        ・
+        <%= link_to "プライバシーポリシー",
+              privacy_policy_path,
+              class: "underline hover:opacity-100" %>
+      </div>
+
     </div>
-
-    <!-- 利用規約・プライバシーポリシー -->
-    <div class="mt-6 text-center text-xs text-gray-600 opacity-80">
-      <%= link_to "利用規約", terms_path,
-        class: "underline hover:opacity-100" %>
-      ・
-      <%= link_to "プライバシーポリシー", privacy_policy_path,
-        class: "underline hover:opacity-100" %>
-    </div>
-
   </div>
+
 </div>

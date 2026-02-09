@@ -8,5 +8,4 @@ def show
 
   Rails.logger.info "DASHBOARD GAMES: #{@games.pluck(:id, :title, :played_age)}"
 end
-
 end

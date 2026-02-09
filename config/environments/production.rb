@@ -5,10 +5,10 @@ Rails.application.configure do
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  
+
   # ✅ これを true から false に変更
   config.assets.compile = false  # ← ここを変更！
-  
+
   config.assets.initialize_on_precompile = false
   config.active_storage.service = :cloudinary
   config.force_ssl = true
