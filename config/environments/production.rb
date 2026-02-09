@@ -10,6 +10,8 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
   config.assets.compile = true
 
+  config.assets.initialize_on_precompile = false
+
   config.active_storage.service = :cloudinary
 
   config.force_ssl = true
