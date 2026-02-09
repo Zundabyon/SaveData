@@ -108,9 +108,9 @@
 }
 
 .year-marker {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 9999px !important;
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 50px !important;
   position: absolute !important;
   left: 2rem !important;
   transform: translateX(-50%);
@@ -131,7 +131,7 @@
     0 0 12px rgba(255, 215, 0, 0.9);
   color: #1a1a1a !important;
   font-weight: 900;
-  font-size: 0.75rem;
+  font-size: 1.0rem;
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
   z-index: 10;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
