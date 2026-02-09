@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      game: ゲーム
     attributes:
       user:
         name: プレイヤー名
@@ -11,6 +12,15 @@ ja:
         birthday: 誕生日
         gender: 性別
         job: 職業
+      game:
+        title: ゲームタイトル
+        hardware: ハード
+        genre: ジャンル
+        played_age: プレイした大体の年齢
+        fun: 楽しさ
+        difficulty: 難しさ
+        memo: ひとことメモ
+        cover_image: カバー画像
 
     errors:
       models:
@@ -33,18 +43,49 @@ ja:
               blank: "を選択してください"
             job:
               blank: "を選択してください"
+        game:
+          attributes:
+            title:
+              blank: "を入力してください"
+              too_long: "は%{count}文字以内で入力してください"
+            played_age:
+              blank: "を入力してください"
+              not_a_number: "は数値で入力してください"
+              not_an_integer: "は整数で入力してください"
+              greater_than_or_equal_to: "は%{count}以上で入力してください"
+              less_than_or_equal_to: "は%{count}以下で入力してください"
+            fun:
+              not_a_number: "は数値で入力してください"
+              not_an_integer: "は整数で入力してください"
+              greater_than_or_equal_to: "は%{count}以上で選択してください"
+              less_than_or_equal_to: "は%{count}以下で選択してください"
+            difficulty:
+              not_a_number: "は数値で入力してください"
+              not_an_integer: "は整数で入力してください"
+              greater_than_or_equal_to: "は%{count}以上で選択してください"
+              less_than_or_equal_to: "は%{count}以下で選択してください"
 
   errors:
     format: "%{attribute}%{message}"
 
+    template:
+      header:
+        one: "入力内容に1件のエラーがあります"
+        other: "入力内容に%{count}件のエラーがあります"
+      body: "以下の項目を確認してください:"
+
     messages:
       blank: "を入力してください"
-      too_short: "%{count}文字以上で入力してください"
-      too_long: "%{count}文字以内で入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
       invalid: "が正しくありません"
       confirmation: "が一致しません"
       taken: "はすでに使用されています"
       required: "を入力してください"
+      not_a_number: "は数値で入力してください"
+      not_an_integer: "は整数で入力してください"
+      greater_than_or_equal_to: "は%{count}以上で入力してください"
+      less_than_or_equal_to: "は%{count}以下で入力してください"
 
   devise:
     failure:

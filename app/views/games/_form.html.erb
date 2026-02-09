@@ -2,7 +2,7 @@
   <!-- エラー表示 -->
   <% if game.errors.any? %>
     <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-      <p class="font-bold text-sm"><%= pluralize(game.errors.count, "error") %> がありました:</p>
+      <p class="font-bold text-sm">入力内容に<%= game.errors.count %>件のエラーがあります</p>
       <ul class="list-disc list-inside mt-2 text-xs">
         <% game.errors.full_messages.each do |message| %>
           <li><%= message %></li>

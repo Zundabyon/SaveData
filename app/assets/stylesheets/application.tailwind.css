@@ -514,15 +514,23 @@ header {
 /* 浮いてゆらゆら */
 @keyframes floatCard {
   0% {
-    transform: translateY(0px) rotate(-6deg);
+    transform: translateY(0px) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotateY(90deg);
   }
   50% {
-    transform: translateY(-10px) rotate(6deg);
+    transform: translateY(-10px) rotateY(180deg);
+  }
+  75% {
+    transform: translateY(-8px) rotateY(270deg);
   }
   100% {
-    transform: translateY(0px) rotate(-6deg);
+    transform: translateY(0px) rotateY(360deg);
   }
 }
 .card-float-wrapper {
-  margin-bottom: -10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* 10pxから20pxに増やす */
 }
