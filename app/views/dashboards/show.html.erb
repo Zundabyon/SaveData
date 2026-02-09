@@ -26,11 +26,7 @@
       <!-- 画像サムネイル（年マーカーの右） -->
       <% if game.cover_image.attached? %>
         <div class="flex-shrink-0 group cursor-pointer"
-            
-             data-title="<%= game.title %>"
-             data-meta="<%= [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>"
-             data-memo="<%= game.memo %>"
-             data-game-id="<%= game.id %>">
+             onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>', '<%= j game.memo %>', '<%= game.id %>')">
           <div class="relative overflow-hidden rounded-lg border-4 border-slate-600
                       hover:border-blue-500 transition-all duration-300 shadow-lg
                       hover:shadow-[0_0_20px_rgba(80,120,255,0.5)]
@@ -48,11 +44,7 @@
                   border border-slate-700 rounded-xl
                   p-5 shadow-lg cursor-pointer
                   hover:border-slate-500 transition"
-          
-           data-title="<%= game.title %>"
-           data-meta="<%= [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>"
-           data-memo="<%= game.memo %>"
-           data-game-id="<%= game.id %>">
+           onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>', '<%= j game.memo %>', '<%= game.id %>')">
 
         <h2 class="text-lg font-semibold tracking-wide"><%= game.title %></h2>
         <div class="mt-2 flex flex-wrap gap-3 text-xs text-slate-400">
@@ -130,7 +122,7 @@
             "lobster" => "lobster.png",
             "other" => "other.png"
           }
-
+          
           job_image = job_images[@user.job] || "other.png"
         %>
 
@@ -179,7 +171,7 @@
 </aside>
 
 <!-- ===== FF7 詳細モーダル ===== -->
-<div
+<div id="gameModal"
      class="fixed inset-0 hidden items-center justify-center
             bg-black/70 backdrop-blur-sm z-50">
 
@@ -190,29 +182,29 @@
               px-8 py-6 space-y-6">
 
     <!-- タイトル -->
-    <h2
+    <h2 id="modalTitle"
         class="text-2xl font-bold tracking-widest text-blue-100">
     </h2>
 
     <!-- メタ情報 -->
-    <p
+    <p id="modalMeta"
        class="text-sm tracking-wider text-blue-200/80">
     </p>
 
     <!-- メモ本文 -->
     <div class="bg-black/30 border border-blue-300/30 rounded-md p-4">
-      <p class="text-slate-200 leading-relaxed"></p>
+      <p id="modalMemo" class="text-slate-200 leading-relaxed"></p>
     </div>
 
     <!-- コマンド -->
     <div class="grid grid-cols-2 gap-6 pt-4">
-      <a
+      <a id="modalEdit"
          class="rpg-command text-center"
          data-turbo-frame="modal">
          へんしゅう
       </a>
 
-      <a
+      <a id="modalDelete"
         class="rpg-command text-center bg-red-700/20"
         data-turbo="false">
         さくじょ
@@ -220,7 +212,7 @@
     </div>
 
     <!-- 閉じる -->
-    <button data-action="click->game-modal#close"
+    <button onclick="closeModal()"
             class="absolute top-4 right-5 text-3xl
                    text-slate-400 hover:text-white">
       ✕
@@ -229,42 +221,35 @@
   </div>
 </div>
 </div>
+
 <script>
-  document.addEventListener('turbo:load', initGameModal)
-  document.addEventListener('DOMContentLoaded', initGameModal)
+function openModal(title, meta, memo, gameId) {
+  const modal = document.getElementById('gameModal')
+  document.getElementById('modalTitle').innerText = title
+  document.getElementById('modalMeta').innerText = meta
+  document.getElementById('modalMemo').innerText = memo || "……"
+  document.getElementById('modalEdit').href = `/games/${gameId}/edit`
+  document.getElementById('modalDelete').href = `/games/${gameId}/confirm_destroy`
+  
+  modal.classList.remove('hidden')
+  modal.classList.add('flex')
+}
 
-  function initGameModal() {
-    const modalElement = document.querySelector('[data-game-modal-target="modal"]')
-    if (!modalElement) return
+function closeModal() {
+  const modal = document.getElementById('gameModal')
+  modal.classList.add('hidden')
+  modal.classList.remove('flex')
+}
 
-    // モーダルを開く
-    document.querySelectorAll('[data-action*="game-modal#open"]').forEach(button => {
-      button.addEventListener('click', function(e) {
-        e.preventDefault()
-        const title = this.dataset.title
-        const meta = this.dataset.meta
-        const memo = this.dataset.memo
-        const gameId = this.dataset.gameId
-
-        document.querySelector('[data-game-modal-target="title"]').innerText = title
-        document.querySelector('[data-game-modal-target="meta"]').innerText = meta
-        document.querySelector('[data-game-modal-target="memo"]').innerText = memo || "……"
-        document.querySelector('[data-game-modal-target="edit"]').href = `/games/${gameId}/edit`
-        document.querySelector('[data-game-modal-target="delete"]').href = `/games/${gameId}/confirm_destroy`
-
-        modalElement.classList.remove('hidden')
-        modalElement.classList.add('flex')
-      })
+// 背景クリックで閉じる
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('gameModal')
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal()
+      }
     })
-
-    // モーダルを閉じる
-    const closeButton = document.querySelector('[data-action*="game-modal#close"]')
-    if (closeButton) {
-      closeButton.addEventListener('click', function(e) {
-        e.preventDefault()
-        modalElement.classList.add('hidden')
-        modalElement.classList.remove('flex')
-      })
-    }
   }
+})
 </script>
