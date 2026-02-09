@@ -11,8 +11,13 @@ RUN bundle install
 
 COPY . .
 
-# Note: Assets precompilation handled by Render's buildCommand (render.yaml)
-# in production. For local Docker development, use: docker compose up
+# Build assets with environment-aware settings
+RUN export RAILS_ENV=production && \
+    export NODE_ENV=production && \
+    yarn install && \
+    yarn build:css && \
+    yarn build && \
+    bundle exec rake assets:precompile || true
 
 EXPOSE 3000
 
