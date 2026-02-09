@@ -12,9 +12,9 @@ RUN bundle install
 COPY . .
 
 # Build assets with environment-aware settings
-RUN mkdir -p public/images && cp -R app/assets/images/* public/images/ || true
 RUN export RAILS_ENV=production && \
     export NODE_ENV=production && \
+    export SECRET_KEY_BASE=dummy && \
     yarn install && \
     yarn build:css && \
     yarn build && \
