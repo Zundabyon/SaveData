@@ -1,4 +1,4 @@
-<div class="min-h-screen text-slate-100 flex" data-controller="game-modal">
+<div class="min-h-screen text-slate-100 flex">
 
 <!-- 中央：年表 -->
 <main class="flex-1 px-6 py-12">
@@ -26,7 +26,7 @@
       <!-- 画像サムネイル（年マーカーの右） -->
       <% if game.cover_image.attached? %>
         <div class="flex-shrink-0 group cursor-pointer"
-             data-action="click->game-modal#open"
+            
              data-title="<%= game.title %>"
              data-meta="<%= [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>"
              data-memo="<%= game.memo %>"
@@ -48,7 +48,7 @@
                   border border-slate-700 rounded-xl
                   p-5 shadow-lg cursor-pointer
                   hover:border-slate-500 transition"
-           data-action="click->game-modal#open"
+          
            data-title="<%= game.title %>"
            data-meta="<%= [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>"
            data-memo="<%= game.memo %>"
@@ -130,7 +130,7 @@
             "lobster" => "lobster.png",
             "other" => "other.png"
           }
-          
+
           job_image = job_images[@user.job] || "other.png"
         %>
 
@@ -179,7 +179,7 @@
 </aside>
 
 <!-- ===== FF7 詳細モーダル ===== -->
-<div data-game-modal-target="modal"
+<div
      class="fixed inset-0 hidden items-center justify-center
             bg-black/70 backdrop-blur-sm z-50">
 
@@ -190,29 +190,29 @@
               px-8 py-6 space-y-6">
 
     <!-- タイトル -->
-    <h2 data-game-modal-target="title"
+    <h2
         class="text-2xl font-bold tracking-widest text-blue-100">
     </h2>
 
     <!-- メタ情報 -->
-    <p data-game-modal-target="meta"
+    <p
        class="text-sm tracking-wider text-blue-200/80">
     </p>
 
     <!-- メモ本文 -->
     <div class="bg-black/30 border border-blue-300/30 rounded-md p-4">
-      <p data-game-modal-target="memo" class="text-slate-200 leading-relaxed"></p>
+      <p class="text-slate-200 leading-relaxed"></p>
     </div>
 
     <!-- コマンド -->
     <div class="grid grid-cols-2 gap-6 pt-4">
-      <a data-game-modal-target="edit"
+      <a
          class="rpg-command text-center"
          data-turbo-frame="modal">
          へんしゅう
       </a>
 
-      <a data-game-modal-target="delete"
+      <a
         class="rpg-command text-center bg-red-700/20"
         data-turbo="false">
         さくじょ
