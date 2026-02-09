@@ -24,20 +24,20 @@
       </div>
 
       <!-- 画像サムネイル（年マーカーの右） -->
-      <% if game.cover_image.attached? %>
-        <div class="flex-shrink-0 group cursor-pointer"
-             onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>', '<%= j game.memo %>', '<%= game.id %>')">
-          <div class="relative overflow-hidden rounded-lg border-4 border-slate-600
-                      hover:border-blue-500 transition-all duration-300 shadow-lg
-                      hover:shadow-[0_0_20px_rgba(80,120,255,0.5)]
-                      bg-slate-800/60 w-[250px]">
-            <%= image_tag game.cover_image.variant(resize_to_fill: [230, 200]),
-                class: "w-full h-44 object-cover group-hover:scale-110 transition-transform duration-300",
-                loading: "lazy",
-                alt: game.title %>
+        <% if game.cover_image.attached? %>
+          <div class="flex-shrink-0 group cursor-pointer"
+              onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>', '<%= j game.memo %>', '<%= game.id %>')">
+            <div class="relative overflow-hidden rounded-lg border-4 border-slate-600
+                        hover:border-blue-500 transition-all duration-300 shadow-lg
+                        hover:shadow-[0_0_20px_rgba(80,120,255,0.5)]
+                        bg-slate-800/60 w-[250px]">
+              <%= image_tag game.cover_image,
+                  class: "w-full h-44 object-cover group-hover:scale-110 transition-transform duration-300",
+                  loading: "lazy",
+                  alt: game.title %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
 
       <!-- カード（画像の右側） -->
       <div class="flex-1 timeline-card bg-slate-800/60 backdrop-blur
@@ -230,7 +230,7 @@ function openModal(title, meta, memo, gameId) {
   document.getElementById('modalMemo').innerText = memo || "……"
   document.getElementById('modalEdit').href = `/games/${gameId}/edit`
   document.getElementById('modalDelete').href = `/games/${gameId}/confirm_destroy`
-  
+
   modal.classList.remove('hidden')
   modal.classList.add('flex')
 }
