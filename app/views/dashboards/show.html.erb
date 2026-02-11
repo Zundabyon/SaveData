@@ -1,27 +1,21 @@
-<div class="min-h-screen text-slate-100 flex px-6">
+<div class="min-h-screen text-slate-100 flex px-4">
 
   <!-- 中央：年表 -->
-  <main class="flex-1 min-w-0 pl-16 pr-12 py-12">
-
+<main class="flex-1 min-w-0 py-16">
     <header class="mb-16 text-center header-center">
-      <h1 class="text-5xl md:text-3xl font-bold tracking-widest">
+      <h1 class="text-6xl md:text-5xl font-bold tracking-widest">
         <%= @user.name %>の冒険の記録
       </h1>
       <p class="mt-2 text-lg text-slate-400">セーブデータを選んでください</p>
     </header>
 
     <!-- スクロール制限 -->
-    <div class="relative max-w-6xl mx-auto
+    <div class="relative w-full
                 overflow-y-auto overflow-x-visible
                 max-h-[calc(100vh-6rem)] pr-6">
 
       <% @games.each do |game| %>
-        <div class="relative pl-16 mb-12 flex gap-4 items-center">
-
-          <!-- 年マーカー -->
-          <div class="year-marker font-sans">
-            <%= game.played_age %>歳
-          </div>
+        <div class="relative pl-24 mb-12 flex gap-4 items-center">
 
           <!-- 画像サムネイル -->
           <% if game.cover_image.attached? %>

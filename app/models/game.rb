@@ -3,7 +3,7 @@ class Game < ApplicationRecord
   has_one_attached :cover_image
 
   # タイトルのバリデーション
-  validates :title, presence: true, length: { maximum: 100 }
+  validates :title, presence: true, length: { maximum: 50 }
 
   # プレイした年齢（必須、0〜120歳）
   validates :played_age,
@@ -33,9 +33,9 @@ class Game < ApplicationRecord
             allow_nil: true
 
   # その他のフィールド（任意）
-  validates :hardware, length: { maximum: 50 }, allow_blank: true
-  validates :genre, length: { maximum: 50 }, allow_blank: true
-  validates :memo, length: { maximum: 500 }, allow_blank: true
+  validates :hardware, length: { maximum: 40 }, allow_blank: true
+  validates :genre, length: { maximum: 20 }, allow_blank: true
+  validates :memo, length: { maximum: 150 }, allow_blank: true
 
   # カバー画像のバリデーション
   validates :cover_image,
