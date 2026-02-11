@@ -1,6 +1,15 @@
+![demo](./demo.gif)
+
 # アプリ名
 
 SaveData
+
+URL:
+https://savedata-app.onrender.com/
+
+テストアカウント:
+Email: test@test.com
+Password: password
 
 ## サービス概要
 
@@ -27,6 +36,45 @@ SaveData は**ゲームの思い出を「年齢 × 時間軸」で記録・共�
 「自分だけの思い出」と「世代の共通体験」を
 同時に味わえるサービスを作りたいと考え、
 本サービスの開発に至りました。
+
+---
+
+## 使い方
+
+### 1. アカウント作成
+
+トップページから新規登録を行います。
+プレイヤー名・生年月日などを入力してアカウントを作成します。
+
+### 2. ゲームを登録
+
+「ゲーム登録」から以下の情報を入力できます。
+
+[![Image from Gyazo](https://i.gyazo.com/96a15a1246a11c869dad6b4e7815a720.png)](https://gyazo.com/96a15a1246a11c869dad6b4e7815a720)
+
+- ゲームタイトル
+- プレイした年齢
+- ハード / ジャンル
+- 面白さ・難易度（10段階）
+- 思い出メモ
+- カバー画像（任意）
+
+### 3. 年表で振り返る
+
+登録したゲームは、年齢順のタイムラインとして表示されます。
+自分のゲーム体験を振り返ることができます。
+
+[![Image from Gyazo](https://i.gyazo.com/baa12a65deaad174c1974f9b98164481.png)](https://gyazo.com/baa12a65deaad174c1974f9b98164481)
+
+### 4. 詳細の確認・編集
+
+各ゲームカードをクリックすると、
+
+- 思い出の詳細表示
+- 編集
+- 削除
+
+を行うことができます。
 
 ---
 
@@ -155,13 +203,15 @@ MVP では年齢軸による体験の可視化に集中します。
 
 ## 技術スタック
 
-- Rails：7.2
-- DB：PostgreSQL（NEON）
-- CSS フレームワーク :TailwindCSS
-- デプロイ先：Render
-- 認証：Devise
-- グラフ表示：Chart.js
-- フロント：Rails 標準 + Hotwire（予定）
+| 分類     | 技術                |
+| -------- | ------------------- |
+| Backend  | Ruby on Rails 7.2.3 |
+| Frontend | TailwindCSS         |
+| DB       | PostgreSQL（Neon）  |
+| 認証     | Devise              |
+| 画像     | Cloudinary          |
+| インフラ | Render              |
+| 環境     | Docker              |
 
 本サービスは CRUD 中心でユーザー・投稿・年表といった関係性が明確な為、
 ActiveRecord による直感的なデータ設計が可能な Rails を採用。
