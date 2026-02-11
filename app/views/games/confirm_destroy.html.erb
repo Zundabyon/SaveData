@@ -20,17 +20,16 @@
       「<%= @game.title %>」を削除しますか？
     </h2>
 
-<div class="flex justify-center gap-6 pt-6">
-  <%= link_to "キャンセル",
-        dashboard_path,
-        class: "rpg-command w-48 text-center" %>
+    <div class="flex justify-center gap-6 pt-6">
+      <%= link_to "キャンセル",
+            dashboard_path,
+            class: "rpg-command w-48 text-center" %>
 
-  <%= link_to "さくじょ",
-        game_path(@game),
-        data: { turbo_method: :delete },
-        class: "rpg-command w-48 text-center bg-red-700" %>
-</div>
-
+      <%= link_to "さくじょ",
+            game_path(@game),
+            data: { turbo_method: :delete },
+            class: "rpg-command w-48 text-center bg-red-700" %>
+    </div>
 
   </div>
 </div>

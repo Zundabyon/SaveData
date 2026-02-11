@@ -1,32 +1,32 @@
-<div class="min-h-screen text-slate-100 flex px-6">
+<div class="min-h-screen text-slate-100 flex px-4">
 
-  <!-- 中央：年表 -->
-  <main class="flex-1 min-w-0 pl-16 pr-12 py-12">
+  <!-- ================= 中央：年表 ================= -->
+  <main class="flex-1 min-w-0 py-16">
 
     <header class="mb-16 text-center header-center">
-      <h1 class="text-5xl md:text-3xl font-bold tracking-widest">
+      <h1 class="text-6xl md:text-5xl font-bold tracking-widest">
         <%= @user.name %>の冒険の記録
       </h1>
-      <p class="mt-2 text-lg text-slate-400">セーブデータを選んでください</p>
+      <p class="mt-2 text-lg text-slate-400">
+        セーブデータを選んでください
+      </p>
     </header>
 
     <!-- スクロール制限 -->
-    <div class="relative max-w-6xl mx-auto
+    <div class="relative w-full
                 overflow-y-auto overflow-x-visible
                 max-h-[calc(100vh-6rem)] pr-6">
 
       <% @games.each do |game| %>
-        <div class="relative pl-16 mb-12 flex gap-4 items-center">
+        <div class="relative pl-24 mb-12 flex gap-4 items-center">
 
-          <!-- 年マーカー -->
-          <div class="year-marker font-sans">
-            <%= game.played_age %>歳
-          </div>
-
-          <!-- 画像サムネイル -->
+          <!-- ================= サムネイル ================= -->
           <% if game.cover_image.attached? %>
             <div class="flex-shrink-0 group cursor-pointer"
-                 onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>', '<%= j game.memo %>', '<%= game.id %>')">
+                 onclick="openModal('<%= j game.title %>',
+                                    '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>',
+                                    '<%= j game.memo %>',
+                                    '<%= game.id %>')">
 
               <div class="relative overflow-hidden rounded-lg border-9 border-slate-600
                           hover:border-blue-500 transition-all duration-300 shadow-lg
@@ -34,19 +34,22 @@
                           bg-slate-800/60 w-[250px]">
 
                 <%= image_tag game.cover_image,
-                    class: "w-50 h-50 object-cover group-hover:scale-110 transition-transform duration-300",
-                    loading: "lazy",
-                    alt: game.title %>
+                      class: "w-50 h-50 object-cover group-hover:scale-110 transition-transform duration-300",
+                      loading: "lazy",
+                      alt: game.title %>
               </div>
             </div>
           <% end %>
 
-          <!-- カード -->
+          <!-- ================= カード ================= -->
           <div class="flex-1 timeline-card bg-slate-800/60 backdrop-blur
                       border border-slate-700 rounded-xl
                       p-8 shadow-lg cursor-pointer
                       hover:border-slate-500 transition"
-               onclick="openModal('<%= j game.title %>', '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>', '<%= j game.memo %>', '<%= game.id %>')">
+               onclick="openModal('<%= j game.title %>',
+                                  '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>',
+                                  '<%= j game.memo %>',
+                                  '<%= game.id %>')">
 
             <div class="flex items-center gap-4 flex-wrap">
 
@@ -60,16 +63,18 @@
                 <% if game.hardware.present? %>
                   <span>🎮 <%= game.hardware %></span>
                 <% end %>
+
                 <% if game.genre.present? %>
                   <span>⚔️ <%= game.genre %></span>
                 <% end %>
+
                 <% if game.played_age.present? %>
                   <span>🕰 <%= game.played_age %>歳ころの思い出</span>
                 <% end %>
               </div>
             </div>
 
-            <!-- 評価 -->
+            <!-- ================= 評価 ================= -->
             <div class="mt-4 flex gap-8 text-base text-slate-200">
 
               <% if game.difficulty.present? %>
@@ -109,12 +114,13 @@
     </div>
   </main>
 
-  <!-- 右：FF7メニュー -->
+  <!-- ================= 右：メニュー ================= -->
   <aside class="hidden md:block w-72 flex-shrink-0 ml-8">
 
     <div class="sticky top-20 mr-8">
       <div class="bg-[#0b0f2a]/90 backdrop-blur rounded-xl
-                  shadow-[0_0_30px_rgba(80,120,255,0.35)] px-8 py-6 space-y-6 rpg-side-window">
+                  shadow-[0_0_30px_rgba(80,120,255,0.35)]
+                  px-8 py-6 space-y-6 rpg-side-window">
 
         <div class="space-y-4 text-center side-block">
 
@@ -145,8 +151,8 @@
 
           <div class="flex justify-center">
             <%= image_tag "jobs/#{job_image}",
-                class: "w-48 h-48 object-contain mx-auto",
-                alt: @user.job || "職業未設定" %>
+                  class: "w-48 h-48 object-contain mx-auto",
+                  alt: @user.job || "職業未設定" %>
           </div>
 
           <div class="user-info space-y-2">
@@ -187,7 +193,7 @@
     </div>
   </aside>
 
-  <!-- モーダル -->
+  <!-- ================= モーダル ================= -->
   <div id="gameModal"
        class="fixed inset-0 hidden items-center justify-center
               bg-black/70 backdrop-blur-sm z-50">
@@ -234,32 +240,32 @@
 </div>
 
 <script>
-function openModal(title, meta, memo, gameId) {
-  const modal = document.getElementById('gameModal')
-  document.getElementById('modalTitle').innerText = title
-  document.getElementById('modalMeta').innerText = meta
-  document.getElementById('modalMemo').innerText = memo || "……"
-  document.getElementById('modalEdit').href = `/games/${gameId}/edit`
-  document.getElementById('modalDelete').href = `/games/${gameId}/confirm_destroy`
+  function openModal(title, meta, memo, gameId) {
+    const modal = document.getElementById('gameModal')
+    document.getElementById('modalTitle').innerText = title
+    document.getElementById('modalMeta').innerText = meta
+    document.getElementById('modalMemo').innerText = memo || "……"
+    document.getElementById('modalEdit').href = `/games/${gameId}/edit`
+    document.getElementById('modalDelete').href = `/games/${gameId}/confirm_destroy`
 
-  modal.classList.remove('hidden')
-  modal.classList.add('flex')
-}
-
-function closeModal() {
-  const modal = document.getElementById('gameModal')
-  modal.classList.add('hidden')
-  modal.classList.remove('flex')
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('gameModal')
-  if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeModal()
-      }
-    })
+    modal.classList.remove('hidden')
+    modal.classList.add('flex')
   }
-})
+
+  function closeModal() {
+    const modal = document.getElementById('gameModal')
+    modal.classList.add('hidden')
+    modal.classList.remove('flex')
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('gameModal')
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal()
+        }
+      })
+    }
+  })
 </script>
