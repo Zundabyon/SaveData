@@ -147,6 +147,7 @@
 }
 
 .materia {
+  display: inline-block;  /* ← これを追加 */
   width: 14px;
   height: 14px;
   border-radius: 9999px;
@@ -159,6 +160,10 @@
 .materia.inactive {
   opacity: 0.2;
   box-shadow: none;
+}
+
+.materia:hover {
+  transform: scale(1.2);  /* ← これも追加（ホバー時に拡大） */
 }
 
 .materia-red {

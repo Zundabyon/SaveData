@@ -7,7 +7,6 @@ class GamesController < ApplicationController
     @games = current_user.games.order(created_at: :desc)
   end
 
-
   def show
   end
 
@@ -21,12 +20,6 @@ class GamesController < ApplicationController
   def create
     @game = current_user.games.new(game_params)
 
-    # デバッグ用ログ
-    Rails.logger.info "===== CREATE DEBUG ====="
-    Rails.logger.info "Raw params: #{params[:game].inspect}"
-    Rails.logger.info "Game params: #{game_params.inspect}"
-    Rails.logger.info "Cover image present: #{params[:game][:cover_image].present?}"
-
     if @game.save
       Rails.logger.info "Game saved! ID: #{@game.id}, Image attached: #{@game.cover_image.attached?}"
       redirect_to dashboard_path, notice: "ゲームのおもいでをセーブしました"
@@ -37,13 +30,6 @@ class GamesController < ApplicationController
   end
 
   def update
-    # デバッグ用ログ
-    Rails.logger.info "===== UPDATE DEBUG ====="
-    Rails.logger.info "Raw params: #{params[:game].inspect}"
-    Rails.logger.info "Game params: #{game_params.inspect}"
-    Rails.logger.info "Cover image present: #{params[:game][:cover_image].present?}"
-    Rails.logger.info "Remove cover image: #{params[:game][:remove_cover_image]}"
-
     # チェックボックスで削除フラグが立っている場合
     @game.cover_image.purge if params[:game][:remove_cover_image] == "1"
 
@@ -56,11 +42,10 @@ class GamesController < ApplicationController
     end
   end
 
-def confirm_destroy
-  @game = current_user.games.find(params[:id])
-  @mode = :confirm_delete
-end
-
+  def confirm_destroy
+    @game = current_user.games.find(params[:id])
+    @mode = :confirm_delete
+  end
 
   def destroy
     @game.destroy!
@@ -77,7 +62,6 @@ end
   def set_game
     @game = current_user.games.find(params[:id])
   end
-
 
   def authorize_user!
     unless @game.user_id == current_user.id

@@ -23,37 +23,24 @@
 #
 
 class User < ApplicationRecord
-  # =========================
   # Associations
-  # =========================
   has_many :games, dependent: :destroy
-
-  # =========================
   # Enums
-  # =========================
   enum gender: { male: 0, female: 1 }
-
-  # =========================
   # Validations
-  # =========================
   validates :email, presence: true
   validates :name, presence: true
   validates :birthday, presence: true
   validates :gender, presence: true
   validates :job, presence: true
-
-  # =========================
   # Devise
-  # =========================
   devise :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
          :validatable
 
-  # =========================
   # Story / Chapter System
-  # =========================
   CHAPTERS = [
     { min: 0,  max: 1,  title: "序章",     label: "伝説の始まり" },
     { min: 2,  max: 4,  title: "第一章",   label: "目覚め" },
@@ -69,17 +56,12 @@ class User < ApplicationRecord
     { min: 30, max: 99, title: "最終章",   label: "SAVEDATA" }
   ].freeze
 
-  # 登録ゲーム数に応じて現在の章を返す
-  # ※ 0本でも「序章」
   def current_chapter
     game_count = games.count
-
     CHAPTERS.find { |c| game_count.between?(c[:min], c[:max]) }
   end
 
-  # =========================
   # Devise helper
-  # =========================
   # パスワード未入力でもユーザー情報を更新できるようにする
   def update_without_current_password(params, *options)
     params.delete(:current_password)
