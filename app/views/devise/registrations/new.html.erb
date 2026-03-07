@@ -1,151 +1,122 @@
 <% content_for :title, "サインアップ - Savedata" %>
 
-<div class="min-h-screen flex">
+<div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-start justify-center px-4 py-12">
+  <div class="w-full max-w-md">
 
-  <!-- ================= 左カラム（ステータス） ================= -->
-  <div class="w-full lg:w-1/2 flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 px-4">
-    <div class="text-center text-white w-full max-w-md">
-
-      <h1 class="text-5xl font-pixel mb-6">
+    <!-- ================= ヘッダー ================= -->
+    <div class="text-center mb-6">
+      <h1 class="text-4xl font-pixel text-white mb-1">
         CHARACTER CREATE
       </h1>
-
-      <!-- ステータスウィンドウ -->
-      <div class="bg-blue-900/60 border border-blue-300 rounded-lg p-6 font-pixel text-xs shadow-lg mb-6">
-
-        <p class="mb-4 text-center text-blue-200">
-          PLAYER STATUS
-        </p>
-
-        <div class="space-y-2 text-blue-100">
-          <div class="flex justify-between">
-            <span>NAME</span>
-            <span>NEW PLAYER</span>
-          </div>
-          <div class="flex justify-between">
-            <span>LEVEL</span>
-            <span>01</span>
-          </div>
-          <div class="flex justify-between">
-            <span>PLAY TIME</span>
-            <span>00:00</span>
-          </div>
-          <div class="flex justify-between">
-            <span>DATA SLOT</span>
-            <span>EMPTY</span>
-          </div>
-          <div class="flex justify-between">
-            <span>MODE</span>
-            <span>STORY</span>
-          </div>
-        </div>
-
-      </div>
-
-      <p class="mt-6 text-xs text-blue-200">
-        新しいキャラクターを作成し、<br>
-        あなたの冒険を振り返ろう。
-      </p>
-
+      <p class="text-xs text-blue-200">新しいセーブデータを作成</p>
     </div>
-  </div>
 
-  <!-- ================= 右カラム（フォーム） ================= -->
-  <div class="w-full lg:w-1/2 flex items-center justify-center bg-gray-300 px-4 py-12">
-    <div class="w-full max-w-md">
-
-      <!-- ヘッダー -->
-      <div class="text-center mb-8">
-        <p class="text-xs text-gray-600">
-          新しいセーブデータを作成
-        </p>
+    <!-- ================= ステータスウィンドウ ================= -->
+    <div class="bg-blue-900/60 border border-blue-300 rounded-lg p-4 font-pixel text-xs shadow-lg mb-6">
+      <p class="mb-3 text-center text-blue-200">PLAYER STATUS</p>
+      <div class="space-y-2 text-blue-100">
+        <div class="flex justify-between">
+          <span>NAME</span><span>NEW PLAYER</span>
+        </div>
+        <div class="flex justify-between">
+          <span>LEVEL</span><span>01</span>
+        </div>
+        <div class="flex justify-between">
+          <span>PLAY TIME</span><span>00:00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>DATA SLOT</span><span>EMPTY</span>
+        </div>
+        <div class="flex justify-between">
+          <span>MODE</span><span>STORY</span>
+        </div>
       </div>
-
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-
-        <%= render "devise/shared/error_messages", resource: resource %>
-
-        <!-- 名前 -->
-        <div class="mb-4">
-          <%= f.label :name, "プレイヤー名",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.text_field :name,
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- Email -->
-        <div class="mb-4">
-          <%= f.label :email, "メールアドレス",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.email_field :email,
-                autofocus: true,
-                autocomplete: "email",
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- 誕生日 -->
-        <div class="mb-4">
-          <%= f.label :birthday, "誕生日",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.date_field :birthday,
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- 性別 -->
-        <div class="mb-5">
-          <span class="block text-xs font-semibold text-gray-700 mb-2">性別</span>
-
-          <label class="inline-flex items-center mr-4">
-            <%= f.radio_button :gender, "male" %>
-            <span class="ml-2 text-gray-700">男性</span>
-          </label>
-
-          <label class="inline-flex items-center">
-            <%= f.radio_button :gender, "female" %>
-            <span class="ml-2 text-gray-700">女性</span>
-          </label>
-        </div>
-
-        <!-- 職業 -->
-        <div class="mb-5">
-          <%= f.label :job, "職業",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.select :job,
-                [["せんし", "warrior"], ["まほうつかい", "mage"], ["とうぞく", "thief"], ["そうりょ", "priest"], ["ゆうしゃ", "fighter"], ["しにがみ", "devil"], ["Figma職人", "figma_master"], ["ロブスター", "lobster"], ["その他", "other"]],
-                { include_blank: "選択してください" },
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- パスワード -->
-        <div class="mb-4">
-          <%= f.label :password, "パスワード ※6文字以上でご入力ください",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.password_field :password,
-                autocomplete: "new-password",
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- 確認 -->
-        <div class="mb-6">
-          <%= f.label :password_confirmation, "パスワード（確認）",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.password_field :password_confirmation,
-                autocomplete: "new-password",
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <%= f.submit "CREATE",
-              class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-pixel rounded-md transition" %>
-
-      <% end %>
-
-      <div class="mt-6 text-center text-xs">
-        <%= link_to "ログイン画面に戻る",
-              new_session_path(resource_name),
-              class: "text-blue-700 hover:underline" %>
-      </div>
-
     </div>
-  </div>
 
+    <!-- ================= フォーム ================= -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <!-- 名前 -->
+      <div class="mb-4">
+        <%= f.label :name, "プレイヤー名",
+              class: "block text-xs font-semibold text-gray-700 mb-1" %>
+        <%= f.text_field :name,
+              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <%= f.label :email, "メールアドレス",
+              class: "block text-xs font-semibold text-gray-700 mb-1" %>
+        <%= f.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      </div>
+
+      <!-- 誕生日 -->
+      <div class="mb-4">
+        <%= f.label :birthday, "誕生日",
+              class: "block text-xs font-semibold text-gray-700 mb-1" %>
+        <%= f.date_field :birthday,
+              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      </div>
+
+      <!-- 性別 -->
+      <div class="mb-5">
+        <span class="block text-xs font-semibold text-gray-700 mb-2">性別</span>
+        <label class="inline-flex items-center mr-4">
+          <%= f.radio_button :gender, "male" %>
+          <span class="ml-2 text-gray-700">男性</span>
+        </label>
+        <label class="inline-flex items-center">
+          <%= f.radio_button :gender, "female" %>
+          <span class="ml-2 text-gray-700">女性</span>
+        </label>
+      </div>
+
+      <!-- 職業 -->
+      <div class="mb-5">
+        <%= f.label :job, "職業",
+              class: "block text-xs font-semibold text-gray-700 mb-1" %>
+        <%= f.select :job,
+              [["せんし", "warrior"], ["まほうつかい", "mage"], ["とうぞく", "thief"], ["そうりょ", "priest"], ["ゆうしゃ", "fighter"], ["しにがみ", "devil"], ["Figma職人", "figma_master"], ["ロブスター", "lobster"], ["その他", "other"]],
+              { include_blank: "選択してください" },
+              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      </div>
+
+      <!-- パスワード -->
+      <div class="mb-4">
+        <%= f.label :password, "パスワード ※6文字以上でご入力ください",
+              class: "block text-xs font-semibold text-gray-700 mb-1" %>
+        <%= f.password_field :password,
+              autocomplete: "new-password",
+              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      </div>
+
+      <!-- 確認 -->
+      <div class="mb-6">
+        <%= f.label :password_confirmation, "パスワード（確認）",
+              class: "block text-xs font-semibold text-gray-700 mb-1" %>
+        <%= f.password_field :password_confirmation,
+              autocomplete: "new-password",
+              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+      </div>
+
+      <%= f.submit "CREATE",
+            class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-pixel rounded-md transition" %>
+
+    <% end %>
+    </div>
+
+    <div class="mt-6 text-center text-xs">
+      <%= link_to "ログイン画面に戻る",
+            new_session_path(resource_name),
+            class: "text-blue-200 hover:text-white" %>
+    </div>
+
+  </div>
 </div>

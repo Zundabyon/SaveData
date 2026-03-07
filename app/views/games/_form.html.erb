@@ -193,7 +193,7 @@
     });
   }
 
-  // マテリア評価システム
+  // マテリアル評価システム
   function setupMateriaRating() {
     // 既存の値を反映
     const currentFun = document.querySelector('input[name="game[fun]"]:checked');
@@ -221,7 +221,7 @@
     });
   }
   
-  // マテリアの表示を更新
+  // マテリアルの表示を更新
   function updateMaterias(type, rating) {
     document.querySelectorAll(`.materia[data-type="${type}"]`).forEach(m => {
       const mRating = parseInt(m.dataset.rating);

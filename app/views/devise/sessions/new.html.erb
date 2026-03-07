@@ -1,147 +1,277 @@
 <% content_for :title, "ログイン - Savedata" %>
 
-<div class="min-h-screen flex">
+<div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-start justify-center px-4 py-12">
+  <div class="w-full max-w-md">
 
-  <!-- ================= 左カラム（装飾） ================= -->
-  <div
-    class="hidden lg:flex lg:w-1/2
-           bg-gradient-to-br from-blue-600 to-blue-800
-           items-center justify-center p-8"
-  >
-    <div class="relative text-center">
+    <!-- ================= ヘッダー ================= -->
+    <div class="text-center mb-6">
 
       <!-- 浮いてるカード -->
-      <div class="card-float-wrapper">
+      <div class="card-float-wrapper mb-2">
         <%= image_tag "dragon_card.png",
-              class: "card-float",
+              class: "card-float mx-auto",
               alt: "dragon card" %>
       </div>
 
-      <!-- ロゴ -->
-      <h1 class="text-5xl font-bold text-white mb-2 font-pixel">
+      <h1 class="text-5xl font-bold text-white font-pixel mb-1">
         Savedata
       </h1>
 
-      <!-- 外枠 -->
-      <div class="mb-12 flex justify-center">
+      <!-- ローディングバー -->
+      <div class="flex justify-center mb-3">
         <div class="w-72 h-5 bg-black border-4 border-white rounded overflow-hidden">
           <div class="h-full bg-pink-400 animate-fill w-0"></div>
         </div>
       </div>
-
-      <div class="mt-16">
-        <p class="text-lg leading-relaxed text-gray-300">
-          Savedataは、ゲームの思い出を「年齢 × 時間軸」で<br>
-          記録するアプリです。
-        </p>
-
-        <p class="text-l leading-relaxed text-gray-300 mt-2">
-          あの頃のプレイ体験を、感動を人生の年表として残そう。
-        </p>
-
-        <div class="mt-8">
-          <%= link_to "使い方",
-                how_to_path,
-                class: "inline-block px-6 py-3 bg-white/10 text-white font-semibold rounded-lghover:bg-white/20 transition-colors backdrop-blur" %>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- ================= 右カラム（ログインフォーム） ================= -->
-  <div
-    class="w-full lg:w-1/2
-           flex items-center justify-center
-           bg-gray-300 px-4 py-12 sm:px-6 lg:px-8"
-  >
-    <div class="w-full max-w-md mt-12">
+    <!-- ================= 紹介文 ================= -->
+    <div class="mb-8 text-center">
+      <p class="text-lg leading-relaxed text-white">
+        Savedataは、ゲームの思い出を<br>
+        「年齢 × 時間軸」で<br>
+        記録するアプリです。
+      </p>
+      <p class="text-sm leading-relaxed text-blue-200 mt-2">
+        あの頃のプレイ体験を、感動を人生の年表として残そう。
+      </p>
+    </div>
 
-      <!-- ヘッダー -->
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-pixel text-gray-900 mb-2">
-          LOGIN
-        </h2>
-        <p class="text-xs text-gray-600">
-          セーブデータ管理システムへようこそ
-        </p>
-      </div>
+    <!-- ================= 冒険をはじめる ================= -->
+    <div id="adventure-start" class="adventure-map-frame p-3 mb-6 font-pixel">
+      <span class="map-corner map-corner-tl">✦</span>
+      <span class="map-corner map-corner-tr">✦</span>
+      <span class="map-corner map-corner-bl">✦</span>
+      <span class="map-corner map-corner-br">✦</span>
+      <button type="button"
+              onclick="showCommandSelect()"
+              class="hover-blink flex items-center justify-center gap-2 py-3 px-4 text-green-200 text-sm hover:bg-white/10 rounded transition w-full">
+        ▶ ぼうけんをはじめる
+      </button>
+    </div>
 
-      <!-- フォーム -->
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+    <!-- ================= コマンド選択 ================= -->
+    <div id="command-select" class="rpg-side-window rounded-lg p-2 mb-6 font-pixel" style="display:none;">
 
-        <% if resource.errors.any? %>
-          <div class="mb-6 p-4 bg-red-100 border border-red-400 rounded-md text-xs">
-            <ul class="space-y-1 text-red-700">
-              <% resource.errors.full_messages.each do |message| %>
-                <li>・<%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <!-- メールアドレス -->
-        <div class="mb-5">
-          <%= f.label :email, "メールアドレス",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.email_field :email,
-                autofocus: true,
-                autocomplete: "email",
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- パスワード -->
-        <div class="mb-5">
-          <%= f.label :password, "パスワード",
-                class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.password_field :password,
-                autocomplete: "current-password",
-                class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-        </div>
-
-        <!-- Remember me -->
-        <% if devise_mapping.rememberable? %>
-          <div class="mb-6">
-            <label class="flex items-center">
-              <%= f.check_box :remember_me,
-                    class: "w-4 h-4 border-gray-400 rounded" %>
-              <span class="ml-2 text-xs text-gray-700">
-                このデバイスで覚えておく
-              </span>
-            </label>
-          </div>
-        <% end %>
-
-        <!-- ログインボタン -->
-        <%= f.submit "START",
-              class: "w-full py-3 bg-blue-600 hover:bg-blue-700
-                     text-white font-pixel rounded-md transition" %>
-
+      <!-- はじめから -->
+      <%= link_to new_registration_path(resource_name),
+            class: "hover-blink flex items-center py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition block" do %>
+        はじめから
       <% end %>
 
-      <!-- 下部リンク -->
-      <div class="mt-6 space-y-2 text-center text-xs">
-        <%= link_to "アカウントを新規作成",
-              new_registration_path(resource_name),
-              class: "text-blue-700 hover:underline block" %>
+      <div class="border-t border-blue-400/30 mx-2"></div>
 
-        <%= link_to "パスワードをお忘れですか？",
-              new_password_path(resource_name),
-              class: "text-gray-600 hover:underline block" %>
-      </div>
-
-      <!-- 利用規約・プライバシーポリシー -->
-      <div class="mt-6 text-center text-xs text-gray-600 opacity-80">
-        <%= link_to "利用規約",
-              terms_path,
-              class: "underline hover:opacity-100" %>
-        ・
-        <%= link_to "プライバシーポリシー",
-              privacy_policy_path,
-              class: "underline hover:opacity-100" %>
-      </div>
+      <!-- つづきから -->
+      <button type="button"
+              onclick="document.getElementById('command-select').style.display='none'; document.getElementById('login-form').style.display='block';"
+              class="hover-blink flex items-center py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition w-full text-left">
+        つづきから
+      </button>
 
     </div>
-  </div>
 
+    <!-- ================= ログインフォーム（つづきから） ================= -->
+    <div id="login-form" style="display:<%= resource.errors.any? ? 'block' : 'none' %>;">
+
+      <!-- もどるボタン -->
+      <button type="button"
+              onclick="document.getElementById('login-form').style.display='none'; document.getElementById('command-select').style.display='block';"
+              class="text-blue-200 text-xs hover:text-white mb-4 block">
+        ← もどる
+      </button>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h2 class="text-2xl font-pixel text-gray-900 mb-4 text-center">LOGIN</h2>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+
+          <% if resource.errors.any? %>
+            <div class="mb-6 p-4 bg-red-100 border border-red-400 rounded-md text-xs">
+              <ul class="space-y-1 text-red-700">
+                <% resource.errors.full_messages.each do |message| %>
+                  <li>・<%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <!-- メールアドレス -->
+          <div class="mb-5">
+            <%= f.label :email, "メールアドレス",
+                  class: "block text-xs font-semibold text-gray-700 mb-1" %>
+            <%= f.email_field :email,
+                  autofocus: true,
+                  autocomplete: "email",
+                  class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+          </div>
+
+          <!-- パスワード -->
+          <div class="mb-5">
+            <%= f.label :password, "パスワード",
+                  class: "block text-xs font-semibold text-gray-700 mb-1" %>
+            <%= f.password_field :password,
+                  autocomplete: "current-password",
+                  class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+          </div>
+
+          <!-- デバイスで記憶 -->
+          <% if devise_mapping.rememberable? %>
+            <div class="mb-6">
+              <label class="flex items-center">
+                <%= f.check_box :remember_me,
+                      class: "w-4 h-4 border-gray-400 rounded" %>
+                <span class="ml-2 text-xs text-gray-700">このデバイスで覚えておく</span>
+              </label>
+            </div>
+          <% end %>
+         <!-- パスワードをお忘れの方向け -->
+          <%= f.submit "START",
+                class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-pixel rounded-md transition" %>
+            <div class="text-center text-xs">
+              <%= link_to "パスワードをお忘れですか？",
+                    new_password_path(resource_name),
+                    class: "text-blue-200 hover:text-white block" %>
+            </div>
+        <% end %>
+      </div>
+
+
+    </div>
+
+    <!-- 利用規約・プライバシーポリシー -->
+    <div class="mt-6 text-center text-xs text-blue-200 opacity-80">
+      <%= link_to "利用規約", terms_path, class: "underline hover:opacity-100" %>
+      ・
+      <%= link_to "プライバシーポリシー", privacy_policy_path, class: "underline hover:opacity-100" %>
+    </div>
+
+    <!-- ================= どんなアプリ？ ================= -->
+    <div class="mt-16 border-t border-blue-400/40 pt-10 pb-8">
+      <h2 class="text-xl font-pixel text-white text-center mb-8">FEATURES</h2>
+
+      <div class="space-y-6">
+
+        <!-- 機能 01 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">🎮</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 01</div>
+            <div class="text-white text-sm font-bold">ゲームを登録</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            タイトル・プレイした年齢・ハード・ジャンル・面白さ・難易度・思い出メモを記録できます。
+          </div>
+        </div>
+
+        <!-- 機能 02 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">📅</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 02</div>
+            <div class="text-white text-sm font-bold">年表タイムライン</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            登録ゲームが年齢順のタイムラインとして並び、自分のゲーム人生を一覧で振り返れます。
+          </div>
+        </div>
+
+        <!-- 機能 03 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">💬</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 03</div>
+            <div class="text-white text-sm font-bold">思い出メモ</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            「あの頃どんな気持ちで遊んだか」を感情とともに記録。ゲームを人生の記憶として残せます。
+          </div>
+        </div>
+
+        <!-- 機能 04 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">🔍</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 04</div>
+            <div class="text-white text-sm font-bold">詳細カード</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            ゲームカードをクリックすると思い出の詳細が表示され、編集・削除も行えます。
+          </div>
+        </div>
+
+        <!-- 機能 05 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">🌐</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 05</div>
+            <div class="text-white text-sm font-bold">シェア機能（予定）</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            年表をSNSでシェアし、同世代との共感・世代を超えた体験の違いを楽しめます。
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= 使い方 ================= -->
+    <div class="mt-16 border-t border-blue-400/40 pt-10 pb-8">
+      <h2 class="text-xl font-pixel text-white text-center mb-8">HOW TO USE</h2>
+
+      <div class="space-y-6">
+
+        <!-- STEP 01 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">🎮</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">STEP 01</div>
+            <div class="text-white text-sm font-bold">アカウント作成</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            SaveDataにアクセスし、新規登録を行います。
+            冒険者名（あなたのお名前）やパスワードをご入力ください。
+          </div>
+        </div>
+
+        <!-- STEP 02 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">💾</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">STEP 02</div>
+            <div class="text-white text-sm font-bold">セーブデータ登録</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            プレイしたゲームの情報や思い出を登録。
+            あの頃の冒険を記録として残すことができます。
+          </div>
+        </div>
+
+        <!-- STEP 03 -->
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <div class="text-center">
+            <div class="text-3xl mb-1">🚀</div>
+            <div class="text-blue-200 text-xs font-semibold mb-1">STEP 03</div>
+            <div class="text-white text-sm font-bold">アップデート予定</div>
+          </div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            マイページ一覧管理・他ユーザーとの交流機能など、
+            随時追加予定です。お楽しみに！
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<script>
+  function showCommandSelect() {
+    document.getElementById('adventure-start').style.display = 'none';
+    var el = document.getElementById('command-select');
+    el.style.display = 'block';
+    el.classList.remove('rpg-modal');
+    void el.offsetWidth; // reflow でアニメーションをリセット
+    el.classList.add('rpg-modal');
+  }
+</script>

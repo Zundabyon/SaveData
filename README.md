@@ -11,6 +11,8 @@ https://savedata-app.onrender.com/
 Email: test@test.com
 Password: password
 
+[アプリ開発記録](https://www.notion.so/SaveData-2de905f284078065926eeb848b141247?source=copy_link)
+
 ## サービス概要
 
 SaveData は**ゲームの思い出を「年齢 × 時間軸」で記録・共有できるノスタルジー型サービス**です。

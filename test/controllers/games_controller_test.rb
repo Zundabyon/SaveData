@@ -1,13 +1,13 @@
 require "test_helper"
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
-  test "should get new" do
-    get games_new_url
-    assert_response :success
+  test "unauthenticated access to new redirects to login" do
+    get new_game_url
+    assert_redirected_to new_user_session_path
   end
 
-  test "should get create" do
-    get games_create_url
-    assert_response :success
+  test "unauthenticated access to show redirects to login" do
+    get game_url(games(:one))
+    assert_redirected_to new_user_session_path
   end
 end
