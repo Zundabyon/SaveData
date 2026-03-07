@@ -23,15 +23,13 @@
 #
 
 one:
-  email: MyString
-  name: MyString
-  birthday: 2026-01-14
-  gender: false
-  crypted_password: 1
+  email: user1@example.com
+  name: Test User One
+  birthday: 1990-01-01
+  encrypted_password: <%= BCrypt::Password.create('password', cost: 4) %>
 
 two:
-  email: MyString
-  name: MyString
-  birthday: 2026-01-14
-  gender: false
-  crypted_password: 1
+  email: user2@example.com
+  name: Test User Two
+  birthday: 1995-06-15
+  encrypted_password: <%= BCrypt::Password.create('password', cost: 4) %>

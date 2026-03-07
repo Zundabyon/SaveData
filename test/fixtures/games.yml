@@ -27,17 +27,19 @@
 #
 
 one:
-  title: MyString
-  platform: MyString
-  started_year: 1
-  ended_year: 1
+  title: Game One
+  hardware: Nintendo Switch
+  played_age: 10
+  played_year: 2000
+  ended_year: 2001
   memo: MyText
   user: one
 
 two:
-  title: MyString
-  platform: MyString
-  started_year: 1
-  ended_year: 1
+  title: Game Two
+  hardware: PlayStation
+  played_age: 15
+  played_year: 2005
+  ended_year: 2006
   memo: MyText
   user: two
