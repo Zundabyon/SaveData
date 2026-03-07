@@ -384,54 +384,7 @@
   animation: gentleBlink 1.2s ease-in-out infinite;
 }
 
-/* ---- 冒険マップフレーム ---- */
-.adventure-map-frame {
-  position: relative;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.025) 0px,
-      rgba(255,255,255,0.025) 1px,
-      transparent 1px,
-      transparent 24px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.025) 0px,
-      rgba(255,255,255,0.025) 1px,
-      transparent 1px,
-      transparent 24px
-    ),
-    linear-gradient(
-      160deg,
-      #0d2e1a 0%,
-      #1a4a28 20%,
-      #153d20 40%,
-      #0e3018 60%,
-      #1c4a2a 80%,
-      #0d2e1a 100%
-    );
-  border: 3px solid #5a9a40;
-  box-shadow:
-    0 0 0 1px rgba(140, 220, 100, 0.5) inset,
-    0 0 0 5px rgba(30, 80, 20, 0.6) inset,
-    0 4px 24px rgba(0, 0, 0, 0.7),
-    0 0 18px rgba(80, 180, 60, 0.35);
-  border-radius: 8px;
-}
-
-.map-corner {
-  position: absolute;
-  color: #8fcc60;
-  font-size: 11px;
-  line-height: 1;
-  pointer-events: none;
-  text-shadow: 0 0 6px rgba(140, 220, 80, 0.8);
-}
-.map-corner-tl { top: 5px;    left: 8px;  }
-.map-corner-tr { top: 5px;    right: 8px; }
-.map-corner-bl { bottom: 5px; left: 8px;  }
-.map-corner-br { bottom: 5px; right: 8px; }
+/* .rpg-menu-item のカーソルは JS で制御 */
 
 header {
   position: relative;

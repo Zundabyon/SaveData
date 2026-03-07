@@ -38,15 +38,11 @@
     </div>
 
     <!-- ================= 冒険をはじめる ================= -->
-    <div id="adventure-start" class="adventure-map-frame p-3 mb-6 font-pixel">
-      <span class="map-corner map-corner-tl">✦</span>
-      <span class="map-corner map-corner-tr">✦</span>
-      <span class="map-corner map-corner-bl">✦</span>
-      <span class="map-corner map-corner-br">✦</span>
+    <div id="adventure-start" class="rpg-side-window rounded-lg p-2 mb-6 font-pixel">
       <button type="button"
               onclick="showCommandSelect()"
-              class="hover-blink flex items-center justify-center gap-2 py-3 px-4 text-green-200 text-sm hover:bg-white/10 rounded transition w-full">
-        ▶ ぼうけんをはじめる
+              class="rpg-menu-item block w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
+        ぼうけんをはじめる
       </button>
     </div>
 
@@ -55,7 +51,7 @@
 
       <!-- はじめから -->
       <%= link_to new_registration_path(resource_name),
-            class: "hover-blink flex items-center py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition block" do %>
+            class: "rpg-menu-item flex items-center py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition block" do %>
         はじめから
       <% end %>
 
@@ -64,7 +60,7 @@
       <!-- つづきから -->
       <button type="button"
               onclick="document.getElementById('command-select').style.display='none'; document.getElementById('login-form').style.display='block';"
-              class="hover-blink flex items-center py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition w-full text-left">
+              class="rpg-menu-item block w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
         つづきから
       </button>
 
@@ -271,7 +267,30 @@
     var el = document.getElementById('command-select');
     el.style.display = 'block';
     el.classList.remove('rpg-modal');
-    void el.offsetWidth; // reflow でアニメーションをリセット
+    void el.offsetWidth;
     el.classList.add('rpg-modal');
   }
+
+  document.querySelectorAll('.rpg-menu-item').forEach(function(el) {
+      var cursor = document.createElement('span');
+      cursor.textContent = '▶';
+      cursor.style.cssText =
+        'display:inline-block;' +
+        'width:0;' +
+        'min-width:0;' +
+        'overflow:hidden;' +
+        'white-space:nowrap;' +
+        'margin-right:0;' +
+        'transition:width 0.12s ease, margin-right 0.12s ease;';
+      el.insertBefore(cursor, el.firstChild);
+
+      el.addEventListener('mouseenter', function() {
+        cursor.style.width = '1.2em';
+        cursor.style.marginRight = '0.4em';
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.style.width = '0';
+        cursor.style.marginRight = '0';
+      });
+  });
 </script>
