@@ -154,11 +154,12 @@
   box-shadow:
     inset 0 0 2px rgba(255,255,255,0.6),
     0 0 6px currentColor;
-  transition: opacity 0.3s ease;
+  outline: 1px solid rgba(0,0,0,0.3);
+  transition: opacity 0.8s ease;
 }
 
 .materia.inactive {
-  opacity: 0.2;
+  opacity: 0.45;
   box-shadow: none;
 }
 
@@ -167,20 +168,20 @@
 }
 
 .materia-red {
-  color: rgb(255, 100, 100);
+  color: rgb(255, 60, 60);
   background: radial-gradient(circle at 30% 30%,
-    #ffd6d6,
-    #ff4a4a 60%,
-    #9b0000
+    #ffaaaa,
+    #ee1111 55%,
+    #6b0000
   );
 }
 
 .materia-green {
-  color: rgb(120, 255, 160);
+  color: rgb(60, 220, 120);
   background: radial-gradient(circle at 30% 30%,
-    #d6ffe8,
-    #3bff8f 60%,
-    #007a3d
+    #aaffcc,
+    #00cc55 55%,
+    #004d22
   );
 }
 
@@ -519,4 +520,250 @@ header {
   display: flex;
   justify-content: center;
   margin-bottom: 20px; /* 10pxから20pxに増やす */
+}
+
+/* ============================================================
+   FEATURES Book Carousel — CSS Sprite + Scroll-Timeline
+   Chrome 115+ (scroll-driven), Chrome 134+ (::scroll-button)
+   ============================================================ */
+
+@property --feat-sprite-fs {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: true;
+}
+
+@property --feat-progress {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+.feat-book-container {
+  /* layout */
+  --slides: 5;
+
+  /* sprite sheet constants (book.webp: 9600×3000px, 7 frames, 5 cols) */
+  --sprite-c:  5;
+  --sprite-h:  3000;
+  --sprite-w:  9600;
+  --sprite-f:  7;
+  --sprite-fr: 12;
+  --sprite-as: calc(var(--sprite-f) / var(--sprite-fr) * 1s);
+
+  /* derived sprite geometry */
+  --sprite-r:  round(up, calc(var(--sprite-f) / var(--sprite-c)), 1);
+  --sprite-sh: calc(var(--sprite-h) / var(--sprite-r));
+  --sprite-th: calc(var(--sprite-sh) / 2.8);   /* overall scale */
+
+  --sprite-ar: calc(var(--sprite-th) / var(--sprite-sh));
+  --sprite-uh: calc(var(--sprite-h) * var(--sprite-ar));
+  --sprite-uw: calc(var(--sprite-w) * var(--sprite-ar));
+  --sprite-tw: calc(var(--sprite-uw) / var(--sprite-c));
+
+  position: relative;
+  width: 100%;
+}
+
+/* grid: carousel only — nav is overlaid inside */
+.feat-book {
+  position: relative;
+  text-align: center;
+  /* expose the scroll-timeline to sibling .feat-sprite */
+  timeline-scope: --feat-carousel-timeline;
+}
+
+/* ── Sprite (page-flip background image) ── */
+.feat-sprite {
+  position: absolute;
+  /* 水平: コンテナ中央に揃える */
+  left: 50%;
+  transform: translateX(-50%);
+  /* 垂直: スプライトのコンテンツ領域をカルーセルに重ねる */
+  margin-top: calc(-1px * ((var(--sprite-th) - var(--sprite-th) * 0.6107) / 2));
+  height: calc(1px * var(--sprite-th));
+  width:  calc(1px * var(--sprite-tw));
+
+  background-image: url(https://assets.codepen.io/36869/book.webp);
+  background-repeat: no-repeat;
+  background-size: calc(1px * var(--sprite-uw)) calc(1px * var(--sprite-uh));
+  z-index: 0;
+  pointer-events: none;
+
+  /* sprite frame calculation */
+  --feat-sprite-fe:    calc(var(--sprite-f) * (var(--slides) - 1));
+  --feat-sprite-fs-n:  mod(var(--feat-sprite-fs), var(--sprite-f));
+  --feat-row: calc(
+    round(down, calc(var(--sprite-tw) * var(--feat-sprite-fs-n) / var(--sprite-uw)), 1)
+    * var(--sprite-th)
+  );
+  --feat-col: mod(calc(var(--sprite-tw) * var(--feat-sprite-fs-n)), var(--sprite-uw));
+
+  background-position: calc(-1px * var(--feat-col)) calc(-1px * var(--feat-row));
+  animation: feat-frame var(--sprite-as) linear 0s normal none running;
+  animation-timeline: --feat-carousel-timeline;
+}
+
+/* ── Carousel scroll container ── */
+.feat-carousel {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  display: grid;
+  margin: 0 auto;
+  width:  calc(1px * (var(--sprite-tw) * 0.7042));
+  height: calc(1px * (var(--sprite-th) * 0.6107));
+  grid: 1fr / auto-flow 100%;
+  scroll-timeline: --feat-carousel-timeline x;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  scroll-marker-group: after;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Native scroll buttons — overlaid inside the book (Chrome 134+) ── */
+.feat-carousel::scroll-button(*) {
+  position: absolute;
+  bottom: 10px;
+  z-index: 3;
+  inline-size: 30px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.35);
+  border-radius: 3px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.75rem;
+}
+.feat-carousel::scroll-button(*):disabled            { opacity: 0.2; }
+.feat-carousel::scroll-button(*):not(:disabled):hover { background: rgba(0,0,0,0.55); filter: drop-shadow(0 0 5px rgba(150,200,255,0.9)); }
+.feat-carousel::scroll-button(left)  { content: "◀" / "前へ"; left:  8px; }
+.feat-carousel::scroll-button(right) { content: "▶" / "次へ"; right: 8px; }
+
+/* ── Progress bar — overlaid at bottom center ── */
+.feat-carousel::scroll-marker-group {
+  content: "";
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  max-width: 160px;
+  height: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(96,165,250,0.85) 0%) no-repeat left center;
+  background-size: var(--feat-progress, calc(100% / var(--slides))) 100%;
+  animation: feat-progress linear both;
+  animation-timeline: --feat-carousel-timeline;
+}
+
+/* ── Carousel items ── */
+.feat-carousel-item {
+  scroll-snap-stop: always;
+  scroll-snap-align: start;
+  position: relative;
+  box-sizing: border-box;
+  color: #1e293b;
+  animation: feat-count-before linear forwards;
+  animation-range: exit;
+  animation-timeline: view(x);
+}
+.feat-carousel-item::scroll-marker {
+  content: '';
+  width: 100%; height: 100%;
+  display: block;
+  box-sizing: border-box;
+  box-shadow: 2px 0 0 rgba(180,200,255,0.3);
+}
+.feat-carousel-item:last-of-type::scroll-marker { box-shadow: none; }
+
+/* ── Page layout ── */
+.feat-page-container {
+  display: flex;
+  height: 100%;
+  animation: feat-stay-centered linear both;
+  animation-timeline: view(x);
+}
+
+.feat-page {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feat-left-page {
+  padding: 16px 10px 40px 18px; /* 下は nav ボタン分 余白 */
+  border-right: 1px solid rgba(0,0,0,0.12);
+  flex-direction: column;
+  text-align: center;
+}
+
+.feat-right-page {
+  padding: 16px 18px 40px 10px; /* 下は nav ボタン分 余白 */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.feat-page-icon  { font-size: 3.5rem; line-height: 1; margin: 0 0 10px; }
+.feat-page-label {
+  font-size: 0.7rem;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  font-family: 'DotGothic16', monospace;
+  margin: 0 0 8px;
+}
+.feat-page-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #0f172a;
+  font-family: 'DotGothic16', monospace;
+  line-height: 2;
+  margin: 0;
+}
+.feat-page-desc {
+  font-size: 0.85rem;
+  color: #1e293b;
+  line-height: 1.9;
+  font-family: 'DotGothic16', monospace;
+  text-align: justify;
+  hyphens: auto;
+  margin: 0;
+}
+
+/* ── Keyframes ── */
+@keyframes feat-stay-centered {
+  entry   0% { opacity: 0; translate: -100%; }
+  entry  75% { opacity: 0; translate:  -25%; }
+  entry 100% { opacity: 1; translate:    0%; }
+  exit    0% { opacity: 1; translate:    0%; }
+  exit   50% { opacity: 0; translate:   50%; }
+  exit  100% { opacity: 0; translate:  100%; }
+}
+
+@keyframes feat-count-before {
+  1%, 100% { counter-increment: page; }
+}
+
+@keyframes feat-progress {
+  100% { --feat-progress: 100%; }
+}
+
+@keyframes feat-frame {
+  to { --feat-sprite-fs: var(--feat-sprite-fe); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .feat-book-container { --sprite-th: calc(var(--sprite-sh) / 4.5); }
+  .feat-page-icon      { font-size: 2.4rem; }
+  .feat-page-label     { font-size: 0.4rem; }
+  .feat-page-title     { font-size: 0.5rem; }
+  .feat-page-desc      { font-size: 0.5rem; }
 }

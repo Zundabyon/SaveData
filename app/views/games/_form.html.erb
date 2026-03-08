@@ -24,12 +24,13 @@
 
   <!-- ハードとジャンルを横並び -->
   <div class="grid grid-cols-2 gap-3 mb-4">
-    <!-- ハード -->
+    <!-- ゲーム機 -->
     <div>
-      <%= f.label :hardware, "ハード",
+      <%= f.label :hardware, "遊んだゲーム機",
             class: "block text-xl font-bold text-gray-800 mb-1" %>
-      <%= f.text_field :hardware,
-            placeholder: "PS / SFC など",
+      <%= f.grouped_collection_select :hardware,
+            Game::HARDWARE_GROUPED, :last, :first, :itself, :itself,
+            { include_blank: "-- 選択 --" },
             class: "w-full px-3 py-2 bg-white border border-gray-400 rounded text-sm" %>
     </div>
 
@@ -37,7 +38,9 @@
     <div>
       <%= f.label :genre, "ジャンル",
             class: "block text-xl font-bold text-gray-800 mb-1" %>
-      <%= f.text_field :genre,
+      <%= f.select :genre,
+            Game::GENRE_OPTIONS,
+            { include_blank: "-- 選択 --" },
             class: "w-full px-3 py-2 bg-white border border-gray-400 rounded text-sm" %>
     </div>
   </div>
@@ -61,7 +64,7 @@
           <%= f.radio_button :fun, i, id: "fun_#{i}", class: "hidden" %>
           <label for="fun_<%= i %>" class="cursor-pointer">
             <span class="materia materia-green inline-block <%= 'inactive' unless game.fun && game.fun >= i %>" 
-                  data-rating="<%= i %>" 
+                  data-rating="<%= i %>"
                   data-type="fun"></span>
           </label>
         <% end %>
@@ -232,4 +235,5 @@
       }
     });
   }
+
 </script>
