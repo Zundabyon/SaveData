@@ -1,12 +1,12 @@
 <% content_for :title, "ログイン - Savedata" %>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-start justify-center px-4 py-12">
-  <div class="w-full max-w-md">
+<div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 px-4 py-12">
+  <div class="w-full max-w-md mx-auto">
 
     <!-- ================= ヘッダー ================= -->
     <div class="text-center mb-6">
 
-      <!-- 浮いてるカード -->
+      <!-- トップ画 -->
       <div class="card-float-wrapper mb-2">
         <%= image_tag "dragon_card.png",
               class: "card-float mx-auto",
@@ -38,16 +38,16 @@
     </div>
 
     <!-- ================= 冒険をはじめる ================= -->
-    <div id="adventure-start" class="rpg-side-window rounded-lg p-2 mb-6 font-pixel">
+    <div id="adventure-start" class="rpg-side-window rounded-lg py-2 px-4 mb-6">
       <button type="button"
               onclick="showCommandSelect()"
-              class="rpg-menu-item block w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
+              class="rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
         ぼうけんをはじめる
       </button>
     </div>
 
     <!-- ================= コマンド選択 ================= -->
-    <div id="command-select" class="rpg-side-window rounded-lg p-2 mb-6 font-pixel" style="display:none;">
+    <div id="command-select" class="rpg-side-window rounded-lg py-2 px-4 mb-6" style="display:none;">
 
       <!-- はじめから -->
       <%= link_to new_registration_path(resource_name),
@@ -60,7 +60,7 @@
       <!-- つづきから -->
       <button type="button"
               onclick="document.getElementById('command-select').style.display='none'; document.getElementById('login-form').style.display='block';"
-              class="rpg-menu-item block w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
+              class="rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
         つづきから
       </button>
 
@@ -77,7 +77,7 @@
       </button>
 
       <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-        <h2 class="text-2xl font-pixel text-gray-900 mb-4 text-center">LOGIN</h2>
+        <h2 class="text-2xl text-gray-900 mb-4 text-center">LOGIN</h2>
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
 
@@ -122,16 +122,165 @@
           <% end %>
          <!-- パスワードをお忘れの方向け -->
           <%= f.submit "START",
-                class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-pixel rounded-md transition" %>
+                class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition font-pixel" %>
             <div class="text-center text-xs">
               <%= link_to "パスワードをお忘れですか？",
                     new_password_path(resource_name),
-                    class: "text-blue-200 hover:text-white block" %>
+                    class: "text-gray-700" %>
             </div>
         <% end %>
       </div>
 
 
+    </div>
+
+
+  </div>
+
+  <!-- ================= このアプリでできること） ================= -->
+  <div class="w-full max-w-2xl mx-auto mt-16">
+
+    <!-- FEATURES -->
+    <div class="border-t border-blue-400/40 pt-4 pb-8">
+      <h2 class="text-xl text-white text-center mb-6">このアプリでできること</h2>
+
+      <!-- Book Carousel: CSS Sprite + Scroll-Timeline (Chrome 115+/134+) -->
+      <div class="feat-book-container">
+        <div class="feat-book">
+
+          <!-- Sprite: page-flip animation driven by scroll-timeline -->
+          <div class="feat-sprite"></div>
+
+          <!-- Carousel -->
+          <div class="feat-carousel">
+
+            <!-- ── 機能 01: ゲームを登録 ── -->
+            <div class="feat-carousel-item">
+              <div class="feat-page-container">
+                <div class="feat-page feat-left-page">
+                  <p class="feat-page-icon">🎮</p>
+                  <p class="feat-page-label">機能 01</p>
+                  <p class="feat-page-title">ゲームを<br>登録</p>
+                </div>
+                <div class="feat-page feat-right-page">
+                  <p class="feat-page-desc">
+                    タイトル・プレイした年齢・ハード・ジャンル・面白さ・難易度・思い出メモを記録できます。<br><br>
+                    あの頃のゲーム体験を、あらゆる角度から記録して永久に保存しましょう。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── 機能 02: 年表タイムライン ── -->
+            <div class="feat-carousel-item">
+              <div class="feat-page-container">
+                <div class="feat-page feat-left-page">
+                  <p class="feat-page-icon">📅</p>
+                  <p class="feat-page-label">機能 02</p>
+                  <p class="feat-page-title">年表<br>タイムライン</p>
+                </div>
+                <div class="feat-page feat-right-page">
+                  <p class="feat-page-desc">
+                    登録ゲームが年齢順のタイムラインとして並び、自分のゲーム人生を一覧で振り返れます。<br><br>
+                    幼少期から現在まで、ゲームとともに歩んだ軌跡が一目でわかります。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── 機能 03: 思い出メモ ── -->
+            <div class="feat-carousel-item">
+              <div class="feat-page-container">
+                <div class="feat-page feat-left-page">
+                  <p class="feat-page-icon">💬</p>
+                  <p class="feat-page-label">機能 03</p>
+                  <p class="feat-page-title">思い出<br>メモ</p>
+                </div>
+                <div class="feat-page feat-right-page">
+                  <p class="feat-page-desc">
+                    「あの頃どんな気持ちで遊んだか」を感情とともに記録。ゲームを人生の記憶として残せます。<br><br>
+                    感動・興奮・悔しさ・達成感――あの瞬間の気持ちを未来の自分へ。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── 機能 04: 詳細カード ── -->
+            <div class="feat-carousel-item">
+              <div class="feat-page-container">
+                <div class="feat-page feat-left-page">
+                  <p class="feat-page-icon">🔍</p>
+                  <p class="feat-page-label">機能 04</p>
+                  <p class="feat-page-title">詳細<br>カード</p>
+                </div>
+                <div class="feat-page feat-right-page">
+                  <p class="feat-page-desc">
+                    ゲームカードをクリックすると思い出の詳細が表示され、編集・削除も行えます。<br><br>
+                    記録はいつでも更新できます。新しい視点で昔のゲームを振り返ってみましょう。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── 機能 05: シェア機能 ── -->
+            <div class="feat-carousel-item">
+              <div class="feat-page-container">
+                <div class="feat-page feat-left-page">
+                  <p class="feat-page-icon">🌐</p>
+                  <p class="feat-page-label">機能 05</p>
+                  <p class="feat-page-title">シェア機能<br>（予定）</p>
+                </div>
+                <div class="feat-page feat-right-page">
+                  <p class="feat-page-desc">
+                    年表をSNSでシェアし、同世代との共感・世代を超えた体験の違いを楽しめます。<br><br>
+                    「あのゲーム知ってる！」という新しいつながりが生まれます。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /feat-carousel -->
+        </div><!-- /feat-book -->
+      </div><!-- /feat-book-container -->
+
+    </div>
+
+    <!--アプリの使い方-->
+    <div class="border-t border-blue-400/40 pt-10 pb-8">
+      <h2 class="text-xl text-white text-center mb-8">アプリの使い方</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+        <!-- STEP 01 -->
+        <div class="flex flex-col items-center text-center bg-white/5 rounded-xl p-5">
+          <div class="text-3xl mb-2">🎮</div>
+          <div class="text-blue-200 text-xs font-semibold mb-1">STEP 01</div>
+          <div class="text-white text-xs font-bold mb-2">アカウント作成</div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            SaveDataにアクセスし、新規登録を行います。冒険者名やパスワードをご入力ください。
+          </div>
+        </div>
+
+        <!-- STEP 02 -->
+        <div class="flex flex-col items-center text-center bg-white/5 rounded-xl p-5">
+          <div class="text-3xl mb-2">💾</div>
+          <div class="text-blue-200 text-xs font-semibold mb-1">STEP 02</div>
+          <div class="text-white text-xs font-bold mb-2">セーブデータ登録</div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            プレイしたゲームの情報や思い出を登録。あの頃の冒険を記録として残せます。
+          </div>
+        </div>
+
+        <!-- STEP 03 -->
+        <div class="flex flex-col items-center text-center bg-white/5 rounded-xl p-5">
+          <div class="text-3xl mb-2">🚀</div>
+          <div class="text-blue-200 text-xs font-semibold mb-1">STEP 03</div>
+          <div class="text-white text-xs font-bold mb-2">アップデート予定</div>
+          <div class="text-blue-100 text-xs leading-relaxed">
+            マイページ一覧管理・他ユーザーとの交流機能など、随時追加予定です。
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- 利用規約・プライバシーポリシー -->
@@ -140,122 +289,9 @@
       ・
       <%= link_to "プライバシーポリシー", privacy_policy_path, class: "underline hover:opacity-100" %>
     </div>
-
-    <!-- ================= どんなアプリ？ ================= -->
-    <div class="mt-16 border-t border-blue-400/40 pt-10 pb-8">
-      <h2 class="text-xl font-pixel text-white text-center mb-8">FEATURES</h2>
-
-      <div class="space-y-6">
-
-        <!-- 機能 01 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">🎮</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 01</div>
-            <div class="text-white text-sm font-bold">ゲームを登録</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            タイトル・プレイした年齢・ハード・ジャンル・面白さ・難易度・思い出メモを記録できます。
-          </div>
-        </div>
-
-        <!-- 機能 02 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">📅</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 02</div>
-            <div class="text-white text-sm font-bold">年表タイムライン</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            登録ゲームが年齢順のタイムラインとして並び、自分のゲーム人生を一覧で振り返れます。
-          </div>
-        </div>
-
-        <!-- 機能 03 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">💬</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 03</div>
-            <div class="text-white text-sm font-bold">思い出メモ</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            「あの頃どんな気持ちで遊んだか」を感情とともに記録。ゲームを人生の記憶として残せます。
-          </div>
-        </div>
-
-        <!-- 機能 04 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">🔍</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 04</div>
-            <div class="text-white text-sm font-bold">詳細カード</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            ゲームカードをクリックすると思い出の詳細が表示され、編集・削除も行えます。
-          </div>
-        </div>
-
-        <!-- 機能 05 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">🌐</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">FEATURE 05</div>
-            <div class="text-white text-sm font-bold">シェア機能（予定）</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            年表をSNSでシェアし、同世代との共感・世代を超えた体験の違いを楽しめます。
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ================= 使い方 ================= -->
-    <div class="mt-16 border-t border-blue-400/40 pt-10 pb-8">
-      <h2 class="text-xl font-pixel text-white text-center mb-8">HOW TO USE</h2>
-
-      <div class="space-y-6">
-
-        <!-- STEP 01 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">🎮</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">STEP 01</div>
-            <div class="text-white text-sm font-bold">アカウント作成</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            SaveDataにアクセスし、新規登録を行います。
-            冒険者名（あなたのお名前）やパスワードをご入力ください。
-          </div>
-        </div>
-
-        <!-- STEP 02 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">💾</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">STEP 02</div>
-            <div class="text-white text-sm font-bold">セーブデータ登録</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            プレイしたゲームの情報や思い出を登録。
-            あの頃の冒険を記録として残すことができます。
-          </div>
-        </div>
-
-        <!-- STEP 03 -->
-        <div class="grid grid-cols-2 gap-4 items-center">
-          <div class="text-center">
-            <div class="text-3xl mb-1">🚀</div>
-            <div class="text-blue-200 text-xs font-semibold mb-1">STEP 03</div>
-            <div class="text-white text-sm font-bold">アップデート予定</div>
-          </div>
-          <div class="text-blue-100 text-xs leading-relaxed">
-            マイページ一覧管理・他ユーザーとの交流機能など、
-            随時追加予定です。お楽しみに！
-          </div>
-        </div>
-
-      </div>
+    <!-- コピーライト -->
+    <div class="mt-4 pb-6 text-center text-xs text-blue-300 opacity-50">
+      &copy; <%= Time.current.year %> SaveData. All rights reserved.
     </div>
 
   </div>
@@ -276,6 +312,7 @@
       cursor.textContent = '▶';
       cursor.style.cssText =
         'display:inline-block;' +
+        'vertical-align:middle;' +
         'width:0;' +
         'min-width:0;' +
         'overflow:hidden;' +

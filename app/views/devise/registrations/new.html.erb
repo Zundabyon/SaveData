@@ -11,28 +11,6 @@
       <p class="text-xs text-blue-200">新しいセーブデータを作成</p>
     </div>
 
-    <!-- ================= ステータスウィンドウ ================= -->
-    <div class="bg-blue-900/60 border border-blue-300 rounded-lg p-4 font-pixel text-xs shadow-lg mb-6">
-      <p class="mb-3 text-center text-blue-200">PLAYER STATUS</p>
-      <div class="space-y-2 text-blue-100">
-        <div class="flex justify-between">
-          <span>NAME</span><span>NEW PLAYER</span>
-        </div>
-        <div class="flex justify-between">
-          <span>LEVEL</span><span>01</span>
-        </div>
-        <div class="flex justify-between">
-          <span>PLAY TIME</span><span>00:00</span>
-        </div>
-        <div class="flex justify-between">
-          <span>DATA SLOT</span><span>EMPTY</span>
-        </div>
-        <div class="flex justify-between">
-          <span>MODE</span><span>STORY</span>
-        </div>
-      </div>
-    </div>
-
     <!-- ================= フォーム ================= -->
     <div class="bg-white rounded-lg shadow-lg p-6">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
