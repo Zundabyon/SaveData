@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "SaveData" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -22,7 +21,7 @@
     <!-- 基本的なOGP設定 -->
     <meta property="og:title" content="<%= @title || 'SaveData' %>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= https://savedata-app.onrender.com/ %>">
+    <meta property="og:url" content="https://savedata-app.onrender.com/">
     <meta property="og:image" content="<%= asset_url('ogp.png') %>">
     <meta property="og:description" content="<%= @description || 'あなたのゲームx人生振り返りアプリ。あの頃の思い出に浸ろう。' %>">
     <meta property="og:site_name" content="SaveData">
