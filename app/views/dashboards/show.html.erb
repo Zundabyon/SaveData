@@ -8,7 +8,11 @@
         <%= @user.name %>の冒険の記録
       </h1>
       <p class="mt-2 text-lg text-slate-400">
-        セーブデータを選んでください
+        <%= if @games.empty? %>
+          ゲームを登録して新たな冒険の１ページを刻もう！
+        <% else %>
+          セーブデータを選んでください
+        <% end %>
       </p>
     </header>
 
@@ -20,7 +24,7 @@
       <% @games.each do |game| %>
         <div class="relative pl-24 mb-12 flex gap-4 items-center">
 
-          <!-- ================= サムネイル ================= -->
+    <!-- ================= サムネイル ================= -->
           <% if game.cover_image.attached? %>
             <div class="flex-shrink-0 group cursor-pointer"
                  onclick="openModal('<%= j game.title %>',
@@ -41,7 +45,7 @@
             </div>
           <% end %>
 
-          <!-- ================= カード ================= -->
+    <!-- ================= カード ================= -->
           <div class="flex-1 timeline-card bg-slate-800/60 backdrop-blur
                       border border-slate-700 rounded-xl
                       p-8 shadow-lg cursor-pointer
@@ -74,7 +78,7 @@
               </div>
             </div>
 
-            <!-- ================= 評価 ================= -->
+    <!-- ================= 評価 ================= -->
             <div class="mt-4 flex gap-8 text-base text-slate-200">
 
               <% if game.difficulty.present? %>
