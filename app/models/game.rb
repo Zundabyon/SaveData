@@ -2,6 +2,29 @@ class Game < ApplicationRecord
   belongs_to :user
   has_one_attached :cover_image
 
+  #　ここにハードウェアの選択肢をグループにして定義しています
+  HARDWARE_GROUPED = {
+    "据え置き機" => [
+      "ファミコン", "スーパーファミコン", "ニンテンドー64", "ゲームキューブ", "Wii", "Nintendo Switch",
+      "プレステ", "プレステ２", "プレステ３", "プレステ４", "プレステ５",
+      "セガサターン", "メガドライブ", "ネオジオ", "アーケード機"
+    ],
+    "携帯機" => [
+      "ゲームボーイ", "ゲームボーイアドバンス", "Nintendo DS", "Nintendo 3DS",
+      "PSP", "PS Vita"
+    ],
+    "その他" => [ "PC", "スマートフォン", "その他" ]
+  }.freeze
+
+  HARDWARE_OPTIONS = HARDWARE_GROUPED.values.flatten.freeze
+
+  #　ここにゲームジャンルの選択肢を定義しています
+  GENRE_OPTIONS = [
+    "アクション", "シューティング", "格闘", "スポーツ",
+    "RPG", "アクションRPG", "アドベンチャー", "ノベル",
+    "シミュレーション", "ストラテジー", "パズル", "ボードゲーム", "その他"
+  ].freeze
+
   # タイトルのバリデーション
   validates :title, presence: true, length: { maximum: 50 }
 
@@ -34,7 +57,9 @@ class Game < ApplicationRecord
 
   # その他のフィールド（任意）
   validates :hardware, length: { maximum: 40 }, allow_blank: true
+  validate :hardware_custom_length
   validates :genre, length: { maximum: 20 }, allow_blank: true
+  validate :genre_custom_length
   validates :memo, length: { maximum: 150 }, allow_blank: true
 
   # カバー画像のバリデーション
@@ -77,5 +102,19 @@ class Game < ApplicationRecord
         format: :webp
       ).processed.url
     end
+  end
+
+  private
+
+  def hardware_custom_length
+    return if hardware.blank?
+    return if hardware.in?(HARDWARE_OPTIONS)
+    errors.add(:hardware, "は10文字以内で入力してください（その他の場合）") if hardware.length > 10
+  end
+
+  def genre_custom_length
+    return if genre.blank?
+    return if genre.in?(GENRE_OPTIONS)
+    errors.add(:genre, "は10文字以内で入力してください（その他の場合）") if genre.length > 10
   end
 end
