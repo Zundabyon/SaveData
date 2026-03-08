@@ -14,11 +14,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- DotGothic16とPress Start 2Pだけ残す -->
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
-
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+
+    <!-- 基本的なOGP設定 -->
+    <meta property="og:title" content="<%= @title || 'SaveData' %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= https://savedata-app.onrender.com/ %>">
+    <meta property="og:image" content="<%= asset_url('ogp.png') %>">
+    <meta property="og:description" content="<%= @description || 'あなたのゲームx人生振り返りアプリ。あの頃の思い出に浸ろう。' %>">
+    <meta property="og:site_name" content="SaveData">
+
+    <!-- Twitter Card設定 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= @title || 'SaveData' %>">
+    <meta name="twitter:description" content="<%= @description || 'あなたのゲームx人生振り返りアプリ。あの頃の思い出に浸ろう。' %>">
+    <meta name="twitter:image" content="<%= asset_url('ogp.png') %>">
 
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
