@@ -8,7 +8,7 @@
         <%= @user.name %>の冒険の記録
       </h1>
       <p class="mt-2 text-lg text-slate-400">
-        <%= if @games.empty? %>
+        <% if @games.empty? %>
           ゲームを登録して新たな冒険の１ページを刻もう！
         <% else %>
           セーブデータを選んでください
@@ -116,6 +116,10 @@
       <% end %>
 
     </div>
+  <!-- サインインしているときのみフッターを表示 -->
+    <% if user_signed_in? %>
+     <%= render "layouts/footer" %>
+    <% end %>
   </main>
 
   <!-- ================= 右：メニュー ================= -->
@@ -240,6 +244,7 @@
 
     </div>
   </div>
+
 
 </div>
 
