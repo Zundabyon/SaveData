@@ -191,7 +191,7 @@
 
 .rpg-command {
   border: 3px solid rgba(220,235,255,0.95);
-  padding: 12px 0;
+  padding: 12px 24px;
   background: linear-gradient(
     180deg,
     #223a8f 0%,
