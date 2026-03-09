@@ -205,15 +205,16 @@ MVP では年齢軸による体験の可視化に集中します。
 
 ## 技術スタック
 
-| 分類     | 技術                |
-| -------- | ------------------- |
-| Backend  | Ruby on Rails 7.2.3 |
-| Frontend | TailwindCSS         |
-| DB       | PostgreSQL（Neon）  |
-| 認証     | Devise              |
-| 画像     | Cloudinary          |
-| インフラ | Render              |
-| 環境     | Docker              |
+| 分類           | 技術                |
+| -------------- | ------------------- |
+| バックエンド   | Ruby 3.2.2          |
+| フレームワーク | Ruby on Rails 7.2.3 |
+| Frontend       | TailwindCSS         |
+| DB             | PostgreSQL（Neon）  |
+| 認証           | Devise              |
+| 画像           | Cloudinary          |
+| インフラ       | Render              |
+| 環境           | Docker              |
 
 本サービスは CRUD 中心でユーザー・投稿・年表といった関係性が明確な為、
 ActiveRecord による直感的なデータ設計が可能な Rails を採用。
