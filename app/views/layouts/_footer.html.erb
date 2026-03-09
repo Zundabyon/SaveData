@@ -1,0 +1,12 @@
+<!-- フッター -->
+            <% if user_signed_in? %>
+              <%= button_to "トップページへ（ログアウト処理destroy）",
+                    destroy_user_session_path,
+                    method: :delete,
+                    class: "rpg-command text-center bg-red-700 w-2" %>
+              
+            <% else %>
+              <%= link_to "ログイン",
+                    new_user_session_path,
+                    class: "rpg-command text-center bg-red-700" %>
+            <% end %><p>テストコード</p>
