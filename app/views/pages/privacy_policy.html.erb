@@ -146,12 +146,12 @@
 
     <!-- 戻るボタン -->
     <div class="mt-8 flex justify-center">
-      <%= link_to "トップへ戻る",root_path,
-      class: "inline-flex items-center justify-center
-              rounded-xl bg-blue-600 px-6 py-3
-              text-white font-semibold
-              shadow-md
-              hover:bg-blue-700
-              transition" %>
+    <% if user_signed_in? %>
+      <%= link_to "ダッシュボードへ戻る", dashboard_path,
+        class: "inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold shadow-md hover:bg-blue-700 transition" %>
+    <% else %>
+      <%= link_to "ログイン画面へ戻る", new_user_session_path,
+        class: "inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold shadow-md hover:bg-blue-700 transition" %>
+    <% end %>
     </div>
 </div>
