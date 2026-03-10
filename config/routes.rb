@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # Devise
   devise_for :users, controllers: {
-    registrations: "users/registrations"
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   # ダッシュボード（ログイン後の拠点）

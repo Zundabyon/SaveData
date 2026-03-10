@@ -30,15 +30,16 @@ class User < ApplicationRecord
   # Validations
   validates :email, presence: true
   validates :name, presence: true
-  validates :birthday, presence: true
-  validates :gender, presence: true
-  validates :job, presence: true
+  validates :birthday, presence: true, unless: :uid?
+  validates :gender, presence: true, unless: :uid?
+  validates :job, presence: true, unless: :uid?
   # Devise
   devise :database_authenticatable,
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable
+         :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   # Story / Chapter System
   CHAPTERS = [
@@ -78,5 +79,20 @@ class User < ApplicationRecord
 
   def level
     [ games.count, 1 ].max
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      user.provider = auth.provider
+      user.uid      = auth.uid
+      user.email    = auth.info.email
+      user.name     = auth.info.name.presence || "冒険者"
+      user.password = Devise.friendly_token[0, 20] if user.new_record?
+      user.save(validate: false)
+    end
+  end
+
+  def password_required?
+    super && provider.blank?
   end
 end
