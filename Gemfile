@@ -53,6 +53,15 @@ gem "jbuilder"
 # ユーザー登録・ログイン機能
 gem "devise"
 
+#GoogleやTwitterなどの外部サービスでログインするためのツール
+gem 'omniauth'
+#GoogleのOAuth
+gem 'omniauth-google-oauth2'
+#OAuth使う時のセキュリティ用
+gem 'omniauth-rails_csrf_protection'
+#環境変数設定時に使用
+gem 'dotenv-rails'
+
 # 管理画面を自動で作る（データの編集・削除等）
 gem "rails_admin"
 
@@ -109,3 +118,4 @@ end
 gem "image_processing", "~> 1.2"
 gem "active_storage_validations"
 gem "sassc-rails"
+

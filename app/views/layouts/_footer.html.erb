@@ -2,6 +2,8 @@
 <% if user_signed_in? %>
   <!-- ハンバーガーメニュー -->
   <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window p-2 flex justify-end items-center gap-2">
+    <%= link_to "ゲームトピック", "#",
+          class: "rpg-command px-4 py-2 text-sm" %>
     <%= link_to "冒険を共有",
           "https://twitter.com/intent/tweet?text=SaveData+あの頃遊んだゲームの思い出を記録しよう&url=https://savedata-app.onrender.com/",
           target: "_blank", rel: "noopener",
