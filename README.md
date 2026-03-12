@@ -1,6 +1,8 @@
-![demo](app/assets/images/readme/demo.gif)
+![demo](app/assets/images/readme/topdemo.gif)
 
 # アプリ名
+
+![demo](app/assets/images/readme/top.png)
 
 SaveData
 
