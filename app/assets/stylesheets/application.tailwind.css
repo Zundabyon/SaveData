@@ -387,16 +387,6 @@
 
 /* .rpg-menu-item のカーソルは JS で制御 */
 
-header {
-  position: relative;
-  left: 144px;
-}
-
-@media (max-width: 768px) {
-  header {
-    left: 0;
-  }
-}
 
 .confirm-wrapper {
   min-height: 100vh;

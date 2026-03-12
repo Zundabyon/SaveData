@@ -1,4 +1,4 @@
-![demo](app/assets/images/demo.gif)
+![demo](app/assets/images/readme/demo.gif)
 
 # アプリ名
 
@@ -42,6 +42,9 @@ SaveData は**ゲームの思い出を「年齢 × 時間軸」で記録・共�
 
 ---
 
+※こちらのアプリは再作中の為、UIUXが
+表示のものと若干異なる可能性がございます。
+
 ## 使い方
 
 ### 1. アカウント作成
@@ -53,7 +56,7 @@ SaveData は**ゲームの思い出を「年齢 × 時間軸」で記録・共�
 
 「ゲーム登録」から以下の情報を入力できます。
 
-[![Image from Gyazo](https://i.gyazo.com/96a15a1246a11c869dad6b4e7815a720.png)](https://gyazo.com/96a15a1246a11c869dad6b4e7815a720)
+![demo](app/assets/images/readme/game_howto.gif)
 
 - ゲームタイトル
 - プレイした年齢
