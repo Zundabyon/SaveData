@@ -1,6 +1,4 @@
-![demo](app/assets/images/readme/topdemo.gif)
-
-# アプリ名
+# アプリ名 SaveData
 
 ![demo](app/assets/images/readme/top.png)
 
@@ -69,10 +67,10 @@ SaveData は**ゲームの思い出を「年齢 × 時間軸」で記録・共�
 
 ### 3. 年表で振り返る
 
+![demo](app/assets/images/readme/topdemo.gif)
+
 登録したゲームは、年齢順のタイムラインとして表示されます。
 自分のゲーム体験を振り返ることができます。
-
-[![Image from Gyazo](https://i.gyazo.com/baa12a65deaad174c1974f9b98164481.png)](https://gyazo.com/baa12a65deaad174c1974f9b98164481)
 
 ### 4. 詳細の確認・編集
 
