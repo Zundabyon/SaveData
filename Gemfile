@@ -38,7 +38,6 @@ gem "cssbundling-rails"
 # Tailwind CSS：見た目を簡単に作れるツール
 gem "tailwindcss-rails", "~> 2.7"
 
-
 # Sass/SCSS：CSSを書きやすくする言語
 gem "dartsass-rails"
 
@@ -59,8 +58,6 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 #OAuth使う時のセキュリティ用
 gem 'omniauth-rails_csrf_protection'
-#環境変数設定時に使用
-gem 'dotenv-rails'
 
 # 管理画面を自動で作る（データの編集・削除等）
 gem "rails_admin"
@@ -93,6 +90,10 @@ end
 
 # === 開発環境のみ ===
 group :development do
+
+  # N+1問題をお知らせしてくれる
+  gem "bullet"
+
   # ブラウザでエラー内容を詳しく見れる
   gem "web-console"
 
