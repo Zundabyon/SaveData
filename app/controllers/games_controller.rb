@@ -69,6 +69,18 @@ class GamesController < ApplicationController
     end
   end
 
+   # /games/igdb_search?q=マリオ　でアクセスされる
+  def igdb_search
+   query = params[:q].to_s.strip
+   return render json: [] if query.blank?
+
+   results = IgdbService.search(query)
+   render json: results
+ rescue => e
+   Rails.logger.error "IGDB error: #{e}"
+   render json: []
+  end
+
   def game_params
     params.require(:game).permit(
       :title,

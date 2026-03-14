@@ -20,8 +20,21 @@
           class: "block text-xl font-bold text-gray-800 mb-1" %>
     <%= f.text_field :title, placeholder: "例: ファイナルファンタジーVII",
           class: "w-full px-3 py-2 bg-white border border-gray-400 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" %>
-　　<button type="button" id="search_title" class="mt-2 text-sm text-blue-600 hover:underline">検索</button>
-            </div>
+  <button type="button" id="search_title"
+          class="mt-2 text-sm text-blue-600 hover:underline">
+    検索
+  </button>
+    <!-- igdb APIによる処理 -->
+  <div id="igdb-results"
+       class="mt-2 border border-gray-300 rounded bg-white max-h-64 overflow-y-auto"
+       style="display: none;">
+  </div>
+
+  <!-- igdb APIで取得した画像を隠して入れておく場所 -->
+  <%= f.hidden_field :igdb_cover_url, id: "igdb_cover_url" %>
+
+
+  </div>
 
   <!-- ハードとジャンルを横並び -->
   <div class="grid grid-cols-2 gap-3 mb-4">
@@ -159,14 +172,55 @@
 <% end %>
 
 <script>
+  // IGDB検索
+  function setupIgdbSearch() {
+    const searchBtn = document.getElementById('search_title')
+    if (!searchBtn) return
+
+    searchBtn.addEventListener('click', function () {
+      const query = document.getElementById('game_title').value
+      if (!query) return
+
+      const resultsBox = document.getElementById('igdb-results')
+      resultsBox.innerHTML = '検索中...'
+      resultsBox.style.display = 'block'
+
+      // コントローラーにHTMLを作ってもらう
+      fetch(`/games/igdb_search?q=${encodeURIComponent(query)}`)
+        .then(response => response.text())   // JSONじゃなくてHTMLとして受け取る
+        .then(html => {
+          resultsBox.innerHTML = html
+
+          // 「選ぶ」ボタンが押されたとき
+          resultsBox.querySelectorAll('.igdb-select-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              // data-title と data-cover から値を取り出す
+              const title = btn.dataset.title
+              const cover = btn.dataset.cover
+
+              // フォームの入力欄にセット
+              document.getElementById('game_title').value = title
+              document.getElementById('igdb_cover_url').value = cover
+
+              // 結果を閉じる
+              resultsBox.style.display = 'none'
+              resultsBox.innerHTML = ''
+            })
+          })
+        })
+    })
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     setupImagePreview();
     setupMateriaRating();
+    setupIgdbSearch();
   });
 
   document.addEventListener('turbo:load', function () {
     setupImagePreview();
     setupMateriaRating();
+    setupIgdbSearch();
   });
 
   // 画像プレビュー
