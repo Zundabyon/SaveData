@@ -30,6 +30,8 @@ services:
       - RAILS_ENV=development
       - DATABASE_URL=postgres://postgres:password@db:5432/savedata_development
       - TZ=Asia/Tokyo
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
