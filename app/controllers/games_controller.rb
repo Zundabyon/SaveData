@@ -19,9 +19,11 @@ class GamesController < ApplicationController
 
   def igdb_search
     query = params[:q].to_s.strip
+    Rails.logger.info "IGDB search action called with query: '#{query}'"
     return head :ok if query.blank?
 
     @games = IgdbService.search(query)
+    Rails.logger.info "IGDB search results: #{@games.length} games found"
     render partial: "games/igdb_results", locals: { games: @games }
   end
 
