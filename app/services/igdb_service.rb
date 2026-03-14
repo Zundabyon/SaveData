@@ -40,7 +40,7 @@ class IgdbService
     request.body = <<~BODY
       fields game.name, game.cover.image_id, game.platforms.name, game.genres.name, name;
       where name ~ *"#{query.gsub('"', '')}"*;
-      limit 30;
+      limit 100;
     BODY
 
     Rails.logger.info "IGDB alternative_names request body: #{request.body}"
@@ -95,15 +95,21 @@ class IgdbService
     request.body = <<~BODY
       fields name, platforms.name, genres.name, cover.image_id;
       search "#{query.gsub('"', '')}";
-      limit 30;
+      limit 50;
     BODY
 
     Rails.logger.info "IGDB games request body: #{request.body}"
     response = http.request(request)
     Rails.logger.info "IGDB games response code: #{response.code}"
-    Rails.logger.info "IGDB games response body: #{response.body}"
-
+    Rails.logger.info "IGDB games response body length: #{response.body.length}"
+    
+    if response.code != "200"
+      Rails.logger.error "IGDB API error: #{response.code} - #{response.body}"
+      return []
+    end
+    
     games = JSON.parse(response.body)
+    Rails.logger.info "IGDB search returned #{games.length} games"
 
     # 画像URLを組み立てて追加する
     games.map do |game|

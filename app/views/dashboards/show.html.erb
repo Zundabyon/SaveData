@@ -1,177 +1,146 @@
-<div class="min-h-screen text-slate-100 flex px-4">
+<div class="container mx-auto px-4 py-8">
+  <!-- ページヘッダー -->
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-bold text-white mb-2">冒険の記録</h1>
+    <p class="text-white">あの頃遊んだゲームの思い出を振り返ろう</p>
+  </div>
 
-  <!-- ================= 中央：年表 ================= -->
-  <main class="flex-1 min-w-0 py-16">
-
-    <header class="mb-16 text-center header-center">
-      <h1 class="text-6xl md:text-5xl font-bold tracking-widest">
-        <%= @user.name %>の冒険の記録
-      </h1>
-      <p class="mt-2 text-lg text-slate-400">
-        <% if @games.empty? %>
-          ゲームを登録して新たな冒険の１ページを刻もう！
-        <% else %>
-          セーブデータを選んでください
-        <% end %>
-      </p>
-    </header>
-
-    <!-- スクロール制限 -->
-    <div class="relative w-full
-                overflow-y-auto overflow-x-visible
-                max-h-[calc(100vh-6rem)] pr-6">
-
+  <% if @games.empty? %>
+    <div class="text-center py-12">
+      <div class="bg-gray-100 rounded-lg p-8 max-w-md mx-auto">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">ゲームデータがありません</h2>
+        <p class="text-gray-600 mb-6">ゲームを登録して冒険を始めましょう！</p>
+        <%= link_to "ゲーム登録", new_game_path, class: "bg-blue-600 hover:bg-blue-700 
+          text-white font-bold py-2 px-4 rounded-lg
+          transition duration-300"
+        %>
+      </div>
+    </div>
+  <% else %>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <% @games.each do |game| %>
-        <div class="relative pl-24 mb-12 flex gap-4 items-center">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 cursor-pointer"
+             onclick="openModal('<%= j game.title %>', '<%= j "#{game.hardware} | #{game.genre}#{game.played_age.present? ? " | #{game.played_age_label}の思い出" : ""}" %>', '<%= j game.memo %>', <%= game.id %>)">
+          <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
+            <% if game.cover_image.attached? %>
+              <%= image_tag game.cover_image, class: "w-full h-full object-cover transition-transform duration-300 hover:scale-105" %>
+            <% else %>
+              <div class="text-gray-400 text-sm font-medium">NO IMAGE</div>
+            <% end %>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
 
-    <!-- ================= サムネイル ================= -->
-          <% if game.cover_image.attached? %>
-            <div class="flex-shrink-0 group cursor-pointer"
-                 onclick="openModal('<%= j game.title %>',
-                                    '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age_label : nil)].compact.join(' / ') %>',
-                                    '<%= j game.memo %>',
-                                    '<%= game.id %>')">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3 leading-tight"><%= game.title %></h3>
 
-              <div class="relative overflow-hidden rounded-lg border-9 border-slate-600
-                          hover:border-blue-500 transition-all duration-300 shadow-lg
-                          hover:shadow-[0_0_20px_rgba(80,120,255,0.5)]
-                          bg-slate-800/60 w-[250px]">
-
-                <%= image_tag game.cover_image,
-                      class: "w-50 h-50 object-cover group-hover:scale-110 transition-transform duration-300",
-                      loading: "lazy",
-                      alt: game.title %>
+            <div class="space-y-3 mb-5">
+              <div class="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+                <span class="font-medium mr-3 text-blue-600">🎮</span>
+                <span class="font-medium"><%= game.hardware %></span>
               </div>
-            </div>
-          <% end %>
-
-    <!-- ================= カード ================= -->
-          <div class="flex-1 timeline-card bg-slate-800/60 backdrop-blur
-                      border border-slate-700 rounded-xl
-                      p-8 shadow-lg cursor-pointer
-                      hover:border-slate-500 transition"
-               onclick="openModal('<%= j game.title %>',
-                                  '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age_label : nil)].compact.join(' / ') %>',
-                                  '<%= j game.memo %>',
-                                  '<%= game.id %>')">
-
-            <div class="flex items-center gap-4 flex-wrap">
-
-              <!-- タイトル -->
-              <h2 class="text-2xl font-semibold tracking-wide">
-                <%= game.title %>
-              </h2>
-
-              <!-- メタ情報 -->
-              <div class="flex flex-wrap gap-3 text-l text-slate-400">
-                <% if game.hardware.present? %>
-                  <span>🎮 <%= game.hardware %></span>
-                <% end %>
-
-                <% if game.genre.present? %>
-                  <span>⚔️ <%= game.genre %></span>
-                <% end %>
-
-                <% if game.played_age.present? %>
-                  <span>🕰 <%= game.played_age_label %>の思い出</span>
-                <% end %>
+              <div class="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+                <span class="font-medium mr-3 text-green-600">⚔️</span>
+                <span class="font-medium"><%= game.genre %></span>
               </div>
-            </div>
-
-    <!-- ================= 評価 ================= -->
-            <div class="mt-4 flex gap-8 text-base text-slate-200">
-
-              <% if game.difficulty.present? %>
-                <div class="space-y-2">
-                  <span class="block text-center">難しさ</span>
-                  <div class="flex gap-1 justify-center">
-                    <% 10.times do |i| %>
-                      <span class="materia materia-red <%= 'inactive' if i >= game.difficulty %>"></span>
-                    <% end %>
-                  </div>
+              <% if game.played_age.present? %>
+                <div class="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+                  <span class="font-medium mr-3 text-purple-600">🕰</span>
+                  <span class="font-medium"><%= game.played_age_label %>の思い出</span>
                 </div>
               <% end %>
+            </div>
 
-              <% if game.fun.present? %>
-                <div class="space-y-1">
-                  <span class="block text-center">面白さ</span>
-                  <div class="flex gap-1 justify-center">
-                    <% 10.times do |i| %>
-                      <span class="materia materia-green <%= 'inactive' if i >= game.fun %>"></span>
+            <!-- 楽しさと難しさの表示 -->
+            <div class="bg-white rounded-lg shadow-md p-4 mb-5 border border-gray-200">
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <span class="font-medium text-green-700 mr-3 text-sm min-w-0">楽しさ:</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-3 mr-3 overflow-hidden">
+                    <% if game.fun.present? %>
+                      <div class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500" style="width: <%= (game.fun * 10) %>%"></div>
+                    <% else %>
+                      <div class="bg-gray-300 h-3 rounded-full" style="width: 0%"></div>
                     <% end %>
                   </div>
+                  <span class="text-sm text-gray-600 font-medium min-w-0"><%= game.fun.present? ? "#{game.fun}/10" : '未評価' %></span>
                 </div>
-              <% end %>
-
+                <div class="flex items-center">
+                  <span class="font-medium text-red-700 mr-3 text-sm min-w-0">難しさ:</span>
+                  <div class="flex-1 bg-gray-200 rounded-full h-3 mr-3 overflow-hidden">
+                    <% if game.difficulty.present? %>
+                      <div class="bg-gradient-to-r from-red-400 to-red-600 h-3 rounded-full transition-all duration-500" style="width: <%= (game.difficulty * 10) %>%"></div>
+                    <% else %>
+                      <div class="bg-gray-300 h-3 rounded-full" style="width: 0%"></div>
+                    <% end %>
+                  </div>
+                  <span class="text-sm text-gray-600 font-medium min-w-0"><%= game.difficulty.present? ? "#{game.difficulty}/10" : '未評価' %></span>
+                </div>
+              </div>
             </div>
 
             <% if game.memo.present? %>
-              <p class="mt-4 text-xl text-slate-300 leading-relaxed line-clamp-2">
-                「<%= game.memo %>」
-              </p>
+              <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mb-5 border-l-4 border-blue-400">
+                <p class="text-gray-700 text-sm italic leading-relaxed">"<%= game.memo %>"</p>
+              </div>
             <% end %>
-
           </div>
         </div>
       <% end %>
-
     </div>
-  <!-- サインインしているときのみフッターを表示 -->
-    <% if user_signed_in? %>
-     <%= render "layouts/footer" %>
-    <% end %>
-  </main>
+  <% end %>
+</div>
 
-  <!-- ================= モーダル ================= -->
-  <div id="gameModal"
-       class="fixed inset-0 hidden items-center justify-center
-              bg-black/70 backdrop-blur-sm z-50">
+<!-- ================= ゲーム詳細モーダル ================= -->
+<div id="gameModal"
+     class="fixed inset-0 hidden items-center justify-center
+            bg-black/80 backdrop-blur-md z-50">
 
-    <div class="w-full max-w-3xl relative
-                bg-[#0b0f2a]/90 backdrop-blur
-                border border-slate-700 rounded-xl
-                shadow-[0_0_30px_rgba(80,120,255,0.35)]
-                px-8 py-6 space-y-6">
+  <div class="w-full max-w-3xl relative
+              bg-gradient-to-br from-blue-50 to-indigo-100 backdrop-blur-lg
+              border-2 border-blue-300 rounded-xl
+              shadow-[0_0_40px_rgba(59,130,246,0.6)]
+              px-8 py-6 space-y-6
+              transform scale-95 opacity-0 transition-all duration-300
+              modal-enter:scale-100 modal-enter:opacity-100">
 
-      <h2 id="modalTitle"
-          class="text-2xl font-bold tracking-widest text-blue-100"></h2>
+    <h2 id="modalTitle"
+        class="text-2xl font-bold tracking-widest text-blue-900"></h2>
 
-      <p id="modalMeta"
-         class="text-sm tracking-wider text-blue-200/80"></p>
+    <p id="modalMeta"
+       class="text-sm tracking-wider text-blue-700 font-medium"></p>
 
-      <div class="bg-black/30 border border-blue-300/30 rounded-md p-4">
-        <p id="modalMemo" class="text-slate-200 leading-relaxed"></p>
-      </div>
-
-      <div class="grid grid-cols-2 gap-6 pt-4">
-        <a id="modalEdit"
-           class="rpg-command text-center"
-           data-turbo-frame="modal">
-          へんしゅう
-        </a>
-
-        <a id="modalDelete"
-           class="rpg-command text-center bg-red-700/20"
-           data-turbo="false">
-          さくじょ
-        </a>
-      </div>
-
-      <button onclick="closeModal()"
-              class="absolute top-4 right-5 text-3xl
-                     text-slate-400 hover:text-white">
-        ✕
-      </button>
-
+    <div class="bg-blue-50/80 border border-blue-200 rounded-md p-4">
+      <p id="modalMemo" class="text-blue-800 leading-relaxed"></p>
     </div>
+
+    <div class="grid grid-cols-2 gap-6 pt-4">
+      <a id="modalEdit"
+         class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-center py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg font-medium"
+         data-turbo-frame="modal">
+        編集
+      </a>
+
+      <a id="modalDelete"
+         class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-center py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg font-medium"
+         data-turbo="false">
+        削除
+      </a>
+    </div>
+
+    <button onclick="closeModal()"
+            class="absolute top-4 right-5 text-3xl
+                   text-blue-400 hover:text-blue-600 transition-colors">
+      ✕
+    </button>
+
   </div>
-
-
 </div>
 
 <script>
   function openModal(title, meta, memo, gameId) {
     const modal = document.getElementById('gameModal')
+    const modalContent = modal.querySelector('div > div')
+
     document.getElementById('modalTitle').innerText = title
     document.getElementById('modalMeta').innerText = meta
     document.getElementById('modalMemo').innerText = memo || "……"
@@ -180,12 +149,26 @@
 
     modal.classList.remove('hidden')
     modal.classList.add('flex')
+
+    // アニメーションで表示
+    setTimeout(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0')
+      modalContent.classList.add('scale-100', 'opacity-100')
+    }, 10)
   }
 
   function closeModal() {
     const modal = document.getElementById('gameModal')
-    modal.classList.add('hidden')
-    modal.classList.remove('flex')
+    const modalContent = modal.querySelector('div > div')
+
+    // アニメーションで非表示
+    modalContent.classList.remove('scale-100', 'opacity-100')
+    modalContent.classList.add('scale-95', 'opacity-0')
+
+    setTimeout(() => {
+      modal.classList.add('hidden')
+      modal.classList.remove('flex')
+    }, 300)
   }
 
   document.addEventListener('DOMContentLoaded', function() {
