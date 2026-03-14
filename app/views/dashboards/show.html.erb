@@ -28,7 +28,7 @@
           <% if game.cover_image.attached? %>
             <div class="flex-shrink-0 group cursor-pointer"
                  onclick="openModal('<%= j game.title %>',
-                                    '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>',
+                                    '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age_label : nil)].compact.join(' / ') %>',
                                     '<%= j game.memo %>',
                                     '<%= game.id %>')">
 
@@ -51,7 +51,7 @@
                       p-8 shadow-lg cursor-pointer
                       hover:border-slate-500 transition"
                onclick="openModal('<%= j game.title %>',
-                                  '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>',
+                                  '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age_label : nil)].compact.join(' / ') %>',
                                   '<%= j game.memo %>',
                                   '<%= game.id %>')">
 
@@ -73,7 +73,7 @@
                 <% end %>
 
                 <% if game.played_age.present? %>
-                  <span>🕰 <%= game.played_age %>歳ころの思い出</span>
+                  <span>🕰 <%= game.played_age_label %>の思い出</span>
                 <% end %>
               </div>
             </div>

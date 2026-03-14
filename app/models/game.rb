@@ -53,6 +53,23 @@ class Game < ApplicationRecord
     "シミュレーション", "ストラテジー", "パズル", "ボードゲーム", "その他"
   ].freeze
 
+  # プレイした年齢の選択肢
+  PLAYED_AGE_OPTIONS = [
+    ["ちっちゃい頃", 5],
+    ["小学校くらい", 8],
+    ["中学校くらい", 12],
+    ["高校の時", 16],
+    ["大学生の頃", 20],
+    ["社会人ほやほや", 23],
+    ["社会人", 25]
+  ].freeze
+
+  # 年齢のラベルを取得するメソッド
+  def played_age_label
+    option = PLAYED_AGE_OPTIONS.find { |label, value| value == played_age }
+    option ? option[0] : played_age.to_s
+  end
+
   # タイトルのバリデーション
   validates :title, presence: true, length: { maximum: 50 }
 

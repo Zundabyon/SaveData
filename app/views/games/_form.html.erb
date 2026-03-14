@@ -76,8 +76,9 @@
   <div class="mb-4">
     <%= f.label :played_age, "何歳くらいにプレイした？",
           class: "block text-xl font-bold text-gray-800 mb-1" %>
-    <%= f.number_field :played_age,
-          placeholder: "例: 15",
+    <%= f.select :played_age,
+          Game::PLAYED_AGE_OPTIONS.map { |label, value| [label, value] },
+          { include_blank: "-- 選択 --", selected: game.played_age || Game::PLAYED_AGE_OPTIONS.first[1] },
           class: "w-full px-3 py-2 bg-white border border-gray-400 rounded text-sm" %>
   </div>
 
@@ -128,7 +129,7 @@
 
   <!-- カバー画像 -->
   <div class="mb-5">
-    <%= f.label :cover_image, "カバー画像",
+    <%= f.label :cover_image, "カバー画像を自分で挿入したい方はこちら",
           class: "block text-xl font-bold text-gray-800 mb-1" %>
 
     <% if game.persisted? && game.cover_image.attached? %>
@@ -185,73 +186,238 @@
 <% end %>
 
 <script>
+  // IGDBプラットフォーム名をハードウェア選択肢にマッピング
+  function mapIgdbPlatformToHardware(igdbPlatform) {
+    const platformMap = {
+      // Nintendo
+      'Nintendo Switch': 'Nintendo Switch',
+      'Nintendo 3DS': 'Nintendo 3DS',
+      'Nintendo DS': 'Nintendo DS',
+      'Wii U': 'Wii',
+      'Wii': 'Wii',
+      'GameCube': 'ゲームキューブ',
+      'Nintendo 64': 'ニンテンドー64',
+      'SNES': 'スーパーファミコン',
+      'NES': 'ファミコン',
+      'Game Boy Advance': 'ゲームボーイアドバンス',
+      'Game Boy Color': 'ゲームボーイ',
+      'Game Boy': 'ゲームボーイ',
+      
+      // PlayStation
+      'PlayStation 5': 'プレステ５',
+      'PlayStation 4': 'プレステ４',
+      'PlayStation 3': 'プレステ３',
+      'PlayStation 2': 'プレステ２',
+      'PlayStation': 'プレステ',
+      'PlayStation Vita': 'PS Vita',
+      'PSP': 'PSP',
+      
+      // Sega
+      'Sega Saturn': 'セガサターン',
+      'Sega Mega Drive/Genesis': 'メガドライブ',
+      
+      // Other
+      'PC': 'PC',
+      'Android': 'スマートフォン',
+      'iOS': 'スマートフォン',
+      'Arcade': 'アーケード機',
+      'Neo Geo': 'ネオジオ'
+    };
+    
+    return platformMap[igdbPlatform] || null;
+  }
+
+  // IGDBジャンル名をジャンル選択肢にマッピング
+  function mapIgdbGenreToGenre(igdbGenre) {
+    const genreMap = {
+      'Role-playing (RPG)': 'RPG',
+      'Action': 'アクション',
+      'Adventure': 'アドベンチャー',
+      'Shooter': 'シューティング',
+      'Fighting': '格闘',
+      'Sport': 'スポーツ',
+      'Racing': 'スポーツ',
+      'Strategy': 'ストラテジー',
+      'Puzzle': 'パズル',
+      'Platform': 'アクション',
+      'Simulator': 'シミュレーション',
+      'Indie': 'その他',
+      'Arcade': 'アクション',
+      'Visual Novel': 'ノベル',
+      'Card & Board Game': 'ボードゲーム',
+      'MOBA': 'アクション',
+      'Point-and-click': 'アドベンチャー',
+      'Tactical': 'ストラテジー',
+      'Hack and slash': 'アクション',
+      'Quiz/Trivia': 'パズル',
+      'Pinball': 'アクション',
+      'Music': 'その他'
+    };
+    
+    return genreMap[igdbGenre] || null;
+  }
+
   // IGDB検索
   function setupIgdbSearch() {
-    const searchBtn = document.getElementById('search_title')
-    if (!searchBtn) return
-
-    searchBtn.addEventListener('click', function () {
-      const query = document.getElementById('game_title').value.trim()
-      if (!query) return
-
-      const resultsBox = document.getElementById('igdb-results')
-      resultsBox.innerHTML = '<p class="p-4 text-sm text-gray-500 text-center">検索中...</p>'
-      resultsBox.style.display = 'block'
-
-      fetch(`/games/igdb_search?q=${encodeURIComponent(query)}`)
-        .then(response => response.text())
-        .then(html => {
-          resultsBox.innerHTML = html
-
-          resultsBox.querySelectorAll('.igdb-select-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-              const title = btn.dataset.title
-              const cover = btn.dataset.cover || ''
-
-              // フォームにセット
-              document.getElementById('game_title').value = title
-              document.getElementById('igdb_cover_url').value = cover
-
-              // 選択プレビューを表示
-              const preview = document.getElementById('igdb-selected-preview')
-              document.getElementById('igdb-selected-name').textContent = title
-              const previewImg = document.getElementById('igdb-selected-img')
-              if (cover) {
-                previewImg.src = cover
-                previewImg.style.display = 'block'
-              } else {
-                previewImg.style.display = 'none'
-              }
-              preview.classList.remove('hidden')
-
-              // 結果を閉じる
-              resultsBox.style.display = 'none'
-              resultsBox.innerHTML = ''
-            })
-          })
-        })
-    })
-
-    // クリアボタン
-    const clearBtn = document.getElementById('igdb-clear-btn')
-    if (clearBtn) {
-      clearBtn.addEventListener('click', function () {
-        document.getElementById('igdb_cover_url').value = ''
-        document.getElementById('igdb-selected-preview').classList.add('hidden')
-      })
+    console.log('Setting up IGDB search...');
+    
+    const searchBtn = document.getElementById('search_title');
+    if (!searchBtn) return;
+    
+    // 既存のリスナーを削除
+    searchBtn.removeEventListener('click', handleIgdbSearchClick);
+    searchBtn.addEventListener('click', handleIgdbSearchClick);
+  }
+  
+  // IGDB検索のクリックハンドラー関数
+  function handleIgdbSearchClick() {
+    console.log('IGDB search button clicked');
+    
+    const query = document.getElementById('game_title').value.trim();
+    console.log('Search query:', query);
+    
+    if (!query) {
+      alert('タイトルを入力してください');
+      return;
     }
+
+    const resultsBox = document.getElementById('igdb-results');
+    if (!resultsBox) {
+      console.error('Results box not found');
+      return;
+    }
+    
+    resultsBox.innerHTML = '<p class="p-4 text-sm text-gray-500 text-center">検索中...</p>';
+    resultsBox.style.display = 'block';
+
+    console.log('Sending fetch request to:', `/games/igdb_search?q=${encodeURIComponent(query)}`);
+    
+    // CSRFトークンを取得
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    console.log('CSRF token:', csrfToken ? 'found' : 'not found');
+    
+    fetch(`/games/igdb_search?q=${encodeURIComponent(query)}`, {
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'X-CSRF-Token': csrfToken || ''
+      },
+      signal: AbortSignal.timeout(10000) // 10秒タイムアウト
+    })
+      .then(response => {
+        console.log('Fetch response status:', response.status);
+        console.log('Fetch response ok:', response.ok);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(html => {
+        console.log('Received HTML response, length:', html.length);
+        resultsBox.innerHTML = html;
+
+        // 選択ボタンにイベントリスナーを設定
+        resultsBox.querySelectorAll('.igdb-select-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const title = btn.dataset.title;
+            const cover = btn.dataset.cover || '';
+            const platforms = btn.dataset.platforms ? JSON.parse(btn.dataset.platforms) : [];
+            const genres = btn.dataset.genres ? JSON.parse(btn.dataset.genres) : [];
+
+            // フォームにセット
+            const titleInput = document.getElementById('game_title');
+            if (titleInput) titleInput.value = title;
+            
+            const coverInput = document.getElementById('igdb_cover_url');
+            if (coverInput) coverInput.value = cover;
+
+            // プラットフォームをマッピングしてセット
+            const hardwareSelect = document.getElementById('game_hardware');
+            if (hardwareSelect && platforms.length > 0) {
+              const mappedHardware = mapIgdbPlatformToHardware(platforms[0].name);
+              if (mappedHardware) {
+                hardwareSelect.value = mappedHardware;
+              }
+            }
+
+            // ジャンルをマッピングしてセット
+            const genreSelect = document.getElementById('game_genre');
+            if (genreSelect && genres.length > 0) {
+              const mappedGenre = mapIgdbGenreToGenre(genres[0].name);
+              if (mappedGenre) {
+                genreSelect.value = mappedGenre;
+              }
+            }
+
+            // 画像プレビューを表示（IGDB画像の場合）
+            if (cover) {
+              const previewContainer = document.getElementById('image-preview');
+              const previewImg = document.getElementById('preview-img');
+              if (previewContainer && previewImg) {
+                previewImg.src = cover;
+                previewContainer.style.display = 'block';
+              }
+              // IGDB画像を選択した場合はファイル入力をクリア
+              const fileInput = document.getElementById('cover_image_input');
+              if (fileInput) fileInput.value = '';
+            }
+
+            // 結果を閉じる
+            resultsBox.style.display = 'none';
+            resultsBox.innerHTML = '';
+          });
+        });
+      })
+      .catch(error => {
+        console.error('IGDB search error:', error);
+        resultsBox.innerHTML = '<p class="p-4 text-sm text-red-500 text-center">検索に失敗しました: ' + error.message + '</p>';
+      });
+  }
+  // クリアボタンの処理もイベント委譲に
+  function setupIgdbClear() {
+    const clearBtn = document.getElementById('igdb-clear-btn');
+    if (!clearBtn) return;
+    
+    // 既存のリスナーを削除
+    clearBtn.removeEventListener('click', handleIgdbClearClick);
+    clearBtn.addEventListener('click', handleIgdbClearClick);
+  }
+  
+  function handleIgdbClearClick() {
+    console.log('IGDB clear button clicked');
+    
+    const coverInput = document.getElementById('igdb_cover_url');
+    if (coverInput) coverInput.value = '';
+    
+    // プラットフォームとジャンルの選択もクリア
+    const hardwareSelect = document.getElementById('game_hardware');
+    if (hardwareSelect) hardwareSelect.value = '';
+    
+    const genreSelect = document.getElementById('game_genre');
+    if (genreSelect) genreSelect.value = '';
+    
+    const preview = document.getElementById('igdb-selected-preview');
+    if (preview) preview.classList.add('hidden');
+    
+    // 画像プレビューも非表示
+    const imagePreview = document.getElementById('image-preview');
+    if (imagePreview) imagePreview.style.display = 'none';
   }
 
   document.addEventListener('DOMContentLoaded', function () {
     setupImagePreview();
     setupMateriaRating();
     setupIgdbSearch();
+    setupIgdbClear();
   });
 
   document.addEventListener('turbo:load', function () {
     setupImagePreview();
     setupMateriaRating();
     setupIgdbSearch();
+    setupIgdbClear();
   });
 
   // 画像プレビュー
@@ -273,6 +439,13 @@
         reader.onload = function (e) {
           previewImg.src = e.target.result;
           previewContainer.style.display = 'block';
+          
+          // ファイルを選択した場合はIGDB関連のフィールドをクリア
+          const coverInput = document.getElementById('igdb_cover_url');
+          if (coverInput) coverInput.value = '';
+          
+          const igdbPreview = document.getElementById('igdb-selected-preview');
+          if (igdbPreview) igdbPreview.classList.add('hidden');
         };
 
         reader.readAsDataURL(file);
@@ -284,6 +457,8 @@
 
   // マテリアル評価システム
   function setupMateriaRating() {
+    console.log('Setting up materia rating...');
+    
     // 既存の値を反映
     const currentFun = document.querySelector('input[name="game[fun]"]:checked');
     const currentDifficulty = document.querySelector('input[name="game[difficulty]"]:checked');
@@ -296,18 +471,31 @@
       updateMaterias('difficulty', parseInt(currentDifficulty.value));
     }
     
-    // マテリアルクリック時の処理
+    // マテリアルクリック時の処理 - 各要素に直接設定
     document.querySelectorAll('.materia').forEach(materia => {
-      materia.parentElement.addEventListener('click', function(e) {
-        e.preventDefault();
-        const rating = parseInt(materia.dataset.rating);
-        const type = materia.dataset.type;
-        
-        // 常に選択状態にする（解除しない）
-        document.getElementById(`${type}_${rating}`).checked = true;
-        updateMaterias(type, rating);
-      });
+      // 既存のリスナーを削除（重複防止）
+      materia.parentElement.removeEventListener('click', handleMateriaClick);
+      materia.parentElement.addEventListener('click', handleMateriaClick);
     });
+  }
+  
+  // マテリアルクリックのハンドラー関数
+  function handleMateriaClick(e) {
+    e.preventDefault();
+    const materia = e.target.closest('.materia');
+    if (!materia) return;
+    
+    console.log('Materia clicked:', materia.dataset);
+    
+    const rating = parseInt(materia.dataset.rating);
+    const type = materia.dataset.type;
+    
+    // 常に選択状態にする（解除しない）
+    const radio = document.getElementById(`${type}_${rating}`);
+    if (radio) {
+      radio.checked = true;
+      updateMaterias(type, rating);
+    }
   }
   
   // マテリアルの表示を更新
