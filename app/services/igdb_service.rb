@@ -19,8 +19,9 @@ class IgdbService
     request["Client-ID"]    = ENV["IGDB_CLIENT_ID"]
     request["Authorization"] = "Bearer #{token}"
     request.body = <<~BODY
-      search "#{query.gsub('"', '')}";
       fields name, platforms.name, genres.name, cover.image_id;
+      search "#{query.gsub('"', '')}";
+      where name ~ *"#{query.gsub('"', '')}"*;
       limit 30;
     BODY
 
