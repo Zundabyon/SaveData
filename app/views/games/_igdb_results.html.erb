@@ -1,24 +1,48 @@
 <% if games.empty? %>
   <p class="p-4 text-sm text-gray-500 text-center">ゲームが見つかりませんでした</p>
 <% else %>
-  <div class="grid grid-cols-3 gap-3 p-3">
+  <div class="grid grid-cols-2 gap-3 p-3">
     <% games.each do |game| %>
       <button type="button"
-              class="igdb-select-btn group flex flex-col items-center text-left rounded border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition overflow-hidden"
+              class="igdb-select-btn group flex text-left rounded border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition overflow-hidden"
               data-title="<%= game["name"] %>"
-              data-cover="<%= game["cover_url"] %>">
-        <% if game["cover_url"] %>
-          <img src="<%= game["cover_url"] %>"
-               class="w-full aspect-[3/4] object-cover"
-               alt="<%= game["name"] %>">
-        <% else %>
-          <div class="w-full aspect-[3/4] bg-gray-200 flex items-center justify-center">
-            <span class="text-xs text-gray-400">No Image</span>
-          </div>
-        <% end %>
-        <p class="w-full px-1 py-1 text-xs font-bold text-gray-700 group-hover:text-blue-700 leading-tight line-clamp-2">
-          <%= game["name"] %>
-        </p>
+              data-cover="<%= game["cover_url"] %>"
+              data-platforms="<%= game["platforms"]&.to_json %>"
+              data-genres="<%= game["genres"]&.to_json %>">
+        <div class="flex-shrink-0 w-16 h-20 mr-3">
+          <% if game["cover_url"] %>
+            <img src="<%= game["cover_url"] %>"
+                 class="w-full h-full object-cover rounded"
+                 alt="<%= game["name"] %>">
+          <% else %>
+            <div class="w-full h-full bg-gray-200 flex items-center justify-center rounded">
+              <span class="text-xs text-gray-400">No Image</span>
+            </div>
+          <% end %>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-bold text-gray-800 group-hover:text-blue-700 leading-tight line-clamp-2 mb-1">
+            <%= game["name"] %>
+          </p>
+          <% if game["platforms"] && game["platforms"].any? %>
+            <p class="text-xs text-gray-600 mb-1">
+              <span class="font-medium">機種:</span>
+              <%= game["platforms"].first(2).map { |p| p["name"] }.join(", ") %>
+              <% if game["platforms"].size > 2 %>
+                (+<%= game["platforms"].size - 2 %>)
+              <% end %>
+            </p>
+          <% end %>
+          <% if game["genres"] && game["genres"].any? %>
+            <p class="text-xs text-gray-600">
+              <span class="font-medium">ジャンル:</span>
+              <%= game["genres"].first(2).map { |g| g["name"] }.join(", ") %>
+              <% if game["genres"].size > 2 %>
+                (+<%= game["genres"].size - 2 %>)
+              <% end %>
+            </p>
+          <% end %>
+        </div>
       </button>
     <% end %>
   </div>

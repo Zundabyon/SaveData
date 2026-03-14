@@ -28,7 +28,7 @@
           <% if game.cover_image.attached? %>
             <div class="flex-shrink-0 group cursor-pointer"
                  onclick="openModal('<%= j game.title %>',
-                                    '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age.to_s + '歳' : nil)].compact.join(' / ') %>',
+                                    '<%= j [game.hardware, game.genre, (game.played_age.present? ? game.played_age_label : nil)].compact.join(' / ') %>',
                                     '<%= j game.memo %>',
                                     '<%= game.id %>')">
 
