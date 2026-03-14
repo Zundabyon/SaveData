@@ -291,4 +291,38 @@
     });
   }
 
+
+  // IGDB検索
+  function setupIgdbSearch() {
+    const btn     = document.getElementById('igdb_search_btn');
+    const results = document.getElementById('igdb-results');
+    const urlBox  = document.getElementById('igdb_cover_url');
+    const titleBox = document.getElementById('game_title');
+
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      const query = titleBox.value.trim();
+      if (!query) return;
+
+      results.innerHTML = '<p class="p-2 text-sm text-gray-500">検索中...</p>';
+      results.style.display = 'block';
+
+      fetch('/games/igdb_search?q=' + encodeURIComponent(query))
+        .then(function(res) { return res.text(); })
+        .then(function(html) {
+          results.innerHTML = html;
+
+          results.querySelectorAll('.igdb-select-btn').forEach(function(selectBtn) {
+            selectBtn.addEventListener('click', function () {
+              titleBox.value = selectBtn.dataset.title;
+              urlBox.value   = selectBtn.dataset.cover || '';
+              results.style.display = 'none';
+              results.innerHTML = '';
+            });
+          });
+        });
+    });
+  }
+
 </script>

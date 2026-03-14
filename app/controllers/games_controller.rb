@@ -17,8 +17,25 @@ class GamesController < ApplicationController
   def edit
   end
 
+  def igdb_search
+    query = params[:q].to_s.strip
+    return head :ok if query.blank?
+
+    @games = IgdbService.search(query)
+    render partial: "games/igdb_results", locals: { games: @games }
+  end
+
   def create
     @game = current_user.games.new(game_params)
+
+    if params[:game][:igdb_cover_url].present?
+      url = params[:game][:igdb_cover_url]
+      @game.cover_image.attach(
+        io: URI.open(url),
+        filename: "igdb_cover.jpg",
+        content_type: "image/jpeg"
+      )
+    end
 
     if @game.save
       Rails.logger.info "Game saved! ID: #{@game.id}, Image attached: #{@game.cover_image.attached?}"
@@ -32,6 +49,15 @@ class GamesController < ApplicationController
   def update
     # チェックボックスで削除フラグが立っている場合
     @game.cover_image.purge if params[:game][:remove_cover_image] == "1"
+
+    if params[:game][:igdb_cover_url].present?
+      url = params[:game][:igdb_cover_url]
+      @game.cover_image.attach(
+        io: URI.open(url),
+        filename: "igdb_cover.jpg",
+        content_type: "image/jpeg"
+      )
+    end
 
     if @game.update(game_params)
       Rails.logger.info "Game updated! Image attached: #{@game.cover_image.attached?}"
@@ -69,18 +95,6 @@ class GamesController < ApplicationController
     end
   end
 
-   # /games/igdb_search?q=マリオ　でアクセスされる
-  def igdb_search
-   query = params[:q].to_s.strip
-   return render json: [] if query.blank?
-
-   results = IgdbService.search(query)
-   render json: results
- rescue => e
-   Rails.logger.error "IGDB error: #{e}"
-   render json: []
-  end
-
   def game_params
     params.require(:game).permit(
       :title,
@@ -91,7 +105,8 @@ class GamesController < ApplicationController
       :cover_image,
       :difficulty,
       :fun,
-      :remove_cover_image
+      :remove_cover_image,
+      :igdb_cover_url
     )
   end
 end
