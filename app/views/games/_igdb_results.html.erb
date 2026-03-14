@@ -1,0 +1,16 @@
+<% games.each do |game| %>
+  <div class="flex items-center gap-3 p-2 border-b border-gray-200 hover:bg-gray-50">
+    <% if game["cover_url"] %>
+      <img src="<%= game["cover_url"] %>" class="w-12 h-16 object-cover rounded">
+    <% else %>
+      <div class="w-12 h-16 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-400">No Image</div>
+    <% end %>
+    <p class="flex-1 text-sm font-bold text-gray-800"><%= game["name"] %></p>
+    <button type="button"
+            class="igdb-select-btn text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            data-title="<%= game["name"] %>"
+            data-cover="<%= game["cover_url"] %>">
+      選ぶ
+    </button>
+  </div>
+<% end %>
