@@ -24,15 +24,26 @@
           class="mt-2 text-sm text-blue-600 hover:underline">
     検索
   </button>
-    <!-- igdb APIによる処理 -->
+    <!-- IGDB検索結果 -->
   <div id="igdb-results"
-       class="mt-2 border border-gray-300 rounded bg-white max-h-64 overflow-y-auto"
+       class="mt-2 border border-gray-300 rounded bg-white max-h-96 overflow-y-auto"
        style="display: none;">
+  </div>
+
+  <!-- 選択したゲームのプレビュー -->
+  <div id="igdb-selected-preview" class="mt-2 hidden">
+    <div class="flex items-center gap-3 p-2 bg-blue-50 border border-blue-300 rounded">
+      <img id="igdb-selected-img" src="" class="w-12 h-16 object-cover rounded border border-blue-300" alt="">
+      <div class="flex-1">
+        <p class="text-xs text-blue-500 font-semibold">IGDBから選択中</p>
+        <p id="igdb-selected-name" class="text-sm font-bold text-gray-800"></p>
+      </div>
+      <button type="button" id="igdb-clear-btn" class="text-xs text-red-500 hover:underline">クリア</button>
+    </div>
   </div>
 
   <!-- igdb APIで取得した画像を隠して入れておく場所 -->
   <%= f.hidden_field :igdb_cover_url, id: "igdb_cover_url" %>
-
 
   </div>
 
@@ -178,29 +189,38 @@
     if (!searchBtn) return
 
     searchBtn.addEventListener('click', function () {
-      const query = document.getElementById('game_title').value
+      const query = document.getElementById('game_title').value.trim()
       if (!query) return
 
       const resultsBox = document.getElementById('igdb-results')
-      resultsBox.innerHTML = '検索中...'
+      resultsBox.innerHTML = '<p class="p-4 text-sm text-gray-500 text-center">検索中...</p>'
       resultsBox.style.display = 'block'
 
-      // コントローラーにHTMLを作ってもらう
       fetch(`/games/igdb_search?q=${encodeURIComponent(query)}`)
-        .then(response => response.text())   // JSONじゃなくてHTMLとして受け取る
+        .then(response => response.text())
         .then(html => {
           resultsBox.innerHTML = html
 
-          // 「選ぶ」ボタンが押されたとき
           resultsBox.querySelectorAll('.igdb-select-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
-              // data-title と data-cover から値を取り出す
               const title = btn.dataset.title
-              const cover = btn.dataset.cover
+              const cover = btn.dataset.cover || ''
 
-              // フォームの入力欄にセット
+              // フォームにセット
               document.getElementById('game_title').value = title
               document.getElementById('igdb_cover_url').value = cover
+
+              // 選択プレビューを表示
+              const preview = document.getElementById('igdb-selected-preview')
+              document.getElementById('igdb-selected-name').textContent = title
+              const previewImg = document.getElementById('igdb-selected-img')
+              if (cover) {
+                previewImg.src = cover
+                previewImg.style.display = 'block'
+              } else {
+                previewImg.style.display = 'none'
+              }
+              preview.classList.remove('hidden')
 
               // 結果を閉じる
               resultsBox.style.display = 'none'
@@ -209,6 +229,15 @@
           })
         })
     })
+
+    // クリアボタン
+    const clearBtn = document.getElementById('igdb-clear-btn')
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        document.getElementById('igdb_cover_url').value = ''
+        document.getElementById('igdb-selected-preview').classList.add('hidden')
+      })
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -292,37 +321,5 @@
   }
 
 
-  // IGDB検索
-  function setupIgdbSearch() {
-    const btn     = document.getElementById('igdb_search_btn');
-    const results = document.getElementById('igdb-results');
-    const urlBox  = document.getElementById('igdb_cover_url');
-    const titleBox = document.getElementById('game_title');
-
-    if (!btn) return;
-
-    btn.addEventListener('click', function () {
-      const query = titleBox.value.trim();
-      if (!query) return;
-
-      results.innerHTML = '<p class="p-2 text-sm text-gray-500">検索中...</p>';
-      results.style.display = 'block';
-
-      fetch('/games/igdb_search?q=' + encodeURIComponent(query))
-        .then(function(res) { return res.text(); })
-        .then(function(html) {
-          results.innerHTML = html;
-
-          results.querySelectorAll('.igdb-select-btn').forEach(function(selectBtn) {
-            selectBtn.addEventListener('click', function () {
-              titleBox.value = selectBtn.dataset.title;
-              urlBox.value   = selectBtn.dataset.cover || '';
-              results.style.display = 'none';
-              results.innerHTML = '';
-            });
-          });
-        });
-    });
-  }
 
 </script>

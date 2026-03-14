@@ -19,7 +19,7 @@ class IgdbService
     request.body = <<~BODY
       search "#{query.gsub('"', '')}";
       fields name, platforms.name, genres.name, cover.image_id;
-      limit 5;
+      limit 30;
     BODY
 
     response = http.request(request)
