@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
 
   # ゲーム管理
-  resources :games, except: :index do
+  resources :games do
     collection do #collectionはゲーム全体への操作
       get :igdb_search # ゲーム情報をigdb APIで引っ張ってくる際に必要
     end
