@@ -14,27 +14,8 @@ document.addEventListener('turbo:load', () => {
 
 // --- ローディング演出の設定 ---
 
-// ページロード時にローディングを表示
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOMContentLoaded fired - showing loading");
-  const overlay = getOverlay();
-  console.log("overlay element:", overlay);
-  if (overlay) {
-    overlay.classList.remove("invisible", "opacity-0");
-    overlay.classList.add("opacity-100");
-    setTimeout(() => {
-      console.log("hiding loading");
-      overlay.classList.remove("opacity-100");
-      overlay.classList.add("opacity-0", "invisible");
-    }, 3000); // 3秒表示
-  } else {
-    console.log("overlay not found");
-  }
-});
-
-// 1. ページ遷移の開始
+// ページ遷移の開始
 document.addEventListener("turbo:before-visit", () => {
-  console.log("turbo:before-visit triggered");
   const overlay = getOverlay();
   if (overlay) {
     overlay.classList.remove("invisible", "opacity-0");
@@ -42,9 +23,8 @@ document.addEventListener("turbo:before-visit", () => {
   }
 });
 
-// 2. フォーム送信時
+// フォーム送信時
 document.addEventListener("turbo:submit-start", () => {
-  console.log("turbo:submit-start triggered");
   const overlay = getOverlay();
   if (overlay) {
     overlay.classList.remove("invisible", "opacity-0");
@@ -52,34 +32,27 @@ document.addEventListener("turbo:submit-start", () => {
   }
 });
 
-// 3. 読み込み完了（非表示にする）
+// 読み込み完了（非表示にする）
 document.addEventListener("turbo:load", () => {
-  console.log("turbo:load triggered");
   const overlay = getOverlay();
   if (overlay) {
     setTimeout(() => {
       overlay.classList.remove("opacity-100");
       overlay.classList.add("opacity-0", "invisible");
-    }, 2000); // 2秒に延長して確認
+    }, 500);
   }
 });
 
-// 4. 【重要】キャッシュ対策
-// Turboは遷移直前の状態をキャッシュするため、
-// 表示したままキャッシュされると「戻る」時にスライムが残ってしまいます。
+// キャッシュ対策
 document.addEventListener("turbo:before-cache", () => {
   const overlay = getOverlay();
   if (overlay) overlay.classList.add("invisible", "opacity-0");
 });
 
-// 5. フォーム送信エラーなどの場合も非表示に戻す
+// フォーム送信エラーなどの場合も非表示に戻す
 document.addEventListener("turbo:submit-end", () => {
-  // ロードが終わったとみなして隠す（エラー表示などはこの後に出るため）
   const overlay = getOverlay();
-  if (overlay) {
-    overlay.classList.remove("opacity-100");
-    overlay.classList.add("opacity-0", "invisible");
-  }
+  if (overlay) overlay.classList.add("invisible", "opacity-0");
 });
 
 // --- ドラッグ&ドロップの関数 ---
