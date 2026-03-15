@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class GamesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_game, only: %i[show edit update destroy confirm_destroy remove_cover_image]

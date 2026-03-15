@@ -1,7 +1,7 @@
 <!-- フッター -->
 <% if user_signed_in? %>
   <!-- ハンバーガーメニュー -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window p-2 flex justify-end items-center gap-2 footer-container">
+  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window p-4 flex justify-end items-center gap-2 footer-container">
     <%= link_to "ゲームトピック", "#",
           class: "rpg-command footer-btn" %>
     <%= link_to "冒険を共有",
@@ -15,8 +15,8 @@
 
     <button id="hamburger-btn"
             onclick="toggleHamburger()"
-            class: "rpg-command footer-hamburger">
-      &#9776;
+            class="rpg-command footer-hamburger">
+      メニュー
     </button>
 
     <div id="hamburger-menu"
