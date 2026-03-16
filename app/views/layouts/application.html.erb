@@ -47,10 +47,28 @@
 
     <%= render "layouts/flash" %>
 
-    <main>
+    <main class="pb-24">
       <%= yield %>
     </main>
 
     <%= render "layouts/footer" %>
+      <script>
+      document.addEventListener("turbo:load", function() {
+        const flashes = document.querySelectorAll(".flash-message");
+
+        flashes.forEach(function(flash){
+          setTimeout(function(){
+
+            flash.style.transition = "opacity 0.5s";
+            flash.style.opacity = "0";
+
+            setTimeout(function(){
+              flash.remove();
+            }, 500);
+
+          }, 5000);
+        });
+      });
+      </script>
   </body>
 </html>

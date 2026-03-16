@@ -219,10 +219,6 @@
   transform: translateY(1px);
 }
 
-.footer-hamburger {
-  /* テキストなので通常サイズ */
-}
-
 .rpg-input {
   background: rgba(10, 20, 60, 0.9);
   border: 1px solid rgba(120, 160, 255, 0.4);
@@ -802,4 +798,11 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+.footer-btn{
+padding:8px 12px;
+}
+.footer-container{
+justify-content:space-evenly;
 }
