@@ -1,17 +1,20 @@
 <div class="container mx-auto px-4 py-8">
   <!-- ページヘッダー -->
   <div class="text-center mb-8">
-    <h1 class="text-4xl font-bold text-white mb-2">冒険の記録</h1>
+    <h1 class="text-4xl font-bold text-white mb-2"><%= current_user.name %>の冒険の記録</h1>
     <p class="text-white">あの頃遊んだゲームの思い出を振り返ろう</p>
   </div>
 
   <!-- ゲーム検索 -->
-  <div class="mb-8 flex justify-center">
-    <%= form_tag dashboard_path, method: :get, class: "flex gap-2 items-center" do %>
-      <%= text_field_tag :title, params[:title], placeholder: "ゲームタイトルで検索", class: "rpg-side-window px-4 py-2 text-white bg-transparent border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-      <%= submit_tag "🔍 検索", class: "rpg-command px-4 py-2" %>
-    <% end %>
-  </div>
+<div class="mb-8 flex justify-center px-4">
+  <%= form_tag dashboard_path, method: :get, class: "flex gap-2 items-center w-full max-w-md" do %>
+    <%= text_field_tag :title, params[:title], 
+        placeholder: "ゲームタイトルで検索", 
+        class: "rpg-side-window px-4 py-2 text-white bg-transparent border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1" %>
+    <%= submit_tag "🔍", class: "rpg-command px-4 py-2 sm:hidden" %>
+    <%= submit_tag "🔍 検索", class: "rpg-command px-4 py-2 hidden sm:block" %>
+  <% end %>
+</div>
 
   <% if @games.empty? %>
     <div class="text-center py-12">

@@ -1,71 +1,62 @@
-<!-- フッター -->
-<% if user_signed_in? %>
-<%
-  job_images = {
-    "せんし" => "warrior.png", "まほうつかい" => "mage.png",
-    "とうぞく" => "thief.png", "そうりょ" => "priest.png",
-    "ゆうしゃ" => "fighter.png", "しにがみ" => "devil.png",
-    "Figmaしょくにん" => "figma_master.png", "ロブスター" => "lobster.png",
-    "その他" => "other.png",
-    "warrior" => "warrior.png", "mage" => "mage.png",
-    "thief" => "thief.png", "priest" => "priest.png",
-    "fighter" => "fighter.png", "devil" => "devil.png",
-    "figma_master" => "figma_master.png", "lobster" => "lobster.png",
-    "other" => "other.png"
-  }
+  <!-- フッター -->
+  <% if user_signed_in? %>
+  <%
+    job_images = {
+      "せんし" => "warrior.png", "まほうつかい" => "mage.png",
+      "とうぞく" => "thief.png", "そうりょ" => "priest.png",
+      "ゆうしゃ" => "fighter.png", "しにがみ" => "devil.png",
+      "Figmaしょくにん" => "figma_master.png", "ロブスター" => "lobster.png",
+      "その他" => "other.png",
+      "warrior" => "warrior.png", "mage" => "mage.png",
+      "thief" => "thief.png", "priest" => "priest.png",
+      "fighter" => "fighter.png", "devil" => "devil.png",
+      "figma_master" => "figma_master.png", "lobster" => "lobster.png",
+      "other" => "other.png"
+    }
 
-  job_image = job_images[current_user.job] || "other.png"
-%>
-  <!-- メニュー -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window px-2 py-2 flex justify-around items-center footer-container pointer-events-none">
+    job_image = job_images[current_user.job] || "other.png"
+  %>
+
+  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window px-2 py-2 flex justify-around items-center footer-container gap-3 pointer-events-none">
+
+    <!-- アバター -->
     <div class="footer-avatar pointer-events-auto">
-  <%= link_to edit_user_registration_path do %>
-    <%= image_tag "jobs/#{job_image}",
-      class: "footer-avatar-img",
-      alt: current_user.job %>
-  <% end %>
-</div>
-  <%= link_to "ゲームトピック", "#",
-          class: "rpg-command footer-btn pointer-events-auto" %>
+      <%= link_to edit_user_registration_path do %>
+        <%= image_tag "jobs/#{job_image}",
+          class: "footer-avatar-img",
+          alt: current_user.job %>
+      <% end %>
+    </div>
+
+    <!-- ボタン -->
+    <%= link_to "ゲームトピック", "#",
+        class: "rpg-command footer-btn pointer-events-auto" %>
+
     <%= link_to "冒険を共有",
-          "https://twitter.com/intent/tweet?text=SaveData+あの頃遊んだゲームの思い出を記録しよう&url=https://savedata-app.onrender.com/",
-          target: "_blank", rel: "noopener",
-          class: "rpg-command footer-btn pointer-events-auto" %>
+        "https://twitter.com/intent/tweet?text=SaveData+あの頃遊んだゲームの思い出を記録しよう&url=https://savedata-app.onrender.com/",
+        target: "_blank", rel: "noopener",
+        class: "rpg-command footer-btn pointer-events-auto" %>
+
     <button id="hamburger-btn"
             onclick="toggleHamburger()"
-            class="rpg-command footer-hamburger pointer-events-auto">
+            class="rpg-command footer-btn pointer-events-auto">
       メニュー
     </button>
 
+    <!-- ハンバーガーメニュー -->
     <div id="hamburger-menu"
-         class="absolute right-0 rpg-side-window rounded-2xl z-50 menu-wipe hamburger-menu pointer-events-auto">
+        class="absolute right-0 rpg-side-window rounded-2xl z-50 menu-wipe hamburger-menu pointer-events-auto">
 
-      <!-- プロフィール -->
-      <%
-        job_images = {
-          "せんし" => "warrior.png", "まほうつかい" => "mage.png",
-          "とうぞく" => "thief.png", "そうりょ" => "priest.png",
-          "ゆうしゃ" => "fighter.png", "しにがみ" => "devil.png",
-          "Figmaしょくにん" => "figma_master.png", "ロブスター" => "lobster.png",
-          "その他" => "other.png",
-          "warrior" => "warrior.png", "mage" => "mage.png",
-          "thief" => "thief.png", "priest" => "priest.png",
-          "fighter" => "fighter.png", "devil" => "devil.png",
-          "figma_master" => "figma_master.png", "lobster" => "lobster.png",
-          "other" => "other.png"
-        }
-        job_image = job_images[current_user.job] || "other.png"
-      %>
       <div class="px-4 py-3 border-b border-blue-400 text-center">
         <%= image_tag "jobs/#{job_image}",
               class: "profile-image object-contain mx-auto mb-2",
               alt: current_user.job || "職業未設定" %>
+
         <div class="text-sm text-blue-300">Lv.<%= current_user.level.presence || "1" %></div>
         <div class="text-lg font-bold text-white"><%= current_user.name.presence || "名無しの冒険者" %></div>
         <div class="text-sm text-blue-200"><%= job_hiragana(current_user.job) %></div>
       </div>
 
-      <!-- メニュー -->
       <ul class="py-2 text-sm text-white">
         <li>
           <%= link_to "ゲーム登録", new_game_path,
@@ -91,100 +82,83 @@
                 class: "block px-4 py-2 hover:bg-blue-800" %>
         </li>
       </ul>
+
     </div>
   </div>
 
   <style>
-    :root {
-      --footer-btn-padding-x: 1rem;
-      --footer-btn-padding-y: 0.5rem;
-      --footer-btn-font-size: 0.875rem;
-      --footer-hamburger-padding-x: 1rem;
-      --footer-hamburger-padding-y: 0.5rem;
-      --footer-hamburger-font-size: 1.125rem;
-      --hamburger-menu-width: 18rem;
-      --profile-image-width: 12rem;
-      --profile-image-height: 12rem;
-    }
+  :root{
+    --footer-btn-padding-x:0.6rem;
+    --footer-btn-padding-y:0.35rem;
+  }
 
-    .footer-btn {
-      padding: var(--footer-btn-padding-y) var(--footer-btn-padding-x);
-      font-size: var(--footer-btn-font-size);
-    }
+  .footer-btn{
+    padding:var(--footer-btn-padding-y) var(--footer-btn-padding-x);
+    font-size:clamp(11px,2.5vw,14px);
+    white-space:nowrap;
+    line-height:1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
 
-    .footer-hamburger {
-      padding: var(--footer-hamburger-padding-y) var(--footer-hamburger-padding-x);
-      font-size: var(--footer-hamburger-font-size);
-      line-height: 1;
-    }
+  .footer-avatar{
+    margin-right:auto;
+    display:flex;
+    align-items:center;
+  }
 
-    .hamburger-menu {
-      bottom: calc(100% + 8px);
-      width: var(--hamburger-menu-width);
-      display: none;
-    }
+  .footer-avatar-img{
+    width:32px;
+    height:32px;
+    image-rendering:pixelated;
+    border:2px solid #8bb6ff;
+    border-radius:6px;
+  }
 
-    .profile-image {
-      width: var(--profile-image-width);
-      height: var(--profile-image-height);
-    }
+  .hamburger-menu{
+    bottom:calc(100% + 8px);
+    width:16rem;
+    display:none;
+  }
 
-    .menu-wipe {
-      transform-origin: right center;
-      overflow: hidden;
-    }
-    @keyframes wipeIn {
-      from { transform: scaleX(0); opacity: 0; }
-      to   { transform: scaleX(1); opacity: 1; }
-    }
-    @keyframes wipeOut {
-      from { transform: scaleX(1); opacity: 1; }
-      to   { transform: scaleX(0); opacity: 0; }
-    }
-    .menu-wipe.is-open {
-      animation: wipeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    .menu-wipe.is-closing {
-      animation: wipeOut 0.1s ease-in forwards;
-    }
-    .footer-avatar{
-      margin-right:auto;
-      display:flex;
-      align-items:center;
-    }
+  .profile-image{
+    width:8rem;
+    height:8rem;
+  }
+  .menu-wipe{
+  transform-origin:right center;
+  overflow:hidden;
+}
 
-    .footer-avatar-img{
-      width:32px;
-      height:32px;
-      image-rendering: pixelated;
-      border:2px solid #8bb6ff;
-      border-radius:6px;
-    }
-  </style>
+  @keyframes wipeIn{
+    from{transform:scaleX(0);opacity:0;}
+    to{transform:scaleX(1);opacity:1;}
+  }
 
-  <script>
-    function toggleHamburger() {
-      const menu = document.getElementById('hamburger-menu');
-      if (menu.style.display === 'none' || menu.style.display === '') {
-        menu.style.display = 'block';
-        menu.classList.remove('is-closing');
-        void menu.offsetWidth; // reflow
-        menu.classList.add('is-open');
-      } else {
-        menu.classList.remove('is-open');
-        menu.classList.add('is-closing');
-        menu.addEventListener('animationend', function hide() {
-          menu.style.display = 'none';
+  @keyframes wipeOut{
+    from{transform:scaleX(1);opacity:1;}
+    to{transform:scaleX(0);opacity:0;}
+  }
+
+  .menu-wipe.is-open{
+    animation:wipeIn 0.25s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .menu-wipe.is-closing{
+    animation:wipeOut 0.15s ease forwards;
+  }
+    </style>
+
+    <script>
+      function toggleHamburger() {
+        const menu = document.getElementById('hamburger-menu');
+        if (menu.style.display === 'none' || menu.style.display === '') {
+          menu.style.display = 'block';
           menu.classList.remove('is-closing');
-          menu.removeEventListener('animationend', hide);
-        });
-      }
-    }
-    document.addEventListener('click', function(e) {
-      const btn = document.getElementById('hamburger-btn');
-      const menu = document.getElementById('hamburger-menu');
-      if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
-        if (menu.style.display !== 'none') {
+          void menu.offsetWidth; // reflow
+          menu.classList.add('is-open');
+        } else {
           menu.classList.remove('is-open');
           menu.classList.add('is-closing');
           menu.addEventListener('animationend', function hide() {
@@ -194,7 +168,21 @@
           });
         }
       }
-    });
+      document.addEventListener('click', function(e) {
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('hamburger-menu');
+        if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+          if (menu.style.display !== 'none') {
+            menu.classList.remove('is-open');
+            menu.classList.add('is-closing');
+            menu.addEventListener('animationend', function hide() {
+              menu.style.display = 'none';
+              menu.classList.remove('is-closing');
+              menu.removeEventListener('animationend', hide);
+            });
+          }
+        }
+      });
   </script>
 
   <script>
