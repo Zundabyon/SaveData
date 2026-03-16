@@ -1,18 +1,36 @@
 <!-- フッター -->
 <% if user_signed_in? %>
+<%
+  job_images = {
+    "せんし" => "warrior.png", "まほうつかい" => "mage.png",
+    "とうぞく" => "thief.png", "そうりょ" => "priest.png",
+    "ゆうしゃ" => "fighter.png", "しにがみ" => "devil.png",
+    "Figmaしょくにん" => "figma_master.png", "ロブスター" => "lobster.png",
+    "その他" => "other.png",
+    "warrior" => "warrior.png", "mage" => "mage.png",
+    "thief" => "thief.png", "priest" => "priest.png",
+    "fighter" => "fighter.png", "devil" => "devil.png",
+    "figma_master" => "figma_master.png", "lobster" => "lobster.png",
+    "other" => "other.png"
+  }
+
+  job_image = job_images[current_user.job] || "other.png"
+%>
   <!-- メニュー -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window p-4 flex justify-end items-center gap-2 footer-container pointer-events-none">
-    <%= link_to "ゲームトピック", "#",
+  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window px-2 py-2 flex justify-around items-center footer-container pointer-events-none">
+    <div class="footer-avatar pointer-events-auto">
+  <%= link_to edit_user_registration_path do %>
+    <%= image_tag "jobs/#{job_image}",
+      class: "footer-avatar-img",
+      alt: current_user.job %>
+  <% end %>
+</div>
+  <%= link_to "ゲームトピック", "#",
           class: "rpg-command footer-btn pointer-events-auto" %>
     <%= link_to "冒険を共有",
           "https://twitter.com/intent/tweet?text=SaveData+あの頃遊んだゲームの思い出を記録しよう&url=https://savedata-app.onrender.com/",
           target: "_blank", rel: "noopener",
           class: "rpg-command footer-btn pointer-events-auto" %>
-    <%= link_to "使い方", how_to_path,
-          class: "rpg-command footer-btn pointer-events-auto" %>
-    <%= link_to "マイページ", edit_user_registration_path,
-          class: "rpg-command footer-btn pointer-events-auto" %>
-
     <button id="hamburger-btn"
             onclick="toggleHamburger()"
             class="rpg-command footer-hamburger pointer-events-auto">
@@ -128,6 +146,19 @@
     }
     .menu-wipe.is-closing {
       animation: wipeOut 0.1s ease-in forwards;
+    }
+    .footer-avatar{
+      margin-right:auto;
+      display:flex;
+      align-items:center;
+    }
+
+    .footer-avatar-img{
+      width:32px;
+      height:32px;
+      image-rendering: pixelated;
+      border:2px solid #8bb6ff;
+      border-radius:6px;
     }
   </style>
 
