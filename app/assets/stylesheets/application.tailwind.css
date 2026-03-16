@@ -766,8 +766,21 @@
 }
 
 .footer-btn{
-padding:8px 12px;
+  padding: var(--footer-btn-padding-y) var(--footer-btn-padding-x);
+  font-size: clamp(10px, 2.5vw, 14px);
+  white-space: nowrap;
 }
+
 .footer-container{
 justify-content:space-evenly;
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  
+  .mb-safe {
+    margin-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  }
 }
