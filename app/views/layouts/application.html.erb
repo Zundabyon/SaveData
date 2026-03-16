@@ -3,7 +3,7 @@
   <head>
     <title><%= content_for(:title) || "SaveData" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-
+    <%= favicon_link_tag('favicon.ico') %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>
@@ -40,7 +40,6 @@
   <body class="m-0 font-['DotGothic16']"> <%# フォントを全体に適用 %>
     <div id="loading-overlay" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black transition-opacity duration-300 opacity-0 invisible">
       <div class="flex flex-col items-center gap-4">
-        <div class="slime-sprite"></div>
         <p class="text-white text-xl tracking-widest animate-pulse">Now Loading...</p>
       </div>
     </div>

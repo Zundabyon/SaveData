@@ -17,7 +17,7 @@
   job_image = job_images[current_user.job] || "other.png"
 %>
   <!-- メニュー -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window px-2 py-2 flex justify-around items-center footer-container pointer-events-none">
+  <div class="fixed bottom-0 left-0 right-0 z-50 rpg-side-window px-2 py-2 flex justify-center items-center gap-4 footer-container pointer-events-none">
     <div class="footer-avatar pointer-events-auto">
   <%= link_to edit_user_registration_path do %>
     <%= image_tag "jobs/#{job_image}",

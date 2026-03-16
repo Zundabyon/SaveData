@@ -758,41 +758,6 @@
   .feat-page-desc      { font-size: 0.5rem; }
 }
 
-/* スライムのスプライトアニメーション設定 */
-/* app/assets/stylesheets/application.tailwind.css など */
-
-.slime-sprite {
-  /* フレームサイズは32pxのまま */
-  width: 32px;
-  height: 32px;
-  
-  /* Railsのアセットパイプラインが画像を読み込めるように設定 */
-  background-image: url('assets/slime_spritesheet.png');
-  background-repeat: no-repeat;
-  
-  /* --- 【重要】ここを更新：画像全体のサイズ（256px = 32px * 8コマ） --- */
-  background-size: 256px 32px;
-  
-  /* ドット絵を拡大してもぼかさず、くっきり表示させる */
-  image-rendering: pixelated; /* Chrome/Edge/Safari */
-  image-rendering: crisp-edges; /* Firefox */
-  
-  /* --- 【重要】ここを更新：steps(8) に変更 --- */
-  /* アニメーション設定：0.8秒で8コマをループ */
-  animation: slime-move 0.8s steps(8) infinite;
-  
-  /* 画面に合わせて大きく見せる（お好みで調整） */
-  transform: scale(3); /* 3倍の大きさにする */
-}
-
-@keyframes slime-move {
-  from { background-position: 0 0; }
-  to {
-    /* --- 【重要】ここを更新：横幅マイナス1コマ分 --- */
-    background-position: -256px 0; 
-  }
-}
-
 /* 表示・非表示の制御用クラス */
 #loading-overlay:not(.invisible) {
   opacity: 1;
