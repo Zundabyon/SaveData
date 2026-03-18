@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     collection do #collectionはゲーム全体への操作
       get :igdb_search # ゲーム情報をigdb APIで引っ張ってくる際に必要
     end
-  
+
     member do #memberは特定のゲームに対する操作
       get    :confirm_destroy  # 削除確認画面
       delete :remove_cover_image  # カバー画像削除
