@@ -1,1 +1,8 @@
-<%= render "shared/timeline", user: @user, games: @games, can_edit: @can_edit %>
+<h1>プロフィール</h1>
+
+<h3>ユーザー名</h3>
+<%= @user.name %>
+<h3>メールアドレス</h3>
+<%= @user.email %>
+<h3>プロフィール</h3>
+<%= @user.profile %>

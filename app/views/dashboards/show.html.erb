@@ -7,12 +7,12 @@
 
   <!-- ゲーム検索 -->
 <div class="mb-8 flex justify-center px-4">
-  <%= form_tag dashboard_path, method: :get, class: "flex gap-2 items-center w-full max-w-md" do %>
-    <%= text_field_tag :title, params[:title], 
-        placeholder: "ゲームタイトルで検索", 
+  <%= form_tag dashboard_path, method: :get, class: "class: flex gap-2 items-center w-full max-w-md sm:max-w-md" do %>
+    <%= text_field_tag :title, params[:title],
+        placeholder: "ゲームタイトルで検索",
         class: "rpg-side-window px-4 py-2 text-white bg-transparent border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1" %>
-    <%= submit_tag "🔍", class: "rpg-command px-4 py-2 sm:hidden" %>
-    <%= submit_tag "🔍 検索", class: "rpg-command px-4 py-2 hidden sm:block" %>
+    <%= submit_tag "🔍", class: "rpg-command px-3 py-1.5 text-sm whitespace-nowrap sm:hidden" %>
+    <%= submit_tag "🔍 検索", class: "rpg-command px-3 py-1 text-sm whitespace-nowrap hidden sm:block" %>
   <% end %>
 </div>
 

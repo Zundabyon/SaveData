@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   def show
-    @user  = User.find(params[:id])
-    @games = @user.games
-    @can_edit = false
+    @user  = current_user.find(params[:id])
+    @games = current_user.games
   end
 end
