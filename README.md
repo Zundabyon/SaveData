@@ -6,7 +6,7 @@
 
 ## URL
 
-https://savedata-app.onrender.com/
+https://savedata.quest
 
 ## テストアカウント
 
