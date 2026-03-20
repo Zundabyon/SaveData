@@ -39,6 +39,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  # メール内のURLに使用されるホストとポートを設定します。これにより、メール内のリンクが正しいURLになります。
+  config.action_mailer.delivery_method = :resend
+  # メールの配信方法をResendに設定します。Resendは外部のメール送信サービスで、APIキーを使用してメールを送信します。
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

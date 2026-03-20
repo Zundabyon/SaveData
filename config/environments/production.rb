@@ -14,13 +14,13 @@ Rails.application.configure do
   #コントローラーのアクションの結果がキャッシュされるため、パフォーマンスが向上します。
 
   config.assets.compile = false
-#アセットが事前にコンパイルされていない場合、エラーが発生します。アセットは事前にコンパイルしておく必要があります。
+  #アセットが事前にコンパイルされていない場合、エラーが発生します。アセットは事前にコンパイルしておく必要があります。
   config.assets.initialize_on_precompile = false
-#アセットのプリコンパイル中にアプリケーションを初期化しないようにします。これにより、プリコンパイルが高速化されます。
+  #アセットのプリコンパイル中にアプリケーションを初期化しないようにします。これにより、プリコンパイルが高速化されます。
   config.active_storage.service = :cloudinary
-#Active StorageはCloudinaryを使用してファイルを保存します。Cloudinaryの設定はconfig/storage.ymlで行います。
+  #Active StorageはCloudinaryを使用してファイルを保存します。Cloudinaryの設定はconfig/storage.ymlで行います。
   config.force_ssl = true
-#すべての通信をSSL/TLSで暗号化します。これにより、セキュリティが向上します。
+  #すべての通信をSSL/TLSで暗号化します。これにより、セキュリティが向上します。
   config.logger = ActiveSupport::Logger.new(STDOUT)
   #ログを標準出力に出力するように設定します。これにより、ログがコンテナやクラウド環境で簡単に収集できます。
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
@@ -31,8 +31,15 @@ Rails.application.configure do
   #ログにリクエストIDをタグとして追加します。これにより、特定のリクエストに関連するログを簡単に追跡できます。
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   #ログレベルを環境変数RAILS_LOG_LEVELから取得し、デフォルトはinfoに設定します。これにより、ログの詳細度を柔軟に調整できます。
+
+  #　<===mail関連の設定===>
   config.action_mailer.perform_caching = false
   #メールのキャッシュは無効にします。これにより、メールの内容が常に最新の状態になります。
+  config.action_mailer.delivery_method = :resend
+  #メールの配信方法をResendに設定します。Resendは外部のメール送信サービスで、APIキーを使用してメールを送信します。
+  config.action_mailer.default_url_options = {host: "savedata.quest",protocol: "https"}
+  #メール内のURLに使用されるホストとプロトコルを設定します。これにより、メール内のリンクが正しいURLになります。
+
   config.i18n.fallbacks = true
   #翻訳が見つからない場合に、デフォルトのロケールの翻訳を使用するようにします。これにより、翻訳が不足している場合でもアプリケーションが正常に動作します。
   config.active_support.report_deprecations = false
