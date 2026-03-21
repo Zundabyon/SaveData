@@ -1,5 +1,5 @@
 Devise.setup do |config|
-  config.mailer_sender = "savedata.quest02990@gmail.com"
+  config.mailer_sender = "no-reply@savedata.quest"
   require "devise/orm/active_record"
   config.case_insensitive_keys = [ :email ]
   config.strip_whitespace_keys = [ :email ]
