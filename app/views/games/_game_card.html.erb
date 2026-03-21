@@ -1,0 +1,61 @@
+<div id="game-card-<%= game.id %>"
+     class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 cursor-pointer"
+     onclick="openModal('<%= j game.title %>', '<%= j "#{game.hardware} | #{game.genre}#{game.played_age.present? ? " | #{game.played_age_label}の思い出" : ""}" %>', '<%= j game.memo %>', <%= game.id %>)">
+
+  <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
+    <% if game.cover_image.attached? %>
+      <%= image_tag game.cover_image, class: "w-full h-full object-cover transition-transform duration-300 hover:scale-105" %>
+    <% else %>
+      <div class="text-gray-400 text-sm font-medium">NO IMAGE</div>
+    <% end %>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+  </div>
+
+  <div class="p-6">
+    <h3 class="text-xl font-bold text-gray-800 mb-3 leading-tight"><%= game.title %></h3>
+
+    <div class="space-y-3 mb-5">
+      <div class="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+        <span class="font-medium mr-3 text-blue-600">🎮</span>
+        <span class="font-medium"><%= game.hardware %></span>
+      </div>
+      <div class="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+        <span class="font-medium mr-3 text-green-600">⚔️</span>
+        <span class="font-medium"><%= game.genre %></span>
+      </div>
+      <% if game.played_age.present? %>
+        <div class="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+          <span class="font-medium mr-3 text-purple-600">🕰</span>
+          <span class="font-medium"><%= game.played_age_label %>の思い出</span>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-4 mb-5 border border-gray-200">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="font-medium text-green-700 text-sm">楽しさ:</span>
+          <div class="flex flex-row-reverse gap-1">
+            <% 10.downto(1) do |i| %>
+              <span class="materia materia-green inline-block <%= 'inactive' unless game.fun && game.fun >= i %>"></span>
+            <% end %>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="font-medium text-red-700 text-sm">難しさ:</span>
+          <div class="flex flex-row-reverse gap-1">
+            <% 10.downto(1) do |i| %>
+              <span class="materia materia-red inline-block <%= 'inactive' unless game.difficulty && game.difficulty >= i %>"></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if game.memo.present? %>
+      <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mb-5 border-l-4 border-blue-400">
+        <p class="text-gray-700 text-sm italic leading-relaxed">"<%= game.memo %>"</p>
+      </div>
+    <% end %>
+  </div>
+</div>
