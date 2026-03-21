@@ -1,8 +1,10 @@
 <h1>プロフィール</h1>
 
 <h3>ユーザー名</h3>
-<%= @user.name %>
+<%= @current_user.name %>
 <h3>メールアドレス</h3>
-<%= @user.email %>
-<h3>プロフィール</h3>
-<%= @user.profile %>
+<%= @current_user.email %>
+        <li>
+          <%= link_to "ユーザー編集", edit_user_registration_path,
+                class: "block px-4 py-2 hover:bg-blue-800" %>
+        </li>

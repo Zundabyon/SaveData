@@ -21,7 +21,7 @@
 
     <!-- アバター -->
     <div class="footer-avatar pointer-events-auto">
-      <%= link_to edit_user_registration_path do %>
+      <%= link_to user_path(current_user) do %>
         <%= image_tag "jobs/#{job_image}",
           class: "footer-avatar-img",
           alt: current_user.job %>
