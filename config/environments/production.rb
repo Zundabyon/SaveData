@@ -3,7 +3,8 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   config.hosts << "savedata.quest"      # 独自ドメイン
   config.hosts << "www.savedata.quest"  # サブドメイン
-
+  config.hosts << "savedata-app.onrender.com"
+  
   config.enable_reloading = false
   #コードの変更を反映させるために、アプリケーションの再起動が必要になります。
   config.eager_load = true

@@ -285,6 +285,9 @@ Ruby / Ruby on Rails を採用しました。
   技術記事
 - [アプリ開発記録（Notion）](https://www.notion.so/SaveData-2de905f284078065926eeb848b141247?source=copy_link)
 
+- ご意見、ご感想などお待ちいたしております。
+  [Eメール](savedata.quest02990@gmail.com)
+
 ---
 
 ## 最後に
