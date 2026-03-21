@@ -257,6 +257,7 @@ SaveData では、
 | データベース   | PostgreSQL（Neon）   |
 | 認証           | Devise               |
 | 画像           | Cloudinary           |
+| メールの送受信 | Resend               |
 | インフラ       | Render               |
 | 開発環境       | Docker               |
 | 進捗管理       | GitHub Issue Project |
