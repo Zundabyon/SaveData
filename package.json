@@ -9,7 +9,8 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.1",
     "@hotwired/turbo-rails": "^7.3.0",
-    "esbuild": "^0.17.19"
+    "esbuild": "^0.17.19",
+    "html2canvas": "^1.4.1"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.1"

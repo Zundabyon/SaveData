@@ -1,5 +1,6 @@
 module ApplicationHelper
 
+
 def job_image_filename(job)
   job_images = {
     "せんし" => "warrior.png", "まほうつかい" => "mage.png",
