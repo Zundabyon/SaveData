@@ -1,10 +1,46 @@
-<h1>プロフィール</h1>
+<div class="max-w-md mx-auto mt-8 rpg-side-window rounded-2xl pointer-events-auto shadow-lg">
 
-<h3>ユーザー名</h3>
-<%= @current_user.name %>
-<h3>メールアドレス</h3>
-<%= @current_user.email %>
-        <li>
-          <%= link_to "ユーザー編集", edit_user_registration_path,
-                class: "block px-4 py-2 hover:bg-blue-800" %>
-        </li>
+  <div class="px-4 py-3 border-b border-blue-400 text-center bg-black/20 rounded-t-2xl">
+    <h1 class="text-xl font-bold text-white tracking-widest">ステータス</h1>
+  </div>
+
+  <div class="px-6 py-6 text-white space-y-6">
+
+    <div class="text-center pb-2">
+      <%= image_tag "jobs/#{job_image_filename(@user.job)}",
+            class: "profile-image object-contain mx-auto w-24 h-24 drop-shadow-md", 
+            alt: @user.job || "職業未設定" %>
+    </div>
+
+    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
+      <div class="text-sm text-blue-300 font-bold">なまえ</div>
+      <div class="text-lg font-bold"><%= @user.name.presence || "名無しの冒険者" %></div>
+    </div>
+
+    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
+      <div class="text-sm text-blue-300 font-bold">しょくぎょう</div>
+      <div class="text-lg font-bold tracking-wider"><%= job_hiragana(@user.job) %></div>
+    </div>
+
+    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
+      <div class="text-sm text-blue-300 font-bold">レベル <span class="text-xs font-normal">(とうろく数)</span></div>
+      <div class="text-lg font-bold text-yellow-300">
+        Lv.<%= @user.games.count %> 
+      </div>
+    </div>
+
+    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
+      <div class="text-sm text-blue-300 font-bold">とくいなジャンル</div>
+      <div class="text-lg font-bold">
+        <%= @favorite_genre.presence || "まだない" %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="py-2 border-t border-blue-400">
+    <%= link_to "冒険者情報を変更する", edit_user_registration_path,
+          class: "block text-center px-4 py-3 text-white hover:bg-blue-800 transition-colors duration-200 rounded-b-2xl" %>
+  </div>
+
+</div>
