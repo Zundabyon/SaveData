@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # ダッシュボード（ログイン後の拠点）
   resource :dashboard, only: :show
-
+  resources :users, only: [:show]
   # ゲーム管理
   resources :games do
     collection do #collectionはゲーム全体への操作

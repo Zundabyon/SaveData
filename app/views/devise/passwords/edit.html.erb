@@ -21,7 +21,7 @@
 
         <!-- 新しいパスワード -->
         <div>
-          <%= f.label :password, "新しいパスワード",
+          <%= f.label :password, "新しいパスワード ※6文字以上",
                 class: "block text-sm font-medium text-gray-700 mb-1" %>
           <% if @minimum_password_length %>
             <em class="text-xs text-gray-500">（<%= @minimum_password_length %>文字以上）</em>
