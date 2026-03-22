@@ -3,7 +3,7 @@ import html2canvas from "html2canvas"
 window.shareCard = function(gameId) {
   const card = document.getElementById(`game-card-${gameId}`)
 
-  html2canvas(card, { useCORS: true }).then(canvas => {
+  html2canvas(card, { useCORS: true, allowTaint: true }).then(canvas => {
     const imageData = canvas.toDataURL('image/png')
 
     fetch('/share_images', {
