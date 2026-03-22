@@ -1,4 +1,4 @@
-require 'open-uri'
+require "open-uri"
 
 class GamesController < ApplicationController
   before_action :authenticate_user!
@@ -10,7 +10,6 @@ class GamesController < ApplicationController
   end
 
   def show
-    
   end
 
   def new

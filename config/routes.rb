@@ -7,14 +7,14 @@ Rails.application.routes.draw do
 
   # ダッシュボード（ログイン後の拠点）
   resource :dashboard, only: :show
-  resources :users, only: [:show]
+  resources :users, only: [ :show ]
   # ゲーム管理
   resources :games do
-    collection do #collectionはゲーム全体への操作
+    collection do # collectionはゲーム全体への操作
       get :igdb_search # ゲーム情報をigdb APIで引っ張ってくる際に必要
     end
 
-    member do #memberは特定のゲームに対する操作
+    member do # memberは特定のゲームに対する操作
       get    :confirm_destroy  # 削除確認画面
       delete :remove_cover_image  # カバー画像削除
     end
@@ -42,5 +42,5 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # 共有画像の保存
-  post '/share_images', to: 'share_images#create'
+  post "/share_images", to: "share_images#create"
 end
