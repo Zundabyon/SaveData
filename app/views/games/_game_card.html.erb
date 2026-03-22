@@ -1,8 +1,10 @@
 <div id="game-card-<%= game.id %>"
      class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 cursor-pointer"
+     style="border: 3px solid #000000; border-radius: 12px; width: 100%;"
      onclick="openModal('<%= j game.title %>', '<%= j "#{game.hardware} | #{game.genre}#{game.played_age.present? ? " | #{game.played_age_label}の思い出" : ""}" %>', '<%= j game.memo %>', <%= game.id %>)">
 
-  <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
+  <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden"
+     style="overflow: hidden;">
     <% if game.cover_image.attached? %>
       <%= image_tag game.cover_image, class: "w-full h-full object-cover transition-transform duration-300 hover:scale-105" %>
     <% else %>
