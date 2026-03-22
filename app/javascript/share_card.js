@@ -16,9 +16,13 @@ window.shareCard = function(gameId) {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data) // ← 追加
-      const tweetUrl = `https://twitter.com/intent/tweet?text=SaveDataでゲームの思い出を記録したよ！&url=${encodeURIComponent(data.url)}`
-      window.open(tweetUrl, '_blank')
+      // TinyURLで短縮
+      fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(data.url)}`)
+        .then(res => res.text())
+        .then(shortUrl => {
+          const tweetUrl = `https://twitter.com/intent/tweet?text=SaveDataでゲームの思い出を記録したよ！%0A${encodeURIComponent(shortUrl)}`
+          window.open(tweetUrl, '_blank')
+        })
     })
     .catch(e => console.log('エラー:', e)) // ← 追加
   })
