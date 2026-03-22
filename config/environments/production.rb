@@ -49,4 +49,6 @@ Rails.application.configure do
   #マイグレーション後にスキーマをダンプしないようにします。これにより、スキーマファイルが更新されるのを防ぎます。
   config.active_record.attributes_for_inspect = [ :id ]
   #Active Recordのオブジェクトをログに出力する際に、id属性のみを表示するようにします。これにより、ログが簡潔になります。
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  #Active Storageのルーティングをrails_storage_proxyに設定します。これにより、Active Storageのファイルへのアクセスがプロキシ経由で行われるようになります。
 end
