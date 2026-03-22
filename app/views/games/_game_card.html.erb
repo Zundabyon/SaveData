@@ -34,7 +34,7 @@
     <div class="bg-white rounded-lg shadow-md p-4 mb-5 border border-gray-200">
       <div class="space-y-3">
         <div class="flex items-center justify-between">
-          <span class="font-medium text-green-700 text-sm">楽しさ:</span>
+          <span style="font-weight:600; color:#15803d; font-size:0.875rem;">楽しさ:</span>
           <div class="flex flex-row-reverse gap-1">
             <% 10.downto(1) do |i| %>
               <span class="materia materia-green inline-block <%= 'inactive' unless game.fun && game.fun >= i %>"
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="flex items-center justify-between">
-          <span class="font-medium text-red-700 text-sm">難しさ:</span>
+          <span style="font-weight:600; color:#b91c1c; font-size:0.875rem;">難しさ:</span>
           <div class="flex flex-row-reverse gap-1">
             <% 10.downto(1) do |i| %>
               <span class="materia materia-red inline-block <%= 'inactive' unless game.difficulty && game.difficulty >= i %>"
