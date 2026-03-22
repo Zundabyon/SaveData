@@ -37,7 +37,8 @@
           <span class="font-medium text-green-700 text-sm">楽しさ:</span>
           <div class="flex flex-row-reverse gap-1">
             <% 10.downto(1) do |i| %>
-              <span class="materia materia-green inline-block <%= 'inactive' unless game.fun && game.fun >= i %>"></span>
+              <span class="materia materia-green inline-block <%= 'inactive' unless game.fun && game.fun >= i %>"
+                    style="display:inline-block; width:14px; height:14px; border-radius:9999px; background: radial-gradient(circle at 30% 30%, #aaffcc, #00cc55 55%, #004d22); box-shadow: 0 0 6px rgb(60,220,120); outline: 1px solid rgba(0,0,0,0.3); <%= 'opacity:0.45;' unless game.fun && game.fun >= i %>"></span>
             <% end %>
           </div>
         </div>
@@ -45,7 +46,8 @@
           <span class="font-medium text-red-700 text-sm">難しさ:</span>
           <div class="flex flex-row-reverse gap-1">
             <% 10.downto(1) do |i| %>
-              <span class="materia materia-red inline-block <%= 'inactive' unless game.difficulty && game.difficulty >= i %>"></span>
+              <span class="materia materia-red inline-block <%= 'inactive' unless game.difficulty && game.difficulty >= i %>"
+                    style="display:inline-block; width:14px; height:14px; border-radius:9999px; background: radial-gradient(circle at 30% 30%, #ffaaaa, #ee1111 55%, #6b0000); box-shadow: 0 0 6px rgb(255,60,60); outline: 1px solid rgba(0,0,0,0.3); <%= 'opacity:0.45;' unless game.difficulty && game.difficulty >= i %>"></span>
             <% end %>
           </div>
         </div>
