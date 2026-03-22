@@ -1,9 +1,8 @@
-require 'open-uri'
-require 'net/http'
-require 'json'
+require "open-uri"
+require "net/http"
+require "json"
 
 class IgdbService
-
   # 日本語を含むクエリかどうかを判定
   def self.contains_japanese?(text)
     # ひらがな・カタカナ・漢字を含むかチェック
@@ -102,12 +101,12 @@ class IgdbService
     response = http.request(request)
     Rails.logger.info "IGDB games response code: #{response.code}"
     Rails.logger.info "IGDB games response body length: #{response.body.length}"
-    
+
     if response.code != "200"
       Rails.logger.error "IGDB API error: #{response.code} - #{response.body}"
       return []
     end
-    
+
     games = JSON.parse(response.body)
     Rails.logger.info "IGDB search returned #{games.length} games"
 

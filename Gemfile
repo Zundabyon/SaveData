@@ -67,11 +67,11 @@ gem "devise"
 gem "resend"
 
 # GoogleやTwitterなどの外部サービスでログインするためのツール
-gem 'omniauth'
+gem "omniauth"
 # GoogleのOAuth
-gem 'omniauth-google-oauth2'
+gem "omniauth-google-oauth2"
 # OAuth使う時のセキュリティ用
-gem 'omniauth-rails_csrf_protection'
+gem "omniauth-rails_csrf_protection"
 
 # 管理画面を自動で作る（データの編集・削除等）
 gem "rails_admin"
@@ -98,7 +98,6 @@ end
 
 # === 開発環境のみで適用 ===
 group :development do
-
   # N+1問題をお知らせしてくれる
   gem "bullet"
 
@@ -123,6 +122,3 @@ group :test do
   # ダミーの名前やメールアドレスを生成
   gem "faker"
 end
-
-
-

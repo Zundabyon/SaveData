@@ -30,7 +30,7 @@ class Game < ApplicationRecord
   belongs_to :user
   has_one_attached :cover_image
 
-  #　ここにハードウェアの選択肢をグループにして定義しています
+  # 　ここにハードウェアの選択肢をグループにして定義しています
   HARDWARE_GROUPED = {
     "据え置き機" => [
       "ファミコン", "スーパーファミコン", "ニンテンドー64", "ゲームキューブ", "Wii", "Nintendo Switch",
@@ -46,7 +46,7 @@ class Game < ApplicationRecord
 
   HARDWARE_OPTIONS = HARDWARE_GROUPED.values.flatten.freeze
 
-  #　ここにゲームジャンルの選択肢を定義しています
+  # 　ここにゲームジャンルの選択肢を定義しています
   GENRE_OPTIONS = [
     "アクション", "シューティング", "格闘", "スポーツ",
     "RPG", "アクションRPG", "アドベンチャー", "ノベル",
@@ -55,13 +55,13 @@ class Game < ApplicationRecord
 
   # プレイした年齢の選択肢
   PLAYED_AGE_OPTIONS = [
-    ["ちっちゃい頃", 5],
-    ["小学校くらい", 8],
-    ["中学校くらい", 12],
-    ["高校の時", 16],
-    ["大学生の頃", 20],
-    ["社会人ほやほや", 23],
-    ["社会人", 25]
+    [ "ちっちゃい頃", 5 ],
+    [ "小学校くらい", 8 ],
+    [ "中学校くらい", 12 ],
+    [ "高校の時", 16 ],
+    [ "大学生の頃", 20 ],
+    [ "社会人ほやほや", 23 ],
+    [ "社会人", 25 ]
   ].freeze
 
   # 年齢のラベルを取得するメソッド
