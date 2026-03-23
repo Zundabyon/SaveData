@@ -1,3 +1,6 @@
+/* ============================================================
+   フォント読み込み
+   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -5,7 +8,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   ベーススタイル
+   ============================================================ */
 @layer base {
+  /* html にも overflow-x: hidden を指定（body だけだと横スクロールが残る場合がある） */
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     font-family: 'DotGothic16', monospace !important;
     overflow-x: hidden;
@@ -18,24 +29,28 @@
       #000000 100%
     ) !important;
   }
-  
+
+  /* スクロールバー非表示（全ブラウザ対応） */
   * {
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  
+
   *::-webkit-scrollbar {
     display: none;
   }
 }
 
-html {
-  overflow-x: hidden;
-}
+/* ============================================================
+   フォントユーティリティ
+   ============================================================ */
+
+/* Press Start 2P（ピクセルフォント） */
 .font-pixel {
   font-family: 'Press Start 2P', monospace !important;
 }
 
+/* 源暎アンティーク（ファンタジー系日本語フォント） */
 @font-face {
   font-family: "GenEiAntique";
   src: url("/fonts/GenEiAntique-Regular.ttf") format("truetype");
@@ -46,6 +61,9 @@ html {
   letter-spacing: 0.18em;
 }
 
+/* ============================================================
+   アニメーション: スキャングロー（青白い光の点滅）
+   ============================================================ */
 @keyframes scanGlow {
   0% {
     box-shadow: 0 0 4px rgba(34,211,238,0.3);
@@ -67,6 +85,9 @@ html {
   animation: scanGlow 2.2s ease-in-out infinite;
 }
 
+/* ============================================================
+   アニメーション: スキャンライン（タイムライン上を流れる光）
+   ============================================================ */
 @keyframes scanLine {
   0% { transform: translateY(-100%); opacity: 0; }
   20% { opacity: 0.15; }
@@ -88,6 +109,9 @@ html {
   animation: scanLine 6s linear infinite;
 }
 
+/* ============================================================
+   アニメーション: マーカーグロー（金色の発光）
+   ============================================================ */
 @keyframes markerGlow {
   0% {
     box-shadow:
@@ -110,6 +134,9 @@ html {
   }
 }
 
+/* ============================================================
+   アニメーション: RPGウィンドウ開閉
+   ============================================================ */
 @keyframes rpgOpen {
   0% { transform: scaleY(0.05); opacity: 0; }
   60% { transform: scaleY(1.05); opacity: 1; }
@@ -121,6 +148,9 @@ html {
   animation: rpgOpen 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
+/* ============================================================
+   RPG: 年齢リストアイテム（サイドウィンドウ用）
+   ============================================================ */
 .rpg-age-item.active {
   color: #9cc7ff;
   background: rgba(80,120,255,0.15);
@@ -134,6 +164,9 @@ html {
   opacity: 1;
 }
 
+/* ============================================================
+   タイムラインカード
+   ============================================================ */
 .timeline-card {
   opacity: 1;
   transform: translateY(0);
@@ -144,13 +177,46 @@ html {
   transform: translateY(0);
 }
 
-.timeline-card:hover {
-  border-color: rgba(120,160,255,0.8);
-  box-shadow: 0 0 12px rgba(80,120,255,0.35);
+.timeline-card {
+  position: relative;
+  border: 2px solid rgba(230, 240, 255, 0.95);
+  background: linear-gradient(
+    180deg,
+    #1b2a6b 0%,
+    #152050 45%,
+    #0b1435 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.6) inset,
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(80, 120, 255, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.timeline-card:hover {
+  border-color: rgba(120,160,255,0.8);
+  box-shadow:
+    0 0 0 1px rgba(160, 200, 255, 0.9) inset,
+    0 14px 36px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(120, 170, 255, 0.55);
+}
+
+/* カード内側の白枠（装飾） */
+.timeline-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================================
+   マテリア（スキル表示用の丸いアイコン）
+   ============================================================ */
 .materia {
-  display: inline-block;  /* ← これを追加 */
+  display: inline-block;
   width: 14px;
   height: 14px;
   border-radius: 9999px;
@@ -167,7 +233,7 @@ html {
 }
 
 .materia:hover {
-  transform: scale(1.2);  /* ← これも追加（ホバー時に拡大） */
+  transform: scale(1.2);
 }
 
 .materia-red {
@@ -188,10 +254,14 @@ html {
   );
 }
 
+/* ============================================================
+   RPGウィンドウ共通
+   ============================================================ */
 .rpg-window {
   font-family: monospace;
 }
 
+/* コマンドボタン */
 .rpg-command {
   border: 3px solid rgba(220,235,255,0.95);
   padding: 12px 24px;
@@ -222,6 +292,7 @@ html {
   transform: translateY(1px);
 }
 
+/* インプットフィールド */
 .rpg-input {
   background: rgba(10, 20, 60, 0.9);
   border: 1px solid rgba(120, 160, 255, 0.4);
@@ -229,6 +300,9 @@ html {
   padding: 6px 8px;
 }
 
+/* ============================================================
+   アニメーション: データ削除エフェクト
+   ============================================================ */
 .data-delete {
   animation: rpg-delete 0.9s steps(6) forwards;
 }
@@ -240,39 +314,9 @@ html {
   100% { opacity: 0; transform: scaleY(0.2); }
 }
 
-.timeline-card {
-  position: relative;
-  border: 2px solid rgba(230, 240, 255, 0.95);
-  background: linear-gradient(
-    180deg,
-    #1b2a6b 0%,
-    #152050 45%,
-    #0b1435 100%
-  );
-  box-shadow:
-    0 0 0 1px rgba(120, 170, 255, 0.6) inset,
-    0 10px 30px rgba(0, 0, 0, 0.6),
-    0 0 25px rgba(80, 120, 255, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.timeline-card:hover {
-  box-shadow:
-    0 0 0 1px rgba(160, 200, 255, 0.9) inset,
-    0 14px 36px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(120, 170, 255, 0.55);
-}
-
-.timeline-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 6px;
-  pointer-events: none;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
-}
-
+/* ============================================================
+   RPGサイドウィンドウ（年齢ナビ等）
+   ============================================================ */
 .rpg-side-window {
   border: 3px solid rgba(230, 240, 255, 0.95);
   background: linear-gradient(
@@ -326,6 +370,9 @@ html {
   text-shadow: 0 0 8px rgba(160,200,255,1);
 }
 
+/* ============================================================
+   RPG詳細カード（モーダル）
+   ============================================================ */
 .rpg-detail-card {
   position: relative;
   border: 4px solid #e6f2ff;
@@ -353,6 +400,9 @@ html {
   pointer-events: none;
 }
 
+/* ============================================================
+   サイドブロック（ユーザー情報・チャプター表示）
+   ============================================================ */
 .rpg-side-window .side-block {
   display: flex;
   flex-direction: column;
@@ -369,6 +419,9 @@ html {
   border-top: 1px solid rgba(80,120,255,0.2);
 }
 
+/* ============================================================
+   アニメーション: ローディングバー
+   ============================================================ */
 @layer utilities {
   @keyframes fill {
     0% { width: 0%; }
@@ -379,6 +432,9 @@ html {
   }
 }
 
+/* ============================================================
+   アニメーション: ホバー時点滅
+   ============================================================ */
 @keyframes gentleBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
@@ -388,9 +444,9 @@ html {
   animation: gentleBlink 1.2s ease-in-out infinite;
 }
 
-/* .rpg-menu-item のカーソルは JS で制御 */
-
-
+/* ============================================================
+   確認画面（削除確認など）
+   ============================================================ */
 .confirm-wrapper {
   min-height: 100vh;
   display: flex;
@@ -431,6 +487,9 @@ html {
   background: #34495e;
 }
 
+/* ============================================================
+   モーダル共通
+   ============================================================ */
 .overlay {
   position: fixed;
   inset: 0;
@@ -466,53 +525,32 @@ html {
   opacity: .7;
 }
 
-.confirm-text {
-  text-align: center;
-  margin: 48px 0 32px;
-  font-size: 1.1rem;
-}
-
 .modal-actions {
   display: flex;
   gap: 24px;
 }
 
-/* カード位置調整 */
+/* ============================================================
+   カードフロートアニメーション（ログイン画面のドラゴンカード）
+   ============================================================ */
 .card-float-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-/* 浮遊アニメーション */
 .card-float {
   width: 120px;
   animation: floatCard 4s ease-in-out infinite;
   transform-origin: center;
 }
 
-/* 浮いてゆらゆら */
 @keyframes floatCard {
-  0% {
-    transform: translateY(0px) rotateY(0deg);
-  }
-  25% {
-    transform: translateY(-8px) rotateY(90deg);
-  }
-  50% {
-    transform: translateY(-10px) rotateY(180deg);
-  }
-  75% {
-    transform: translateY(-8px) rotateY(270deg);
-  }
-  100% {
-    transform: translateY(0px) rotateY(360deg);
-  }
-}
-.card-float-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px; /* 10pxから20pxに増やす */
+  0%   { transform: translateY(0px)  rotateY(0deg);   }
+  25%  { transform: translateY(-8px) rotateY(90deg);  }
+  50%  { transform: translateY(-10px) rotateY(180deg); }
+  75%  { transform: translateY(-8px) rotateY(270deg); }
+  100% { transform: translateY(0px)  rotateY(360deg); }
 }
 
 /* ============================================================
@@ -520,6 +558,7 @@ html {
    Chrome 115+ (scroll-driven), Chrome 134+ (::scroll-button)
    ============================================================ */
 
+/* CSS カスタムプロパティの型定義（アニメーション補間に必要） */
 @property --feat-sprite-fs {
   syntax: "<integer>";
   initial-value: 0;
@@ -532,9 +571,15 @@ html {
   initial-value: 0%;
 }
 
+/* コンテナ: スプライト計算変数をまとめて定義 */
 .feat-book-container {
+  /* はみ出し防止（スプライトが画面幅を超えるのを隠す） */
   overflow-x: hidden;
+
+  /* スライド枚数 */
   --slides: 5;
+
+  /* スプライトシート定数（book.webp: 9600×3000px, 7フレーム, 5列） */
   --sprite-c:  5;
   --sprite-h:  3000;
   --sprite-w:  9600;
@@ -542,10 +587,10 @@ html {
   --sprite-fr: 12;
   --sprite-as: calc(var(--sprite-f) / var(--sprite-fr) * 1s);
 
-  /* derived sprite geometry */
+  /* スプライト幾何計算 */
   --sprite-r:  round(up, calc(var(--sprite-f) / var(--sprite-c)), 1);
   --sprite-sh: calc(var(--sprite-h) / var(--sprite-r));
-  --sprite-th: calc(var(--sprite-sh) / 2.8);   /* overall scale */
+  --sprite-th: calc(var(--sprite-sh) / 2.8); /* 全体スケール */
 
   --sprite-ar: calc(var(--sprite-th) / var(--sprite-sh));
   --sprite-uh: calc(var(--sprite-h) * var(--sprite-ar));
@@ -556,21 +601,18 @@ html {
   width: 100%;
 }
 
-/* grid: carousel only — nav is overlaid inside */
+/* 本ラッパー: scroll-timeline をスプライトに公開 */
 .feat-book {
   position: relative;
   text-align: center;
-  /* expose the scroll-timeline to sibling .feat-sprite */
   timeline-scope: --feat-carousel-timeline;
 }
 
-/* ── Sprite (page-flip background image) ── */
+/* スプライト（本のページめくりアニメーション画像） */
 .feat-sprite {
   position: absolute;
-  /* 水平: コンテナ中央に揃える */
   left: 50%;
   transform: translateX(-50%);
-  /* 垂直: スプライトのコンテンツ領域をカルーセルに重ねる */
   margin-top: calc(-1px * ((var(--sprite-th) - var(--sprite-th) * 0.6107) / 2));
   height: calc(1px * var(--sprite-th));
   width:  calc(1px * var(--sprite-tw));
@@ -581,7 +623,7 @@ html {
   z-index: 0;
   pointer-events: none;
 
-  /* sprite frame calculation */
+  /* フレーム計算 */
   --feat-sprite-fe:    calc(var(--sprite-f) * (var(--slides) - 1));
   --feat-sprite-fs-n:  mod(var(--feat-sprite-fs), var(--sprite-f));
   --feat-row: calc(
@@ -595,14 +637,15 @@ html {
   animation-timeline: --feat-carousel-timeline;
 }
 
-/* ── Carousel scroll container ── */
+/* カルーセル本体: 横スクロールコンテナ */
 .feat-carousel {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
   display: grid;
   margin: 0 auto;
-  width:  calc(1px * (var(--sprite-tw) * 0.7042));
+  /* min() でスプライト計算幅と100%の小さい方を使う → スマホではみ出さない */
+  width: min(calc(1px * (var(--sprite-tw) * 0.7042)), 100%);
   height: calc(1px * (var(--sprite-th) * 0.6107));
   grid: 1fr / auto-flow 100%;
   scroll-timeline: --feat-carousel-timeline x;
@@ -613,7 +656,7 @@ html {
   z-index: 1;
 }
 
-/* ── Native scroll buttons — overlaid inside the book (Chrome 134+) ── */
+/* ネイティブスクロールボタン（Chrome 134+） */
 .feat-carousel::scroll-button(*) {
   position: absolute;
   bottom: 10px;
@@ -627,12 +670,12 @@ html {
   color: rgba(255,255,255,0.9);
   font-size: 0.75rem;
 }
-.feat-carousel::scroll-button(*):disabled            { opacity: 0.2; }
+.feat-carousel::scroll-button(*):disabled             { opacity: 0.2; }
 .feat-carousel::scroll-button(*):not(:disabled):hover { background: rgba(0,0,0,0.55); filter: drop-shadow(0 0 5px rgba(150,200,255,0.9)); }
 .feat-carousel::scroll-button(left)  { content: "◀" / "前へ"; left:  8px; }
 .feat-carousel::scroll-button(right) { content: "▶" / "次へ"; right: 8px; }
 
-/* ── Progress bar — overlaid at bottom center ── */
+/* プログレスバー */
 .feat-carousel::scroll-marker-group {
   content: "";
   position: absolute;
@@ -651,7 +694,7 @@ html {
   animation-timeline: --feat-carousel-timeline;
 }
 
-/* ── Carousel items ── */
+/* カルーセルアイテム */
 .feat-carousel-item {
   scroll-snap-stop: always;
   scroll-snap-align: start;
@@ -671,7 +714,7 @@ html {
 }
 .feat-carousel-item:last-of-type::scroll-marker { box-shadow: none; }
 
-/* ── Page layout ── */
+/* ページレイアウト */
 .feat-page-container {
   display: flex;
   height: 100%;
@@ -688,14 +731,14 @@ html {
 }
 
 .feat-left-page {
-  padding: 16px 10px 40px 18px; /* 下は nav ボタン分 余白 */
+  padding: 16px 10px 40px 18px;
   border-right: 1px solid rgba(0,0,0,0.12);
   flex-direction: column;
   text-align: center;
 }
 
 .feat-right-page {
-  padding: 16px 18px 40px 10px; /* 下は nav ボタン分 余白 */
+  padding: 16px 18px 40px 10px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -728,7 +771,7 @@ html {
   margin: 0;
 }
 
-/* ── Keyframes ── */
+/* ── キーフレーム ── */
 @keyframes feat-stay-centered {
   entry   0% { opacity: 0; translate: -100%; }
   entry  75% { opacity: 0; translate:  -25%; }
@@ -750,100 +793,113 @@ html {
   to { --feat-sprite-fs: var(--feat-sprite-fe); }
 }
 
-/* ── Responsive ── */
+/* ── レスポンシブ（スマホ） ── */
 @media (max-width: 640px) {
+  /* スプライトを小さくスケールダウン */
   .feat-book-container { --sprite-th: calc(var(--sprite-sh) / 4.5); }
   .feat-page-icon      { font-size: 2.4rem; }
   .feat-page-label     { font-size: 0.4rem; }
   .feat-page-title     { font-size: 0.5rem; }
   .feat-page-desc      { font-size: 0.5rem; }
-  .font-pixel { font-size: clamp(1.2rem, 8vw, 3rem); }
 }
 
-/* 表示・非表示の制御用クラス */
+/* ============================================================
+   ローディングオーバーレイ
+   ============================================================ */
 #loading-overlay:not(.invisible) {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-.footer-btn{
+/* ============================================================
+   フッター
+   ============================================================ */
+:root {
+  --footer-btn-padding-x: 0.6rem;
+  --footer-btn-padding-y: 0.35rem;
+}
+
+.footer-btn {
   padding: var(--footer-btn-padding-y) var(--footer-btn-padding-x);
-  font-size: clamp(10px, 2.5vw, 14px);
+  font-size: clamp(11px, 2.5vw, 14px);
   white-space: nowrap;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.footer-container{
-justify-content:space-evenly;
+.footer-container {
+  justify-content: space-evenly;
 }
 
+.footer-avatar {
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+
+.footer-avatar-img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  border: 2px solid #8bb6ff;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   セーフエリア対応（iPhone ノッチ・ホームバー）
+   ============================================================ */
 @layer utilities {
   .pb-safe {
     padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   }
-  
+
   .mb-safe {
     margin-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
 }
-  :root{
-    --footer-btn-padding-x:0.6rem;
-    --footer-btn-padding-y:0.35rem;
-  }
 
-  .footer-btn{
-    padding:var(--footer-btn-padding-y) var(--footer-btn-padding-x);
-    font-size:clamp(11px,2.5vw,14px);
-    white-space:nowrap;
-    line-height:1;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .footer-avatar{
-    margin-right:auto;
-    display:flex;
-    align-items:center;
-  }
-
-  .footer-avatar-img{
-    width:32px;
-    height:32px;
-    image-rendering:pixelated;
-    border:2px solid #8bb6ff;
-    border-radius:6px;
-  }
-
-  .hamburger-menu{
-    bottom:calc(100% + 8px);
-    width:16rem;
-    display:none;
-  }
-
-  .profile-image{
-    width:8rem;
-    height:8rem;
-  }
-  .menu-wipe{
-  transform-origin:right center;
-  overflow:hidden;
+/* ============================================================
+   ハンバーガーメニュー
+   ============================================================ */
+.hamburger-menu {
+  bottom: calc(100% + 8px);
+  width: 16rem;
+  display: none;
 }
 
-  @keyframes wipeIn{
-    from{transform:scaleX(0);opacity:0;}
-    to{transform:scaleX(1);opacity:1;}
-  }
+/* ============================================================
+   プロフィール画像
+   ============================================================ */
+.profile-image {
+  width: 8rem;
+  height: 8rem;
+}
 
-  @keyframes wipeOut{
-    from{transform:scaleX(1);opacity:1;}
-    to{transform:scaleX(0);opacity:0;}
-  }
+/* ============================================================
+   メニューワイプアニメーション（開閉）
+   ============================================================ */
+.menu-wipe {
+  transform-origin: right center;
+  overflow: hidden;
+}
 
-  .menu-wipe.is-open{
-    animation:wipeIn 0.25s cubic-bezier(0.22,1,0.36,1) forwards;
-  }
+@keyframes wipeIn {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
 
-  .menu-wipe.is-closing{
-    animation:wipeOut 0.15s ease forwards;
-  }
+@keyframes wipeOut {
+  from { transform: scaleX(1); opacity: 1; }
+  to   { transform: scaleX(0); opacity: 0; }
+}
+
+.menu-wipe.is-open {
+  animation: wipeIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.menu-wipe.is-closing {
+  animation: wipeOut 0.15s ease forwards;
+}
