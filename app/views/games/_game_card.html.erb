@@ -1,4 +1,6 @@
 <div id="game-card-<%= game.id %>"
+     data-user-name="<%= current_user.name %>"
+     data-game-title="<%= game.title %>"
      class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 cursor-pointer"
      style="border: 3px solid #000000; border-radius: 12px; width: 100%;"
      onclick="openModal('<%= j game.title %>', '<%= j "#{game.hardware} | #{game.genre}#{game.played_age.present? ? " | #{game.played_age_label}の思い出" : ""}" %>', '<%= j game.memo %>', <%= game.id %>)">
@@ -33,7 +35,8 @@
       <% end %>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md p-4 mb-5 border border-gray-200">
+    <div class="bg-white rounded-lg shadow-md p-4 mb-5 border border-gray-200"
+     style="background: white;">
       <div class="space-y-3">
         <div class="flex items-center justify-between">
           <span style="font-weight:600; color:#15803d; font-size:0.875rem;">楽しさ:</span>
