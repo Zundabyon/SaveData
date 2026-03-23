@@ -100,7 +100,7 @@
     <div class="bg-white p-3 rounded border border-gray-300">
       <p class="text-xl font-bold text-gray-800 mb-2 text-center">楽しさ</p>
       <div class="flex flex-row-reverse justify-center gap-1">
-        <% 10.downto(1) do |i| %>
+        <% 5.downto(1) do |i| %>
           <%= f.radio_button :fun, i, id: "fun_#{i}", class: "hidden" %>
           <label for="fun_<%= i %>" class="cursor-pointer">
             <span class="materia materia-green inline-block <%= 'inactive' unless game.fun && game.fun >= i %>" 
@@ -116,7 +116,7 @@
     <div class="bg-white p-3 rounded border border-gray-300">
       <p class="text-xl font-bold text-gray-800 mb-2 text-center">難しさ</p>
       <div class="flex flex-row-reverse justify-center gap-1">
-        <% 10.downto(1) do |i| %>
+        <% 5.downto(1) do |i| %>
           <%= f.radio_button :difficulty, i, id: "difficulty_#{i}", class: "hidden" %>
           <label for="difficulty_<%= i %>" class="cursor-pointer">
             <span class="materia materia-red inline-block <%= 'inactive' unless game.difficulty && game.difficulty >= i %>" 
@@ -249,6 +249,7 @@
       'Fighting': '格闘',
       'Sport': 'スポーツ',
       'Racing': 'スポーツ',
+      'shooter': 'シューティング',
       'Strategy': 'ストラテジー',
       'Puzzle': 'パズル',
       'Platform': 'アクション',
