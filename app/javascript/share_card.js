@@ -27,7 +27,7 @@ window.shareCard = function(gameId) {
       fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(data.url)}`)
         .then(res => res.text())
         .then(shortUrl => {
-          const tweetText = `${userName}の冒険の記録\n「${gameTitle}」\n#SaveData\n宝箱を開ける👉${shortUrl}`
+          const tweetText = `🛡️${userName}の冒険の記録🗡️\n「${gameTitle}」\n#SaveData\n🎁宝箱を開ける👉${shortUrl}`
           const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
           tweetWindow.location.href = tweetUrl
         })
