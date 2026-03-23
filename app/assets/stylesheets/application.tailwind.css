@@ -29,6 +29,9 @@
   }
 }
 
+html {
+  overflow-x: hidden;
+}
 .font-pixel {
   font-family: 'Press Start 2P', monospace !important;
 }
@@ -530,10 +533,8 @@
 }
 
 .feat-book-container {
-  /* layout */
+  overflow-x: hidden;
   --slides: 5;
-
-  /* sprite sheet constants (book.webp: 9600×3000px, 7 frames, 5 cols) */
   --sprite-c:  5;
   --sprite-h:  3000;
   --sprite-w:  9600;
@@ -756,6 +757,7 @@
   .feat-page-label     { font-size: 0.4rem; }
   .feat-page-title     { font-size: 0.5rem; }
   .feat-page-desc      { font-size: 0.5rem; }
+  .font-pixel { font-size: clamp(1.2rem, 8vw, 3rem); }
 }
 
 /* 表示・非表示の制御用クラス */
