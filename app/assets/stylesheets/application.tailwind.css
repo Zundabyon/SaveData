@@ -575,7 +575,7 @@
 .feat-book-container {
   /* はみ出し防止（スプライトが画面幅を超えるのを隠す） */
   overflow-x: hidden;
-
+  overflow-y: hidden;
   /* スライド枚数 */
   --slides: 5;
 
