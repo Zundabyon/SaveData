@@ -2,8 +2,9 @@ import html2canvas from "html2canvas"
 
 window.shareCard = function(gameId) {
   const card = document.getElementById(`game-card-${gameId}`)
+  const userName = card.dataset.userName
+  const gameTitle = card.dataset.gameTitle.slice(0, 20)
 
-  // 先にウィンドウを開く（ポップアップブロック対策）
   const tweetWindow = window.open('', '_blank')
 
   html2canvas(card, {
@@ -26,7 +27,8 @@ window.shareCard = function(gameId) {
       fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(data.url)}`)
         .then(res => res.text())
         .then(shortUrl => {
-          const tweetUrl = `https://twitter.com/intent/tweet?text=SaveDataでゲームの思い出を記録したよ！%0A${encodeURIComponent(shortUrl)}`
+          const tweetText = `${userName}の冒険の記録\n「${gameTitle}」\n#SaveData\n宝箱を開ける👉${shortUrl}`
+          const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
           tweetWindow.location.href = tweetUrl
         })
     })
