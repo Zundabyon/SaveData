@@ -1,46 +1,80 @@
-<div class="max-w-md mx-auto mt-8 rpg-side-window rounded-2xl pointer-events-auto shadow-lg">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 px-4 font-mono">
+  <div class="w-full max-w-md">
 
-  <div class="px-4 py-3 border-b border-blue-400 text-center bg-black/20 rounded-t-2xl">
-    <h1 class="text-xl font-bold text-white tracking-widest">ステータス</h1>
-  </div>
+    <div class="bg-gray-200 border-4 border-gray-400 rounded-2xl shadow-2xl overflow-hidden relative">
 
-  <div class="px-6 py-6 text-white space-y-6">
+      <div class="bg-gray-600 text-black px-4 py-2 flex justify-between items-center">
+        <span class="text-xs tracking-tighter">BOUKENSYA NO LICENSE</span>
+        <span class="text-sm font-bold">冒険者免許証</span>
+      </div>
 
-    <div class="text-center pb-2">
-      <%= image_tag "jobs/#{job_image_filename(@user.job)}",
-            class: "profile-image object-contain mx-auto w-24 h-24 drop-shadow-md", 
-            alt: @user.job || "職業未設定" %>
-    </div>
+      <div class="p-6">
+        <div class="flex gap-4 mb-6">
+          <div class="shrink-0">
+            <div class="w-28 h-32 bg-white border-2 border-gray-400 shadow-inner flex items-center justify-center overflow-hidden">
+              <%= image_tag "jobs/#{job_image_filename(@user.job)}",
+              class: "profile-image object-contain w-full h-full",
+              alt: @user.job || "職業未設定" %>
+            </div>
+          </div>
 
-    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
-      <div class="text-sm text-blue-300 font-bold">なまえ</div>
-      <div class="text-lg font-bold"><%= @user.name.presence || "名無しの冒険者" %></div>
-    </div>
+          <div class="flex-grow flex flex-col justify-end pb-2">
+            <div class="border-b border-blue-600 mb-4">
+              <span class="text-[10px] text-blue-700 font-bold block">種別</span>
+              <span class="text-lg font-bold text-gray-800">冒険者</span>
+            </div>
+            <div class="border-b-2 border-blue-600">
+              <span class="text-[10px] text-blue-700 font-bold block">氏名</span>
+              <span class="text-xl font-black text-gray-900 tracking-tighter">
+                <%= @user.name.presence || "名無しの冒険者" %>
+              </span>
+            </div>
+          </div>
+        </div>
 
-    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
-      <div class="text-sm text-blue-300 font-bold">しょくぎょう</div>
-      <div class="text-lg font-bold tracking-wider"><%= job_hiragana(@user.job) %></div>
-    </div>
+        <div class="space-y-3">
+          <div class="flex gap-2">
+            <div class="flex-grow bg-white border border-gray-300 p-2 rounded">
+              <span class="text-[10px] text-gray-500 block">現在のジョブ</span>
+              <span class="font-bold text-gray-800"><%= job_hiragana(@user.job) %></span>
+            </div>
+            <div class="w-24 bg-white border border-gray-300 p-2 rounded text-center">
+              <span class="text-[10px] text-gray-500 block">レベル</span>
+              <span class="text-xl font-black  text-black"><%= @user.games.count %></span>
+            </div>
+            <div class="w-24 bg-white border border-gray-300 p-2 rounded text-center">
+              <span class="text-[10px] text-gray-500 block">ランク</span>
+              <span class="text-xl font-black text-yellow-600">
+                <%# LVに応じてランクを変える演出例 %>
+                <%= @user.games.count > 2 ? "A" : "B" %>
+              </span>
+            </div>
+          </div>
 
-    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
-      <div class="text-sm text-blue-300 font-bold">レベル <span class="text-xs font-normal">(とうろく数)</span></div>
-      <div class="text-lg font-bold text-yellow-300">
-        Lv.<%= @user.games.count %> 
+          <div class="bg-white border border-gray-300 p-2 rounded">
+            <span class="text-[10px] text-gray-500 block">特記・得意ジャンル</span>
+            <span class="text-sm font-bold text-gray-700">
+              <%= @favorite_genre.presence || "未登録" %>
+            </span>
+          </div>
+
+          <div class="text-xs text-gray-500 leading-tight">
+            * 本証は冒険者ギルドが定める基準を満たした者に交付される。<br>
+            * 有効期限：世界に平和が訪れるまで
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <%= link_to edit_user_registration_path,
+          class: "block w-full py-2 bg-blue-700 hover:bg-blue-800 text-white text-center text-sm font-bold rounded shadow-md transition-colors border-b-4 border-blue-900 active:border-b-0 active:translate-y-[2px]" do %>
+            登録情報の変更（ギルドへ申請）
+          <% end %>
+        </div>
+      </div>
+
+      <div class="absolute bottom-16 right-4 w-12 h-12 border-2 border-red-500 rounded-full flex items-center justify-center rotate-12 opacity-30 pointer-events-none">
+        <span class="text-[10px] text-red-600 font-bold text-center leading-none">ギルド<br>公認</span>
       </div>
     </div>
-
-    <div class="flex justify-between items-end border-b border-blue-800/80 pb-2">
-      <div class="text-sm text-blue-300 font-bold">とくいなジャンル</div>
-      <div class="text-lg font-bold">
-        <%= @favorite_genre.presence || "まだない" %>
-      </div>
-    </div>
-
   </div>
-
-  <div class="py-2 border-t border-blue-400">
-    <%= link_to "冒険者情報を変更する", edit_user_registration_path,
-          class: "block text-center px-4 py-3 text-white hover:bg-blue-800 transition-colors duration-200 rounded-b-2xl" %>
-  </div>
-
 </div>

@@ -611,6 +611,7 @@
 /* スプライト（本のページめくりアニメーション画像） */
 .feat-sprite {
   position: absolute;
+  max-width: 100%;
   left: 50%;
   transform: translateX(-50%);
   margin-top: calc(-1px * ((var(--sprite-th) - var(--sprite-th) * 0.6107) / 2));
