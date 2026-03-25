@@ -9,13 +9,11 @@
     <%= csp_meta_tag %>
     <%= yield :head %>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
 
-    <!-- OGP設定 -->
     <meta property="og:title" content="<%= @title || 'SaveData' %>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://savedata-app.onrender.com/">
@@ -23,7 +21,6 @@
     <meta property="og:description" content="<%= @description || 'SaveData-あの頃遊んだゲームの思い出・感動を紡ぐアプリ。' %>">
     <meta property="og:site_name" content="SaveData">
 
-    <!-- Twitter Card設定 -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%= @title || 'SaveData' %>">
     <meta name="twitter:description" content="<%= @description || 'SaveData-あの頃遊んだゲームの思い出・感動を紡ぐアプリ。' %>">
@@ -32,8 +29,11 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
   </head>
-  
-  <body class="min-h-screen pb-safe m-0 font-['DotGothic16']">
+
+  <body class="min-h-screen m-0 font-['DotGothic16']">
+
+    <%= render "layouts/hamburger" %>
+
     <div id="loading-overlay" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black transition-opacity duration-300 opacity-0 invisible">
       <div class="flex flex-col items-center gap-4">
         <p class="text-white text-xl tracking-widest animate-pulse">Now Loading...</p>
@@ -42,24 +42,18 @@
 
     <%= render "layouts/flash" %>
 
-    <main class="pb-24">
+    <main>
       <%= yield %>
     </main>
 
-    <%= render "layouts/footer" %>
-    
     <script>
       document.addEventListener("turbo:load", function() {
         const flashes = document.querySelectorAll(".flash-message");
-
         flashes.forEach(function(flash){
           setTimeout(function(){
             flash.style.transition = "opacity 0.5s";
             flash.style.opacity = "0";
-
-            setTimeout(function(){
-              flash.remove();
-            }, 500);
+            setTimeout(function(){ flash.remove(); }, 500);
           }, 5000);
         });
       });

@@ -12,11 +12,6 @@
    ベーススタイル
    ============================================================ */
 @layer base {
-  /* html にも overflow-x: hidden を指定（body だけだと横スクロールが残る場合がある） */
-  html {
-    overflow-x: hidden;
-  }
-
   body {
     font-family: 'DotGothic16', monospace !important;
     overflow-x: hidden;
@@ -817,12 +812,12 @@
    フッター
    ============================================================ */
 :root {
-  --footer-btn-padding-x: 0.6rem;
-  --footer-btn-padding-y: 0.35rem;
+  --menu-btn-padding-x: 0.6rem;
+  --menu-btn-padding-y: 0.35rem;
 }
 
-.footer-btn {
-  padding: var(--footer-btn-padding-y) var(--footer-btn-padding-x);
+.menu-btn {
+  padding: var(--menu-btn-padding-y) var(--menu-btn-padding-x);
   font-size: clamp(11px, 2.5vw, 14px);
   white-space: nowrap;
   line-height: 1;
@@ -830,25 +825,6 @@
   align-items: center;
   justify-content: center;
 }
-
-.footer-container {
-  justify-content: space-evenly;
-}
-
-.footer-avatar {
-  margin-right: auto;
-  display: flex;
-  align-items: center;
-}
-
-.footer-avatar-img {
-  width: 32px;
-  height: 32px;
-  image-rendering: pixelated;
-  border: 2px solid #8bb6ff;
-  border-radius: 6px;
-}
-
 /* ============================================================
    セーフエリア対応（iPhone ノッチ・ホームバー）
    ============================================================ */
@@ -863,15 +839,6 @@
 }
 
 /* ============================================================
-   ハンバーガーメニュー
-   ============================================================ */
-.hamburger-menu {
-  bottom: calc(100% + 8px);
-  width: 16rem;
-  display: none;
-}
-
-/* ============================================================
    プロフィール画像
    ============================================================ */
 .profile-image {
@@ -880,25 +847,52 @@
 }
 
 /* ============================================================
+   ハンバーガーメニュー
+   ============================================================ */
+.hamburger-menu {
+  width: 16rem;
+  display: none;
+  position: fixed !important;
+  bottom: 1rem;
+  left: 1rem;
+  top: auto;
+  right: auto;
+}
+
+/* ============================================================
    メニューワイプアニメーション（開閉）
    ============================================================ */
 .menu-wipe {
-  transform-origin: right center;
+  transform-origin: right top;
   overflow: hidden;
 }
 
 @keyframes wipeIn {
-  from { transform: scaleX(0); opacity: 0; }
-  to   { transform: scaleX(1); opacity: 1; }
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 
 @keyframes wipeOut {
-  from { transform: scaleX(1); opacity: 1; }
-  to   { transform: scaleX(0); opacity: 0; }
+  from {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0);
+    opacity: 0;
+  }
 }
 
 .menu-wipe.is-open {
   animation: wipeIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  height: auto !important;
+  min-height: 300px !important;
 }
 
 .menu-wipe.is-closing {
