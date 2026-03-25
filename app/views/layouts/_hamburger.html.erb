@@ -20,7 +20,7 @@
     <button id="hamburger-btn"
             onclick="toggleHamburger()"
             class="rpg-command menu-btn pointer-events-auto text-2xl">
-      ☰
+      メニュー
     </button>
 
     <!-- ハンバーガーメニュー -->
@@ -38,29 +38,36 @@
 
       <ul class="py-2 text-sm text-white">
         <li>
-          <%= link_to "冒険をきろく", new_game_path,
+          <%= link_to "冒険記録をみる", dashboard_path,
                 class: "block px-4 py-2 hover:bg-blue-800" %>
         </li>
         <li>
-          <%= link_to "ぼうけんしょう", user_path(current_user),
+          <%= link_to "ぼうけんのきろくをつける", new_game_path,
+                class: "block px-4 py-2 hover:bg-blue-800" %>
+        </li>
+        <li>
+          <%= link_to "ぼうけんしょうをみる", user_path(current_user),
                 class: "block px-4 py-2 hover:bg-blue-800" %>
         </li>
         <li>
           <%= link_to "つかいかた", how_to_path,
                 class: "block px-4 py-2 hover:bg-blue-800" %>
         </li>
+
         <li>
-          <%= link_to "冒険をおわる", destroy_user_session_path,
-                data: { turbo_method: :delete },
+          <%= link_to "利用規約", terms_path,
                 class: "block px-4 py-2 hover:bg-blue-800" %>
         </li>
+
         <li>
           <%= link_to "プライバシーポリシー", privacy_policy_path,
                 class: "block px-4 py-2 hover:bg-blue-800" %>
         </li>
+
         <li>
-          <%= link_to "利用規約", terms_path,
-                class: "block px-4 py-2 hover:bg-blue-800" %>
+          <%= link_to "ぼうけんをおわる（ログアウト）", destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "block px-4 py-2 font-bold hover:bg-blue-800" %>
         </li>
       </ul>
 

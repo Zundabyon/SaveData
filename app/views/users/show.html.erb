@@ -63,18 +63,22 @@
             * 有効期限：世界に平和が訪れるまで
           </div>
         </div>
-
-        <div class="mt-6">
-          <%= link_to edit_user_registration_path,
-          class: "block w-full py-2 bg-blue-700 hover:bg-blue-800 text-white text-center text-sm font-bold rounded shadow-md transition-colors border-b-4 border-blue-900 active:border-b-0 active:translate-y-[2px]" do %>
-            登録情報の変更（ギルドへ申請）
-          <% end %>
-        </div>
       </div>
 
       <div class="absolute bottom-16 right-4 w-12 h-12 border-2 border-red-500 rounded-full flex items-center justify-center rotate-12 opacity-30 pointer-events-none">
         <span class="text-[10px] text-red-600 font-bold text-center leading-none">ギルド<br>公認</span>
       </div>
     </div>
+        <div class="mt-6 justify-center flex gap-4">
+           
+          <%= link_to edit_user_registration_path,
+          class: "inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold shadow-md hover:bg-blue-700 transition" do %>
+            登録情報の変更<br>（ギルドへ申請）
+          <% end %>
+          <%= link_to dashboard_path,
+          class: "inline-flex items-center justify-center rounded-xl bg-red-600 px-6 py-3 text-white font-semibold shadow-md hover:bg-red-700 transition" do %>
+            冒険記録一覧へ
+          <% end %>
+        </div>
   </div>
 </div>

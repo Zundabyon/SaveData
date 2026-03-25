@@ -839,6 +839,14 @@
 }
 
 /* ============================================================
+   プロフィール画像
+   ============================================================ */
+.profile-image {
+  width: 8rem;
+  height: 8rem;
+}
+
+/* ============================================================
    ハンバーガーメニュー
    ============================================================ */
 .hamburger-menu {
@@ -852,32 +860,39 @@
 }
 
 /* ============================================================
-   プロフィール画像
-   ============================================================ */
-.profile-image {
-  width: 8rem;
-  height: 8rem;
-}
-
-/* ============================================================
    メニューワイプアニメーション（開閉）
    ============================================================ */
 .menu-wipe {
-  transform-origin: right center;
+  transform-origin: right top;
+  overflow: hidden;
 }
 
 @keyframes wipeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 
 @keyframes wipeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0);
+    opacity: 0;
+  }
 }
 
 .menu-wipe.is-open {
   animation: wipeIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  height: auto !important;
+  min-height: 300px !important;
 }
 
 .menu-wipe.is-closing {
