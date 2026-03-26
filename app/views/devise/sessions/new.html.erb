@@ -252,9 +252,22 @@
             </div>
 
           </div><!-- /feat-carousel -->
+            <button 
+              type="button"
+              class="feat-nav-btn feat-nav-prev" 
+              id="featPrevBtn"
+              aria-label="前のページ">
+              ◀
+            </button>
+            <button 
+              type="button"
+              class="feat-nav-btn feat-nav-next" 
+              id="featNextBtn"
+              aria-label="次のページ">
+              ▶
+            </button>
         </div><!-- /feat-book -->
       </div><!-- /feat-book-container -->
-
     </div>
 
     <!--アプリの使い方-->
@@ -310,6 +323,61 @@
 </div>
 
 <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('featCarousel');
+    const prevBtn = document.getElementById('featPrevBtn');
+    const nextBtn = document.getElementById('featNextBtn');
+
+    if (!carousel || !prevBtn || !nextBtn) return;
+
+    const items = carousel.querySelectorAll('.feat-carousel-item');
+    const itemWidth = carousel.offsetWidth;
+    let currentIndex = 0;
+
+    // ボタン状態の更新
+    function updateButtons() {
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === items.length - 1;
+    }
+
+    // スクロール位置の更新
+    function scrollToIndex(index) {
+      carousel.scrollTo({
+        left: itemWidth * index,
+        behavior: 'smooth'
+      });
+      currentIndex = index;
+      updateButtons();
+    }
+
+    // 前へボタン
+    prevBtn.addEventListener('click', function() {
+      if (currentIndex > 0) {
+        scrollToIndex(currentIndex - 1);
+      }
+    });
+
+    // 次へボタン
+    nextBtn.addEventListener('click', function() {
+      if (currentIndex < items.length - 1) {
+        scrollToIndex(currentIndex + 1);
+      }
+    });
+
+    // スクロールイベントで現在位置を追跡
+    carousel.addEventListener('scroll', function() {
+      const scrollLeft = carousel.scrollLeft;
+      const newIndex = Math.round(scrollLeft / itemWidth);
+      if (newIndex !== currentIndex) {
+        currentIndex = newIndex;
+        updateButtons();
+      }
+    });
+
+    // 初期状態
+    updateButtons();
+  });
+
   function showCommandSelect() {
     document.getElementById('adventure-start').style.display = 'none';
     var el = document.getElementById('command-select');
