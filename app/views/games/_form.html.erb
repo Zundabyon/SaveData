@@ -14,33 +14,46 @@
     </div>
   <% end %>
 
-  <!-- タイトル -->
+<!-- タイトル -->
 <div class="mb-4">
   <%= f.label :title, "ゲーム選択",
         class: "block text-xl font-bold text-gray-800 mb-1" %>
   
   <!-- 入力欄とボタンを横並びに -->
-  <div class="flex gap-2 items-start">
+  <div class="flex gap-1 sm:gap-2 items-start">
     <%= f.text_field :title, placeholder: "例: ファイナルファンタジーVII",
-          class: "flex-1 px-3 py-3 bg-white border border-gray-400 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" %>
+          class: "flex-1 min-w-0 px-2 py-2 sm:px-3 sm:py-3 bg-white border border-gray-400 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" %>
     
+    <!-- スマホ用：アイコンのみ -->
     <button type="button" id="search_title"
-            class="flex-shrink-0 inline-flex items-center justify-center gap-2
-                  px-4 py-2.5 sm:px-5 sm:py-3
-                  bg-blue-500 hover:bg-blue-600 rounded border border-gray-400 
-                  transition text-white text-sm font-bold"
-            style="min-height: 44px;">
-
+            class="flex-shrink-0 inline-flex items-center justify-center
+                   px-3 py-2
+                   bg-blue-500 hover:bg-blue-600 rounded border border-gray-400 
+                   transition text-white text-sm font-bold
+                   sm:hidden"
+            style="min-width: 44px; min-height: 44px;"
+            title="検索">
       <%= image_tag 'search.gif', alt: '検索', class: 'w-5 h-5' %>
-
+    </button>
+    
+    <!-- デスクトップ用：アイコン+テキスト -->
+    <button type="button" id="search_title_desktop"
+            class="hidden sm:inline-flex flex-shrink-0 items-center justify-center gap-2
+                   px-4 py-2.5 sm:px-5 sm:py-3
+                   bg-blue-500 hover:bg-blue-600 rounded border border-gray-400 
+                   transition text-white text-sm font-bold"
+            style="min-height: 44px;">
+      <%= image_tag 'search.gif', alt: '検索', class: 'w-5 h-5' %>
       <span>検索</span>
     </button>
   </div>
+  
   <p class="text-xs text-gray-600 mt-1">
     💡 英語タイトルで検索すると、より多くの結果が見つかります！<br>
     例: "Final Fantasy" や "The Legend of Zelda"
   </p>
 </div>
+
     <!-- IGDB検索結果 -->
   <div id="igdb-results"
        class="mt-2 border border-gray-300 rounded bg-white max-h-96 overflow-y-auto"
@@ -273,17 +286,23 @@
     return genreMap[igdbGenre] || null;
   }
 
-  // IGDB検索
-  function setupIgdbSearch() {
-    console.log('Setting up IGDB search...');
-    
-    const searchBtn = document.getElementById('search_title');
-    if (!searchBtn) return;
-    
-    // 既存のリスナーを削除
-    searchBtn.removeEventListener('click', handleIgdbSearchClick);
-    searchBtn.addEventListener('click', handleIgdbSearchClick);
+// IGDB検索
+function setupIgdbSearch() {
+  console.log('Setting up IGDB search...');
+  
+  const searchBtnMobile = document.getElementById('search_title');
+  const searchBtnDesktop = document.getElementById('search_title_desktop');
+  
+  if (searchBtnMobile) {
+    searchBtnMobile.removeEventListener('click', handleIgdbSearchClick);
+    searchBtnMobile.addEventListener('click', handleIgdbSearchClick);
   }
+  
+  if (searchBtnDesktop) {
+    searchBtnDesktop.removeEventListener('click', handleIgdbSearchClick);
+    searchBtnDesktop.addEventListener('click', handleIgdbSearchClick);
+  }
+}
   
   // IGDB検索のクリックハンドラー関数
   function handleIgdbSearchClick() {
