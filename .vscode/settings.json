@@ -6,12 +6,17 @@
         "dartsass",
         "dotenv",
         "groupdate",
+        "IGDB",
         "importmap",
+        "inputlength",
         "jsbundling",
         "lghover",
+        "maxlength",
+        "MOBA",
         "omakase",
         "omniauth",
         "onclick",
-        "sassc"
+        "sassc",
+        "SNES"
     ]
 }

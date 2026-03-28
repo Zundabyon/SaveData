@@ -85,40 +85,29 @@ gem "groupdate"
 gem "dotenv-rails", groups: [ :development, :test ]
 
 # === 開発・テスト環境 ===
+
+# === テスト環境のみで適用 ===
 group :development, :test do
-  # コードの途中で止めて確認できる
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'              # ← 追加！ダミーデータ自動生成（fakerと組み合わせて真価を発揮）
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # セキュリティの問題を自動チェック
   gem "brakeman", require: false
-
-  # コードの書き方をチェック（品質向上）
   gem "rubocop-rails-omakase", require: false
 end
 
+group :test do
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem 'shoulda-matchers'              # ← 追加！バリデーションテストが1行で書ける
+  gem 'database_cleaner-active_record' # ← 追加！テスト後にDBをきれいにリセット
+  gem 'simplecov', require: false     # ← 追加！テストカバレッジを計測
+end
 # === 開発環境のみで適用 ===
 group :development do
-  # N+1問題をお知らせしてくれる
   gem "bullet"
-
-  # ブラウザでエラー内容を詳しく見れる
   gem "web-console"
-
-  # データベース構造をコードに自動記入
   gem "annotate"
 end
 
-# === テスト環境のみで適用 ===
-group :test do
-  # ブラウザ操作を自動テスト
-  gem "capybara"
 
-  # テスト用のブラウザを動かす
-  gem "selenium-webdriver"
-
-  # テストデータを簡単に作る
-  gem "factory_bot_rails"
-
-  # ダミーの名前やメールアドレスを生成
-  gem "faker"
-end

@@ -266,11 +266,11 @@
       'Shooter': 'シューティング',
       'Fighting': '格闘',
       'Sport': 'スポーツ',
-      'Racing': 'スポーツ',
+      'Racing': 'レース',
       'shooter': 'シューティング',
       'Strategy': 'ストラテジー',
       'Puzzle': 'パズル',
-      'Platform': 'アクション',
+      'Platform': 'その他',
       'Simulator': 'シミュレーション',
       'Indie': 'その他',
       'Arcade': 'アクション',
@@ -279,10 +279,10 @@
       'MOBA': 'アクション',
       'Point-and-click': 'アドベンチャー',
       'Tactical': 'ストラテジー',
-      'Hack and slash': 'アクション',
+      'Hack and slash': 'ハクスラ',
       'Quiz/Trivia': 'パズル',
-      'Pinball': 'アクション',
-      'Music': 'その他'
+      'Pinball': 'その他',
+      'Music': '音ゲー'
     };
     
     return genreMap[igdbGenre] || null;
@@ -501,11 +501,11 @@ function setupIgdbSearch() {
     const currentDifficulty = document.querySelector('input[name="game[difficulty]"]:checked');
     
     if (currentFun) {
-      updateMaterias('fun', parseInt(currentFun.value));
+      updateMaterials('fun', parseInt(currentFun.value));
     }
     
     if (currentDifficulty) {
-      updateMaterias('difficulty', parseInt(currentDifficulty.value));
+      updateMaterials('difficulty', parseInt(currentDifficulty.value));
     }
     
     // マテリアルクリック時の処理 - 各要素に直接設定
@@ -531,12 +531,12 @@ function setupIgdbSearch() {
     const radio = document.getElementById(`${type}_${rating}`);
     if (radio) {
       radio.checked = true;
-      updateMaterias(type, rating);
+      updateMaterials(type, rating);
     }
   }
   
   // マテリアルの表示を更新
-  function updateMaterias(type, rating) {
+  function updateMaterials(type, rating) {
     document.querySelectorAll(`.materia[data-type="${type}"]`).forEach(m => {
       const mRating = parseInt(m.dataset.rating);
       if (mRating <= rating) {
