@@ -88,9 +88,9 @@ gem "dotenv-rails", groups: [ :development, :test ]
 
 # === テスト環境のみで適用 ===
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'faker'              # ← 追加！ダミーデータ自動生成（fakerと組み合わせて真価を発揮）
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"              # ← 追加！ダミーデータ自動生成（fakerと組み合わせて真価を発揮）
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
@@ -99,9 +99,9 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'shoulda-matchers'              # ← 追加！バリデーションテストが1行で書ける
-  gem 'database_cleaner-active_record' # ← 追加！テスト後にDBをきれいにリセット
-  gem 'simplecov', require: false     # ← 追加！テストカバレッジを計測
+  gem "shoulda-matchers"              # ← 追加！バリデーションテストが1行で書ける
+  gem "database_cleaner-active_record" # ← 追加！テスト後にDBをきれいにリセット
+  gem "simplecov", require: false     # ← 追加！テストカバレッジを計測
 end
 # === 開発環境のみで適用 ===
 group :development do
@@ -109,5 +109,3 @@ group :development do
   gem "web-console"
   gem "annotate"
 end
-
-
