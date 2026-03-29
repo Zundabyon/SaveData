@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
         expect(user).not_to be_valid
       end
     end
-    
+
     context 'jobがあるとき' do
       it '有効であること' do
         user = build(:user, job: "engineer")
@@ -67,6 +67,24 @@ RSpec.describe User, type: :model do
       it '無効であること' do
         user = build(:user, job: nil)
         expect(user).not_to be_valid
+      end
+    end
+
+  # === OAuthユーザー用のバリデーションチェック ===
+    context 'OAuthユーザー（Google）のとき' do
+      it 'birthdayがなくても有効であること' do
+        user = build(:user, :google_oauth2)
+        expect(user).to be_valid
+      end
+
+      it 'genderがなくても有効であること' do
+        user = build(:user, :google_oauth2)
+        expect(user).to be_valid
+      end
+
+      it 'jobがなくても有効であること' do
+        user = build(:user, :google_oauth2)
+        expect(user).to be_valid
       end
     end
   end
