@@ -1,145 +1,120 @@
-require "open-uri"
-require "net/http"
-require "json"
-
 class IgdbService
-  # 日本語を含むクエリかどうかを判定
-  def self.contains_japanese?(text)
-    # ひらがな・カタカナ・漢字を含むかチェック
-    text =~ /[\p{Hiragana}\p{Katakana}\p{Han}]/
-  end
+  IGDB_BASE_URL = "https://api.igdb.com/v4"
 
-  # ゲームを検索する
+  # ===================================================================
+  # 公開API
+  # ===================================================================
+
+  # ゲームを検索する（日本語・英語を自動判定して振り分け）
   def self.search(query)
-    Rails.logger.info "IGDB search called with query: #{query}"
-    token = get_token  # まず入場チケットをもらう
-    Rails.logger.info "IGDB token obtained: #{token.present? ? 'YES' : 'NO'}"
-
-    if contains_japanese?(query)
-      # 日本語を含む場合：alternative_namesを使って検索
-      Rails.logger.info "Using alternative_names search for Japanese query"
-      search_with_alternative_names(query, token)
-    else
-      # 英語の場合：従来のgames検索
-      Rails.logger.info "Using games search for English query"
-      search_games_directly(query, token)
-    end
+    token = get_token
+    contains_japanese?(query) ? search_by_alternative_names(query, token) : search_games_directly(query, token)
   end
 
-  # alternative_namesを使って日本語検索
-  def self.search_with_alternative_names(query, token)
-    # まずalternative_namesで検索
-    uri = URI("https://api.igdb.com/v4/alternative_names")
-    http = Net::HTTP.new(uri.host, 443)
-    http.use_ssl = true
+  # ===================================================================
+  # 検索ロジック（private）
+  # ===================================================================
 
-    request = Net::HTTP::Post.new(uri)
-    request["Client-ID"]    = ENV["IGDB_CLIENT_ID"]
-    request["Authorization"] = "Bearer #{token}"
-    request.body = <<~BODY
+  private_class_method def self.search_by_alternative_names(query, token)
+    # 日本語タイトルはIGDBの alternative_names テーブルに登録されているため、
+    # games テーブルの直接検索ではヒットしない。
+    # alternative_names 経由でゲーム情報を取得する。
+    body = <<~BODY
       fields game.name, game.cover.image_id, game.platforms.name, game.genres.name, name;
-      where name ~ *"#{query.gsub('"', '')}"*;
+      where name ~ *"#{sanitize(query)}"*;
       limit 100;
     BODY
 
-    Rails.logger.info "IGDB alternative_names request body: #{request.body}"
-    response = http.request(request)
-    Rails.logger.info "IGDB alternative_names response code: #{response.code}"
+    results = igdb_request("/alternative_names", body, token)
+    return [] unless results
 
-    alternative_names = JSON.parse(response.body)
-    Rails.logger.info "Found #{alternative_names.length} alternative names"
-    Rails.logger.info "Alternative names response: #{response.body}"
-
-    # alternative_namesからゲーム情報を抽出
-    games = alternative_names.map do |alt|
-      game_data = alt["game"]
-      next nil unless game_data
-
-      # 構造をフラットに
-      {
-        "id" => game_data["id"],
-        "name" => game_data["name"],
-        "cover" => game_data["cover"],
-        "platforms" => game_data["platforms"],
-        "genres" => game_data["genres"],
-        "alternative_name" => alt["name"]
-      }
-    end.compact
-
-    Rails.logger.info "Extracted #{games.length} games from alternative names"
-
-    # 画像URLを組み立てて追加する
-    games.map do |game|
-      Rails.logger.info "Processing game: #{game['name']}, cover: #{game['cover']&.inspect}"
-      if game["cover"]
-        image_id = game["cover"]["image_id"]
-        game["cover_url"] = "https://images.igdb.com/igdb/image/upload/t_cover_big/#{image_id}.jpg"
-        Rails.logger.info "Added cover_url: #{game['cover_url']}"
-      else
-        Rails.logger.info "No cover for game: #{game['name']}"
-      end
-      game
+    results.filter_map do |alt|
+      next unless alt["game"]
+      alt["game"].merge(
+        "alternative_name" => alt["name"],
+        "cover_url"        => build_cover_url(alt.dig("game", "cover", "image_id"))
+      )
     end
   end
 
-  # 従来のgames直接検索（英語用）
-  def self.search_games_directly(query, token)
-    uri = URI("https://api.igdb.com/v4/games")
-    http = Net::HTTP.new(uri.host, 443)
-    http.use_ssl = true
-
-    request = Net::HTTP::Post.new(uri)
-    request["Client-ID"]    = ENV["IGDB_CLIENT_ID"]
-    request["Authorization"] = "Bearer #{token}"
-    request.body = <<~BODY
+  private_class_method def self.search_games_directly(query, token)
+    # 英語タイトルは games テーブルの search 機能で直接検索する
+    body = <<~BODY
       fields name, platforms.name, genres.name, cover.image_id;
-      search "#{query.gsub('"', '')}";
+      search "#{sanitize(query)}";
       limit 50;
     BODY
 
-    Rails.logger.info "IGDB games request body: #{request.body}"
-    response = http.request(request)
-    Rails.logger.info "IGDB games response code: #{response.code}"
-    Rails.logger.info "IGDB games response body length: #{response.body.length}"
+    results = igdb_request("/games", body, token)
+    return [] unless results
 
-    if response.code != "200"
-      Rails.logger.error "IGDB API error: #{response.code} - #{response.body}"
-      return []
-    end
-
-    games = JSON.parse(response.body)
-    Rails.logger.info "IGDB search returned #{games.length} games"
-
-    # 画像URLを組み立てて追加する
-    games.map do |game|
-      Rails.logger.info "Processing game: #{game['name']}, cover: #{game['cover']&.inspect}"
-      if game["cover"]
-        image_id = game["cover"]["image_id"]
-        game["cover_url"] = "https://images.igdb.com/igdb/image/upload/t_cover_big/#{image_id}.jpg"
-        Rails.logger.info "Added cover_url: #{game['cover_url']}"
-      else
-        Rails.logger.info "No cover for game: #{game['name']}"
-      end
-      game
+    results.map do |game|
+      game.merge("cover_url" => build_cover_url(game.dig("cover", "image_id")))
     end
   end
 
-  # 入場チケット（アクセストークン）を取得する
-  # 1時間キャッシュして使い回す（毎回取りに行かなくていい）
-  def self.get_token
+  # ===================================================================
+  # 共通ヘルパー（private）
+  # ===================================================================
+
+  # IGDB APIへのHTTPリクエストを共通化したメソッド
+  # 各エンドポイントで同じセットアップが重複しないよう切り出している
+  private_class_method def self.igdb_request(path, body, token)
+    uri  = URI("#{IGDB_BASE_URL}#{path}")
+    http = Net::HTTP.new(uri.host, 443)
+    http.use_ssl = true
+
+    req = Net::HTTP::Post.new(uri).tap do |r|
+      r["Client-ID"]     = ENV["IGDB_CLIENT_ID"]
+      r["Authorization"] = "Bearer #{token}"
+      r.body             = body
+    end
+
+    res = http.request(req)
+    unless res.code == "200"
+      Rails.logger.error "IGDB error [#{path}] #{res.code}: #{res.body}"
+      return nil
+    end
+
+    JSON.parse(res.body)
+  end
+
+  # カバー画像のURLを組み立てる
+  # image_id が nil の場合（カバーなし）は nil を返す
+  private_class_method def self.build_cover_url(image_id)
+    return nil unless image_id
+    "https://images.igdb.com/igdb/image/upload/t_cover_big/#{image_id}.jpg"
+  end
+
+  # 日本語（ひらがな・カタカナ・漢字）を含むかどうかを判定する
+  private_class_method def self.contains_japanese?(text)
+    text =~ /[\p{Hiragana}\p{Katakana}\p{Han}]/
+  end
+
+  # クエリ文字列のサニタイズ
+  # 【許可リスト方式】で安全な文字のみを残す
+  # - 許可：日本語（ひらがな・カタカナ・漢字）、英数字、スペース
+  # - 除去：記号類（クエリインジェクション対策）
+  # 例）"FF*; fields password;" → "FF fields password"（記号が除去される）
+  private_class_method def self.sanitize(query)
+    query.gsub(/[^\p{Hiragana}\p{Katakana}\p{Han}a-zA-Z0-9\s]/, "").strip
+  end
+
+  # ===================================================================
+  # 認証（private）
+  # ===================================================================
+
+  # TwitchのOAuth2でアクセストークンを取得する
+  # 毎回取得するとAPIコールが増えるため、1時間Railsキャッシュに保持して使い回す
+  private_class_method def self.get_token
     Rails.cache.fetch("igdb_token", expires_in: 1.hour) do
-      Rails.logger.info "Getting new IGDB token"
-      Rails.logger.info "IGDB_CLIENT_ID: #{ENV['IGDB_CLIENT_ID']&.present? ? 'SET' : 'NOT SET'}"
-      Rails.logger.info "IGDB_CLIENT_SECRET: #{ENV['IGDB_CLIENT_SECRET']&.present? ? 'SET' : 'NOT SET'}"
-      uri = URI("https://id.twitch.tv/oauth2/token")
-      response = Net::HTTP.post_form(uri, {
+      res = Net::HTTP.post_form(
+        URI("https://id.twitch.tv/oauth2/token"),
         client_id:     ENV["IGDB_CLIENT_ID"],
         client_secret: ENV["IGDB_CLIENT_SECRET"],
         grant_type:    "client_credentials"
-      })
-      Rails.logger.info "Token response code: #{response.code}"
-      Rails.logger.info "Token response body: #{response.body}"
-      JSON.parse(response.body)["access_token"]
+      )
+      JSON.parse(res.body)["access_token"]
     end
   end
 end
