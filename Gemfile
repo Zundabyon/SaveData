@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # === コアフレームワーク ===
 # Rails本体：Webアプリを作るための基盤
-gem "rails", "~> 7.2.3"
+gem "rails", "~> 7.2.3.1"
 
 # アプリの起動を速くする
 gem "bootsnap", require: false

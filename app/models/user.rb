@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Associations
   has_many :games, dependent: :destroy
   # Enums
-  enum gender, { male: 0, female: 1 }
+  enum :gender, { male: 0, female: 1 }
   # Validations
   validates :email, presence: true
   validates :name, presence: true
