@@ -1,100 +1,109 @@
-ja:
-  activerecord:
-    models:
-      user: ユーザー
-      game: ゲーム
-    attributes:
-      user:
-        name: プレイヤー名
-        email: メールアドレス
-        password: パスワード
-        password_confirmation: パスワード（確認）
-        birthday: 誕生日
-        gender: 性別
-        job: 職業
-      game:
-        title: ゲームタイトル
-        hardware: ハード
-        genre: ジャンル
-        played_age: プレイした大体の年齢
-        fun: 楽しさ
-        difficulty: 難しさ
-        memo: ひとことメモ
-        cover_image: カバー画像
-
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              taken: "はすでに使用されています"
-              blank: "を入力してください"
-              invalid: "の形式が正しくありません"
-            password:
-              blank: "を入力してください"
-              too_short: "は%{count}文字以上で入力してください"
-            password_confirmation:
-              confirmation: "が一致しません"
-            name:
-              blank: "を入力してください"
-            birthday:
-              blank: "を入力してください"
-            gender:
-              blank: "を選択してください"
-            job:
-              blank: "を選択してください"
-        game:
-          attributes:
-            title:
-              blank: "を入力してください"
-              too_long: "は%{count}文字以内で入力してください"
-            played_age:
-              blank: "を入力してください"
-              not_a_number: "は数値で入力してください"
-              not_an_integer: "は整数で入力してください"
-              greater_than_or_equal_to: "は%{count}以上で入力してください"
-              less_than_or_equal_to: "は%{count}以下で入力してください"
-            fun:
-              not_a_number: "は数値で入力してください"
-              not_an_integer: "は整数で入力してください"
-              greater_than_or_equal_to: "は%{count}以上で選択してください"
-              less_than_or_equal_to: "は%{count}以下で選択してください"
-            difficulty:
-              not_a_number: "は数値で入力してください"
-              not_an_integer: "は整数で入力してください"
-              greater_than_or_equal_to: "は%{count}以上で選択してください"
-              less_than_or_equal_to: "は%{count}以下で選択してください"
+activerecord:
+  models:
+    user: ユーザー
+    game: ゲーム
+  attributes:
+    user:
+      name: プレイヤー名
+      email: メールアドレス
+      password: パスワード
+      password_confirmation: パスワード（確認）
+      birthday: 誕生日
+      gender: 性別
+      job: 職業
+    game:
+      title: ゲームタイトル
+      hardware: ハード
+      genre: ジャンル
+      played_age: プレイした大体の年齢
+      fun: 楽しさ
+      difficulty: 難しさ
+      memo: ひとことメモ
+      cover_image: カバー画像
 
   errors:
-    format: "%{attribute}%{message}"
+    models:
+      user:
+        attributes:
+          email:
+            taken: "はすでに使用されています"
+            blank: "を入力してください"
+            invalid: "の形式が正しくありません"
+          password:
+            blank: "を入力してください"
+            too_short: "は%{count}文字以上で入力してください"
+          password_confirmation:
+            confirmation: "が一致しません"
+          name:
+            blank: "を入力してください"
+          birthday:
+            blank: "を入力してください"
+          gender:
+            blank: "を選択してください"
+          job:
+            blank: "を選択してください"
+      game:
+        attributes:
+          title:
+            blank: "を入力してください"
+            too_long: "は%{count}文字以内で入力してください"
+          played_age:
+            blank: "を入力してください"
+            not_a_number: "は数値で入力してください"
+            not_an_integer: "は整数で入力してください"
+            greater_than_or_equal_to: "は%{count}以上で入力してください"
+            less_than_or_equal_to: "は%{count}以下で入力してください"
+          fun:
+            not_a_number: "は数値で入力してください"
+            not_an_integer: "は整数で入力してください"
+            greater_than_or_equal_to: "は%{count}以上で選択してください"
+            less_than_or_equal_to: "は%{count}以下で選択してください"
+          difficulty:
+            not_a_number: "は数値で入力してください"
+            not_an_integer: "は整数で入力してください"
+            greater_than_or_equal_to: "は%{count}以上で選択してください"
+            less_than_or_equal_to: "は%{count}以下で選択してください"
 
-    template:
-      header:
-        one: "入力内容に1件のエラーがあります"
-        other: "入力内容に%{count}件のエラーがあります"
-      body: "以下の項目を確認してください:"
+errors:
+  format: "%{attribute}%{message}"
 
-    messages:
-      blank: "を入力してください"
-      too_short: "は%{count}文字以上で入力してください"
-      too_long: "は%{count}文字以内で入力してください"
-      invalid: "が正しくありません"
-      confirmation: "が一致しません"
-      taken: "はすでに使用されています"
-      required: "を入力してください"
-      not_a_number: "は数値で入力してください"
-      not_an_integer: "は整数で入力してください"
-      greater_than_or_equal_to: "は%{count}以上で入力してください"
-      less_than_or_equal_to: "は%{count}以下で入力してください"
+  template:
+    header:
+      one: "入力内容に1件のエラーがあります"
+      other: "入力内容に%{count}件のエラーがあります"
+    body: "以下の項目を確認してください:"
 
-  devise:
-    failure:
-      invalid: "メールアドレスまたはパスワードが違います"
-      not_found_in_database: "メールアドレスまたはパスワードが違います"
-      unauthenticated: "ログインしてください"
-    registrations:
-      signed_up: "アカウントを作成しました"
-      updated: "アカウント情報を更新しました"
-    sessions:
-      signed_in: "ログインしました"
-      signed_out: "ログアウトしました"
+  messages:
+    blank: "を入力してください"
+    too_short: "は%{count}文字以上で入力してください"
+    too_long: "は%{count}文字以内で入力してください"
+    invalid: "が正しくありません"
+    confirmation: "が一致しません"
+    taken: "はすでに使用されています"
+    required: "を入力してください"
+    not_a_number: "は数値で入力してください"
+    not_an_integer: "は整数で入力してください"
+    greater_than_or_equal_to: "は%{count}以上で入力してください"
+    less_than_or_equal_to: "は%{count}以下で入力してください"
+    greater_than: "は%{count}より大きい値にしてください"
+    less_than: "は%{count}より小さい値にしてください"
+    equal_to: "は%{count}にしてください"
+    other_than: "は%{count}以外の値にしてください"
+    inclusion: "は一覧にありません"
+    exclusion: "は予約されています"
+    wrong_length: "は%{count}文字で入力してください"
+    not_saved:
+      one: "エラーが発生したため %{resource} は保存されませんでした:"
+      other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした:"
+
+devise:
+  failure:
+    invalid: "メールアドレスまたはパスワードが違います"
+    not_found_in_database: "メールアドレスまたはパスワードが違います"
+    unauthenticated: "ログインしてください"
+  registrations:
+    signed_up: "アカウントを作成しました"
+    updated: "アカウント情報を更新しました"
+  sessions:
+    signed_in: "ログインしました"
+    signed_out: "ログアウトしました"
