@@ -573,6 +573,7 @@ DEPENDENCIES
   active_storage_validations
   activestorage-cloudinary-service
   annotate
+  bcrypt (~> 3.1.7)
   bootsnap
   brakeman
   bullet
