@@ -111,4 +111,3 @@ group :development do
   gem "web-console"
   gem "annotate"
 end
-
