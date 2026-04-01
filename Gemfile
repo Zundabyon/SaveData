@@ -102,6 +102,7 @@ group :test do
   gem "shoulda-matchers"              # ← 追加！バリデーションテストが1行で書ける
   gem "database_cleaner-active_record" # ← 追加！テスト後にDBをきれいにリセット
   gem "simplecov", require: false     # ← 追加！テストカバレッジを計測
+  gem "rails-controller-testing"      # ← 追加！コントローラーテストでassignsを使うため
 end
 # === 開発環境のみで適用 ===
 group :development do

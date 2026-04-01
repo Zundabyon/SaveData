@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'バリデーション' do
-
     context 'emailがあるとき' do
       it '有効であること' do
         user = build(:user)
@@ -70,7 +69,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-  # === OAuthユーザー用のバリデーションチェック ===
+    # === OAuthユーザー用のバリデーションチェック ===
     context 'OAuthユーザー（Google）のとき' do
       it 'birthdayがなくても有効であること' do
         user = build(:user, :google_oauth2)

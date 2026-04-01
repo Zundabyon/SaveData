@@ -8,6 +8,8 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # RSpecとRailsを統合するための行。これにより、RSpecの機能がRailsアプリケーション内で利用できるようになります。
 require 'rspec/rails'
+# コントローラーテストでassignsを使うためのgem
+require 'rails-controller-testing'
 
 
 
@@ -23,12 +25,20 @@ end
 # RSpecの設定を行うためのブロック
 RSpec.configure do |config|
   # テストで使用するフィクスチャのパスを指定します。これにより、テストデータを定義したファイルが正しく読み込まれるようになります。
-  config.fixture_paths = [Rails.root.join('spec/fixtures')]
+  config.fixture_paths = [ Rails.root.join('spec/fixtures') ]
   # buildはFactoryBotのメソッドなのに、RSPECにFactoryBot使うよ！って教えてなかったから怒られた感じなので追加
   config.include FactoryBot::Syntax::Methods
+  # コントローラーテストでassignsを使うための設定
+  # TemplateAssertions が reset_template_assertion を提供するため3つ全て必要
+  config.include Rails::Controller::Testing::TestProcess, type: :controller
+  config.include Rails::Controller::Testing::TemplateAssertions, type: :controller
+  config.include Rails::Controller::Testing::Integration, type: :controller
+  # Deviseのテストヘルパーを追加（sign_inが使えるようになる）
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  # コントローラーテストでビューをレンダリングしない
+  config.render_views = false
   # 各テストをトランザクション内で実行する設定。これにより、テストがデータベースに与える影響を最小限に抑えることができます。
   config.use_transactional_fixtures = true
   # RSpecのマッチャーやモックの設定を行うためのブロック。ここでは、RSpecの期待値とモックの設定をカスタマイズしています。
   config.filter_rails_from_backtrace!
-
 end
