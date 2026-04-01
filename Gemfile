@@ -62,6 +62,7 @@ gem "jbuilder"
 # === 認証・管理 ===
 # ユーザー登録・ログイン機能
 gem "devise"
+gem "bcrypt", "~> 3.1.7"  # Deviseのパスワード暗号化に必要
 
 # メール送信サービス（ユーザー登録の確認メール等）
 gem "resend"
