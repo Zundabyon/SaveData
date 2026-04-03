@@ -37,11 +37,20 @@
     </div>
   <% else %>
 
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <% @games.each do |game| %>
-        <%= render 'games/game_card', game: game %>
-      <% end %>
-    </div>
+    <% @games.group_by(&:played_age).each do |age, games_in_group| %>
+      <% label = Game::PLAYED_AGE_OPTIONS.find { |l, v| v == age }&.first || age.to_s %>
+      <div class="mb-10">
+        <div class="flex items-center gap-3 mb-4">
+          <h2 class="text-2xl font-bold text-yellow-300 tracking-widest">◆ <%= label %></h2>
+          <div class="flex-1 border-t border-yellow-500/40"></div>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <% games_in_group.each do |game| %>
+            <%= render 'games/game_card', game: game %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
 <!-- ================= ゲーム詳細モーダル ================= -->
