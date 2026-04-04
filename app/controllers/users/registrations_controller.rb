@@ -5,19 +5,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # パスワードなしで更新できるようにする
   def update_resource(resource, params)
-    
     # パスワード変更がある場合
     if params[:password].present?
-      
+
       # 現在のパスワードを確認
-      if params[:current_password].present? && 
+      if params[:current_password].present? &&
          resource.valid_password?(params[:current_password])
-        
+
         # パスワード変更を含む更新
-        resource.update(params.except(:current_password, 'パスワードを更新しました'))
+        resource.update(params.except(:current_password, "パスワードを更新しました"))
       else
         # 現在のパスワードが正しくない
-        resource.errors.add(:current_password, '現在のパスワードが正しくありません')
+        resource.errors.add(:current_password, "現在のパスワードが正しくありません")
         false
       end
     else
