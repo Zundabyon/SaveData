@@ -73,43 +73,9 @@
         <div class="border-t border-gray-400 my-6"></div>
 
         <!-- パスワード変更セクション -->
-        <div class="mb-4">
-          <p class="text-xs font-bold text-gray-700 mb-3">パスワード変更（変更する場合のみ入力）</p>
-          
-          <!-- 新しいパスワード -->
-          <div class="mb-4">
-            <%= f.label :password, "新しいパスワード",
-              class: "block text-xs font-semibold text-gray-700 mb-1" %>
-            <%= f.password_field :password,
-              autocomplete: "new-password",
-              placeholder: "変更しない場合は空欄",
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-            <p class="text-xs text-gray-600 mt-1">※ 6文字以上</p>
-          </div>
-
-          <!-- パスワード確認 -->
-          <div class="mb-4">
-            <%= f.label :password_confirmation, "新しいパスワード（確認）",
-              class: "block text-xs font-semibold text-gray-700 mb-1" %>
-            <%= f.password_field :password_confirmation,
-              autocomplete: "new-password",
-              placeholder: "変更しない場合は空欄",
-              class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-          </div>
-        </div>
-
-        <!-- 区切り線 -->
-        <div class="border-t border-gray-400 my-6"></div>
-
-        <!-- 現在のパスワード（必須） -->
-        <div class="mb-5">
-          <%= f.label :current_password, "現在のパスワード（必須）",
-            class: "block text-xs font-semibold text-gray-700 mb-1" %>
-          <%= f.password_field :current_password,
-            autocomplete: "current-password",
-            required: true,
-            class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
-          <p class="text-xs text-gray-600 mt-1">※ 変更を保存するには現在のパスワードが必要です</p>
+        <div class="mb-5 text-center">
+          <%= link_to "パスワードを変更する", edit_user_password_path, 
+          class: "text-sm text-blue-700 hover:text-blue-900 underline font-semibold" %>
         </div>
 
         <!-- ボタン -->
