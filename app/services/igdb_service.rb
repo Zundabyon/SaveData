@@ -137,7 +137,7 @@ class IgdbService
     req = Net::HTTP::Post.new(uri).tap do |r|
       r["Authorization"] = "DeepL-Auth-Key #{ENV['DEEPL_API_KEY']}"
       r["Content-Type"]  = "application/json"
-      r.body = { text: [query], source_lang: "JA", target_lang: "EN" }.to_json
+      r.body = { text: [ query ], source_lang: "JA", target_lang: "EN" }.to_json
     end
 
     res = http.request(req)
