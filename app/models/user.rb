@@ -1,15 +1,18 @@
 class User < ApplicationRecord
-  # Associations
+  # ユーザーがパスワードを変更する際に、現在のパスワードを入力する必要があるため
+  # attr_accessorは、モデルに仮想的な属性を追加するためのメソッドで、current_passwordはデータベースには保存されないが、フォームからの入力を受け取るために使用される
+  attr_accessor :current_password
+
   has_many :games, dependent: :destroy
-  # Enums
+
   enum :gender, { male: 0, female: 1 }
-  # Validations
+
   validates :email, presence: true
   validates :name, presence: true
   validates :birthday, presence: true, unless: :uid?
   validates :gender, presence: true, unless: :uid?
   validates :job, presence: true, unless: :uid?
-  # Devise
+
   devise :database_authenticatable,
          :registerable,
          :recoverable,
