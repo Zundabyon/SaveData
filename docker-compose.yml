@@ -36,6 +36,13 @@ services:
       db:
         condition: service_healthy
 
+  ai_service:
+    build: ../savedata_ai
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../savedata_ai/.env
+
 volumes:
   postgres_data:
   bundle_data:
