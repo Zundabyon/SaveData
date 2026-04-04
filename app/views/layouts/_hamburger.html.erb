@@ -74,47 +74,52 @@
     </div>
   </div>
 
-  <script>
-    function toggleHamburger() {
-      const menu = document.getElementById('hamburger-menu');
-      const btn = document.getElementById('hamburger-btn');
+ <script>
+  function toggleHamburger() {
+    const menu = document.getElementById('hamburger-menu');
+    const btn = document.getElementById('hamburger-btn');
 
-      if (menu.style.display === 'none' || menu.style.display === '') {
-        const rect = btn.getBoundingClientRect();
-        menu.style.position = 'fixed';
-        menu.style.top = (rect.bottom + 8) + 'px';
-        menu.style.right = (window.innerWidth - rect.right) + 'px';
-        menu.style.left = 'auto';
+    if (menu.style.display === 'none' || menu.style.display === '') {
+      const rect = btn.getBoundingClientRect();
+      menu.style.position = 'fixed';
+      menu.style.top = (rect.bottom + 8) + 'px';
+      menu.style.right = (window.innerWidth - rect.right) + 'px';
+      menu.style.left = 'auto';
 
-        menu.style.display = 'block';
-        menu.classList.remove('is-closing');
-        void menu.offsetWidth;
-        menu.classList.add('is-open');
-      } else {
-        menu.classList.remove('is-open');
-        menu.classList.add('is-closing');
-        menu.addEventListener('animationend', function hide() {
-          menu.style.display = 'none';
-          menu.classList.remove('is-closing');
-          menu.removeEventListener('animationend', hide);
-        });
-      }
+      menu.style.display = 'block';
+      menu.classList.remove('is-closing');
+      void menu.offsetWidth;
+      menu.classList.add('is-open');
+    } else {
+      closeHamburger();
     }
+  }
 
-    document.addEventListener('click', function(e) {
-      const btn = document.getElementById('hamburger-btn');
-      const menu = document.getElementById('hamburger-menu');
-      if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
-        if (menu.style.display !== 'none') {
-          menu.classList.remove('is-open');
-          menu.classList.add('is-closing');
-          menu.addEventListener('animationend', function hide() {
-            menu.style.display = 'none';
-            menu.classList.remove('is-closing');
-            menu.removeEventListener('animationend', hide);
-          });
-        }
-      }
+  function closeHamburger() {
+    const menu = document.getElementById('hamburger-menu');
+    if (!menu || menu.style.display === 'none' || menu.style.display === '') return;
+    menu.classList.remove('is-open');
+    menu.classList.add('is-closing');
+    menu.addEventListener('animationend', function hide() {
+      menu.style.display = 'none';
+      menu.classList.remove('is-closing');
+      menu.removeEventListener('animationend', hide);
     });
+  }
+
+  // ページキャッシュ前に必ずメニューを閉じる（これが根本原因の修正）
+  document.addEventListener('turbo:before-cache', closeHamburger);
+
+  // 外側クリックで閉じる（重複登録を防ぐため一度削除してから登録）
+  document.removeEventListener('click', handleOutsideClick);
+  document.addEventListener('click', handleOutsideClick);
+
+  function handleOutsideClick(e) {
+    const btn = document.getElementById('hamburger-btn');
+    const menu = document.getElementById('hamburger-menu');
+    if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+      closeHamburger();
+    }
+  }
   </script>
 <% end %>
