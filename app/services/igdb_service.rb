@@ -34,41 +34,36 @@ class IgdbService
   # 英語検索：複数の戦略を組み合わせてヒット率を上げる
   #
   # 【戦略の組み合わせ理由】
-  #   IGDB にはファジー検索がないため、以下4戦略の結果をマージして補完する。
+  #   IGDB にはファジー検索がないため、以下3戦略の結果をマージして補完する。
   #
-  #   戦略1: IGDBフルテキスト search
-  #     → 最もヒット率高。"DARK SOULS" で "DARK SOULS III" 等もヒット。
+  #   戦略1: 部分一致 (name ~ *"query"*)
+  #     → 入力がタイトルの一部でもヒット。
+  #       例: "DARK SOULS" → "DARK SOULS III", "DARK SOULS: REMASTERED" 等にヒット。
   #
-  #   戦略2: 部分一致 (name ~ *"query"*)
-  #     → 入力が正式名の一部でもヒット。
+  #   戦略2: 単語分割 AND 条件検索
+  #     → 入力の各単語がタイトルに含まれていればヒット。
+  #       部分一致では拾えない「単語が離れているタイトル」を補完する。
+  #       例: "DARK SOULS" → name~*"DARK"* & name~*"SOULS"*
+  #           → "DARK REBIRTH: SOULS OF CHAOS" のようなタイトルもヒット。
   #
-  #   戦略3: スペース除去版でフルテキスト検索
-  #     → "DARK SOULS" と入力 → "DARKSOULS" でも検索して逆パターンを補完。
+  #   戦略3: スペース除去版で部分一致検索
+  #     → スペースなしで入力した場合の逆パターンを補完する。
+  #       例: "DARKSOULS" → name ~ *"DARKSOULS"* でヒット。
   #
-  #   戦略4: 単語分割 AND 条件検索
-  #     → "DARKSOULS" を入力した場合は単語分割されないので非対応だが、
-  #       "DARK SOULS" → name~*"DARK"* & name~*"SOULS"* で確実にヒットさせる。
-  #
-  # ※ "DARKSOULS"→"DARK SOULS" の完全な逆変換は IGDB 側の制限で対応不可。
-  #    戦略1の IGDB フルテキスト検索がElasticsearch経由のため、
-  #    ある程度の表記ゆれは吸収される可能性がある。
   private_class_method def self.search_games_directly(query, token)
     sanitized = sanitize(query)
     results   = []
 
-    # 戦略1: IGDBフルテキスト search
-    results += fulltext_search(sanitized, token)
-
-    # 戦略2: 部分一致検索
+    # 戦略1: 部分一致検索
     results += partial_match_search(sanitized, token)
 
-    # 戦略3: スペース除去版でフルテキスト検索
-    no_space = sanitized.delete(" ")
-    results  += fulltext_search(no_space, token) if no_space != sanitized
-
-    # 戦略4: 複数単語をAND条件で検索
+    # 戦略2: 複数単語をAND条件で検索（単語が離れているタイトルを補完）
     words   = sanitized.split
     results += word_and_search(words, token) if words.size >= 2
+
+    # 戦略3: スペース除去版で部分一致検索（逆パターン補完）
+    no_space = sanitized.delete(" ")
+    results  += partial_match_search(no_space, token) if no_space != sanitized
 
     # IDで重複除去 → カバーURL付加
     build_results(results)
@@ -77,16 +72,6 @@ class IgdbService
   # ===================================================================
   # 検索クエリビルダー（private）
   # ===================================================================
-
-  # フルテキスト検索（IGDB の search 構文）
-  private_class_method def self.fulltext_search(query, token)
-    body = <<~BODY
-      fields name, platforms.name, genres.name, cover.image_id;
-      search "#{query}";
-      limit 50;
-    BODY
-    igdb_request("/games", body, token) || []
-  end
 
   # 部分一致検索（name ~ *"query"*）
   private_class_method def self.partial_match_search(query, token)
