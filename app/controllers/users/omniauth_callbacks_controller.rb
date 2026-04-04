@@ -1,7 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     begin
-      Rails.logger.info "OmniAuth auth data: #{request.env["omniauth.auth"].inspect}"
       @user = User.from_omniauth(request.env["omniauth.auth"])
 
       if @user.persisted?
@@ -12,8 +11,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         redirect_to new_user_registration_url, alert: @user.errors.full_messages.join(", ")
       end
     rescue => e
-      Rails.logger.error "Google OAuth error: #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
       redirect_to root_path, alert: "Googleログインでエラーが発生しました。#{e.message}"
     end
   end

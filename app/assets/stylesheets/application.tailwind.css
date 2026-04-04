@@ -45,90 +45,6 @@
   font-family: 'Press Start 2P', monospace !important;
 }
 
-/* 源暎アンティーク（ファンタジー系日本語フォント） */
-@font-face {
-  font-family: "GenEiAntique";
-  src: url("/fonts/GenEiAntique-Regular.ttf") format("truetype");
-}
-
-.font-fantasy {
-  font-family: "GenEiAntique", serif;
-  letter-spacing: 0.18em;
-}
-
-/* ============================================================
-   アニメーション: スキャングロー（青白い光の点滅）
-   ============================================================ */
-@keyframes scanGlow {
-  0% {
-    box-shadow: 0 0 4px rgba(34,211,238,0.3);
-    opacity: 0.7;
-  }
-  50% {
-    box-shadow:
-      0 0 8px rgba(34,211,238,0.8),
-      0 0 16px rgba(34,211,238,0.4);
-    opacity: 1;
-  }
-  100% {
-    box-shadow: 0 0 4px rgba(34,211,238,0.3);
-    opacity: 0.7;
-  }
-}
-
-.animate-scan-glow {
-  animation: scanGlow 2.2s ease-in-out infinite;
-}
-
-/* ============================================================
-   アニメーション: スキャンライン（タイムライン上を流れる光）
-   ============================================================ */
-@keyframes scanLine {
-  0% { transform: translateY(-100%); opacity: 0; }
-  20% { opacity: 0.15; }
-  80% { opacity: 0.15; }
-  100% { transform: translateY(100%); opacity: 0; }
-}
-
-.timeline-scan::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(56,189,248,0.15) 50%,
-    transparent 100%
-  );
-  animation: scanLine 6s linear infinite;
-}
-
-/* ============================================================
-   アニメーション: マーカーグロー（金色の発光）
-   ============================================================ */
-@keyframes markerGlow {
-  0% {
-    box-shadow:
-      inset 0 0 8px rgba(255, 255, 255, 0.8),
-      0 0 12px rgba(255, 215, 0, 0.6),
-      0 0 20px rgba(255, 215, 0, 0.4);
-  }
-  50% {
-    box-shadow:
-      inset 0 0 12px rgba(255, 255, 255, 1),
-      0 0 20px rgba(255, 215, 0, 1),
-      0 0 35px rgba(255, 215, 0, 0.7),
-      0 0 50px rgba(255, 215, 0, 0.4);
-  }
-  100% {
-    box-shadow:
-      inset 0 0 8px rgba(255, 255, 255, 0.8),
-      0 0 12px rgba(255, 215, 0, 0.6),
-      0 0 20px rgba(255, 215, 0, 0.4);
-  }
-}
-
 /* ============================================================
    アニメーション: RPGウィンドウ開閉
    ============================================================ */
@@ -141,70 +57,6 @@
 .rpg-modal {
   transform-origin: top;
   animation: rpgOpen 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-/* ============================================================
-   RPG: 年齢リストアイテム（サイドウィンドウ用）
-   ============================================================ */
-.rpg-age-item.active {
-  color: #9cc7ff;
-  background: rgba(80,120,255,0.15);
-  transform: translateX(4px);
-  text-shadow:
-    0 0 6px rgba(120,160,255,0.8),
-    0 0 14px rgba(80,120,255,0.6);
-}
-
-.rpg-age-item.active .rpg-cursor {
-  opacity: 1;
-}
-
-/* ============================================================
-   タイムラインカード
-   ============================================================ */
-.timeline-card {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.timeline-card.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.timeline-card {
-  position: relative;
-  border: 2px solid rgba(230, 240, 255, 0.95);
-  background: linear-gradient(
-    180deg,
-    #1b2a6b 0%,
-    #152050 45%,
-    #0b1435 100%
-  );
-  box-shadow:
-    0 0 0 1px rgba(120, 170, 255, 0.6) inset,
-    0 10px 30px rgba(0, 0, 0, 0.6),
-    0 0 25px rgba(80, 120, 255, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.timeline-card:hover {
-  border-color: rgba(120,160,255,0.8);
-  box-shadow:
-    0 0 0 1px rgba(160, 200, 255, 0.9) inset,
-    0 14px 36px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(120, 170, 255, 0.55);
-}
-
-/* カード内側の白枠（装飾） */
-.timeline-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 6px;
-  pointer-events: none;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 /* ============================================================
@@ -252,9 +104,6 @@
 /* ============================================================
    RPGウィンドウ共通
    ============================================================ */
-.rpg-window {
-  font-family: monospace;
-}
 
 /* コマンドボタン */
 .rpg-command {
@@ -287,28 +136,6 @@
   transform: translateY(1px);
 }
 
-/* インプットフィールド */
-.rpg-input {
-  background: rgba(10, 20, 60, 0.9);
-  border: 1px solid rgba(120, 160, 255, 0.4);
-  color: #e0e7ff;
-  padding: 6px 8px;
-}
-
-/* ============================================================
-   アニメーション: データ削除エフェクト
-   ============================================================ */
-.data-delete {
-  animation: rpg-delete 0.9s steps(6) forwards;
-}
-
-@keyframes rpg-delete {
-  0%   { opacity: 1; filter: none; }
-  40%  { opacity: 0.6; filter: blur(1px); }
-  70%  { opacity: 0.3; filter: blur(3px); }
-  100% { opacity: 0; transform: scaleY(0.2); }
-}
-
 /* ============================================================
    RPGサイドウィンドウ（年齢ナビ等）
    ============================================================ */
@@ -326,94 +153,6 @@
     0 20px 40px rgba(0, 0, 0, 0.7);
 }
 
-.rpg-age-item {
-  border-radius: 6px;
-  color: #e0e7ff;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.rpg-age-item:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(80,120,255,0.25),
-    rgba(80,120,255,0.05)
-  );
-  box-shadow:
-    inset 0 0 0 1px rgba(160,200,255,0.6),
-    0 0 12px rgba(80,120,255,0.35);
-  transform: translateX(4px);
-}
-
-.rpg-age-item.active {
-  background: linear-gradient(
-    90deg,
-    rgba(120,160,255,0.35),
-    rgba(80,120,255,0.1)
-  );
-  color: #ffffff;
-  box-shadow:
-    inset 0 0 0 1px rgba(200,220,255,0.9),
-    0 0 16px rgba(120,170,255,0.8);
-  transform: translateX(6px);
-}
-
-.rpg-age-item.active .rpg-cursor {
-  opacity: 1;
-  text-shadow: 0 0 8px rgba(160,200,255,1);
-}
-
-/* ============================================================
-   RPG詳細カード（モーダル）
-   ============================================================ */
-.rpg-detail-card {
-  position: relative;
-  border: 4px solid #e6f2ff;
-  background: linear-gradient(
-    180deg,
-    #1b2a6b 0%,
-    #152050 45%,
-    #0b1435 100%
-  );
-  box-shadow:
-    inset 0 0 0 2px rgba(120, 170, 255, 0.9),
-    0 0 0 1px rgba(255,255,255,0.6),
-    0 20px 50px rgba(0,0,0,0.75),
-    0 0 60px rgba(80,120,255,0.6);
-  border-radius: 14px;
-  animation: rpgOpen 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.rpg-detail-card::before {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border: 2px solid rgba(255,255,255,0.35);
-  border-radius: 10px;
-  pointer-events: none;
-}
-
-/* ============================================================
-   サイドブロック（ユーザー情報・チャプター表示）
-   ============================================================ */
-.rpg-side-window .side-block {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  text-align: center;
-}
-
-.side-block .user-info {
-  padding-bottom: 0.5rem;
-}
-
-.side-block .current-chapter {
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(80,120,255,0.2);
-}
-
 /* ============================================================
    アニメーション: ローディングバー
    ============================================================ */
@@ -425,104 +164,6 @@
   .animate-fill {
     animation: fill 10s linear infinite;
   }
-}
-
-/* ============================================================
-   アニメーション: ホバー時点滅
-   ============================================================ */
-@keyframes gentleBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
-.hover-blink:hover {
-  animation: gentleBlink 1.2s ease-in-out infinite;
-}
-
-/* ============================================================
-   確認画面（削除確認など）
-   ============================================================ */
-.confirm-wrapper {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.confirm-card {
-  width: 100%;
-  max-width: 720px;
-  padding: 48px 32px;
-}
-
-.confirm-text {
-  text-align: center;
-  font-size: 1.1rem;
-  margin-bottom: 32px;
-}
-
-.confirm-actions {
-  display: flex;
-  gap: 16px;
-}
-
-.dashboard-btn {
-  flex: 1;
-  padding: 16px 0;
-  text-align: center;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.dashboard-btn.danger {
-  background: #c0392b;
-}
-
-.dashboard-btn.secondary {
-  background: #34495e;
-}
-
-/* ============================================================
-   モーダル共通
-   ============================================================ */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  width: 100%;
-  max-width: 900px;
-  padding: 32px;
-  border-radius: 16px;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-title {
-  font-size: 1.8rem;
-}
-
-.modal-close {
-  font-size: 2rem;
-}
-
-.modal-meta {
-  margin-top: 8px;
-  opacity: .7;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 24px;
 }
 
 /* ============================================================
@@ -825,18 +466,6 @@
   align-items: center;
   justify-content: center;
 }
-/* ============================================================
-   セーフエリア対応（iPhone ノッチ・ホームバー）
-   ============================================================ */
-@layer utilities {
-  .pb-safe {
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-  }
-
-  .mb-safe {
-    margin-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
-  }
-}
 
 /* ============================================================
    プロフィール画像
@@ -898,4 +527,3 @@
 .menu-wipe.is-closing {
   animation: wipeOut 0.15s ease forwards;
 }
-
