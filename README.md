@@ -275,18 +275,22 @@ SaveData では、
 | 進捗管理       | GitHub Issue Project          |
 | テスト実装     | CI/CD GitHubActionsにて自動化 |
 
-デプロイはDockerで行いました。
-開発環境、本番環境をそれぞれ
-Dockerfile.dev Dockerfileに分けて管理しています。
-テストに関しては今後GitHubActionsを用いて自動化予定です。
+### フロントエンド技術選定理由
 
-### 採用理由
+### バックエンド技術選定理由
 
 本サービスは CRUD 中心で、
 ユーザー・投稿・年表といったデータの関係性が明確です。
 
 そのため、開発効率と保守性の観点から、
 Ruby / Ruby on Rails を採用しました。
+
+### 外部サービス選定理由
+
+デプロイはDockerで行いました。
+開発環境、本番環境をそれぞれ
+Dockerfile.dev Dockerfileに分けて管理しています。
+テストに関しては今後GitHubActionsを用いて自動化予定です。
 
 ---
 
