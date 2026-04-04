@@ -6,9 +6,21 @@ class IgdbService
   # ===================================================================
 
   # ゲームを検索する（日本語・英語を自動判定して振り分け）
+  # 日本語の場合は alternative_names 検索 + 英語翻訳して英語検索も実行する
   def self.search(query)
     token = get_token
-    contains_japanese?(query) ? search_by_alternative_names(query, token) : search_games_directly(query, token)
+    if contains_japanese?(query)
+      results = search_by_alternative_names(query, token)
+
+      # 日本語→英語に変換して英語検索も実行（IGDBに日本語alternative_nameが
+      # 登録されていないゲームを拾うための補完）
+      english_query = translate_to_english(query)
+      results += search_games_directly(english_query, token) if english_query
+
+      results.uniq { |g| g["id"] }
+    else
+      search_games_directly(query, token)
+    end
   end
 
   # ===================================================================
@@ -108,6 +120,36 @@ class IgdbService
       next unless alt["game"]
       alt["game"].merge("alternative_name" => alt["name"])
     end
+  end
+
+  # ===================================================================
+  # 翻訳（private）
+  # ===================================================================
+
+  # DeepL APIで日本語クエリを英語に変換する
+  # → 変換失敗時は nil を返し、呼び出し元でスキップさせる
+  # → .env に DEEPL_API_KEY の設定が必要
+  private_class_method def self.translate_to_english(query)
+    uri  = URI("https://api-free.deepl.com/v2/translate")
+    http = Net::HTTP.new(uri.host, 443)
+    http.use_ssl = true
+
+    req = Net::HTTP::Post.new(uri).tap do |r|
+      r["Authorization"] = "DeepL-Auth-Key #{ENV['DEEPL_API_KEY']}"
+      r["Content-Type"]  = "application/json"
+      r.body = { text: [query], source_lang: "JA", target_lang: "EN" }.to_json
+    end
+
+    res = http.request(req)
+    unless res.code == "200"
+      Rails.logger.error "DeepL error #{res.code}: #{res.body}"
+      return nil
+    end
+
+    JSON.parse(res.body).dig("translations", 0, "text")
+  rescue => e
+    Rails.logger.error "DeepL translation error: #{e.message}"
+    nil
   end
 
   # ===================================================================
