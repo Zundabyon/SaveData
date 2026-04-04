@@ -21,11 +21,9 @@ class GamesController < ApplicationController
 
   def igdb_search
     query = params[:q].to_s.strip
-    Rails.logger.info "IGDB search action called with query: '#{query}'"
     return head :ok if query.blank?
 
     @games = IgdbService.search(query)
-    Rails.logger.info "IGDB search results: #{@games.length} games found"
     render partial: "games/igdb_results", locals: { games: @games }
   end
 
@@ -42,10 +40,8 @@ class GamesController < ApplicationController
     end
 
     if @game.save
-      Rails.logger.info "Game saved! ID: #{@game.id}, Image attached: #{@game.cover_image.attached?}"
       redirect_to dashboard_path, notice: "ゲームのおもいでをセーブしました"
     else
-      Rails.logger.error "Game save failed: #{@game.errors.full_messages}"
       render :new, status: :unprocessable_entity
     end
   end
@@ -64,10 +60,8 @@ class GamesController < ApplicationController
     end
 
     if @game.update(game_params)
-      Rails.logger.info "Game updated! Image attached: #{@game.cover_image.attached?}"
       redirect_to dashboard_path, notice: "ゲームの思い出を更新しました"
     else
-      Rails.logger.error "Game update failed: #{@game.errors.full_messages}"
       render :edit, status: :unprocessable_entity
     end
   end
