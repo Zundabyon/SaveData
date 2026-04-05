@@ -142,13 +142,11 @@ class IgdbService
 
     res = http.request(req)
     unless res.code == "200"
-      Rails.logger.error "DeepL error #{res.code}: #{res.body}"
       return nil
     end
 
     JSON.parse(res.body).dig("translations", 0, "text")
   rescue => e
-    Rails.logger.error "DeepL translation error: #{e.message}"
     nil
   end
 
