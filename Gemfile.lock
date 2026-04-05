@@ -587,6 +587,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  faraday (~> 2.0)
   groupdate
   image_processing (~> 1.2)
   importmap-rails

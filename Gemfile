@@ -44,6 +44,9 @@ gem "stimulus-rails"
 # ページ移動を高速化（画面全体を再読み込みしない）
 gem "turbo-rails"
 
+# APIリクエストを簡単にするHTTPクライアント
+gem "faraday", "~> 2.0"
+
 # === 画像処理・Active Storage拡張機能 ===
 gem "image_processing", "~> 1.2"
 gem "active_storage_validations"
