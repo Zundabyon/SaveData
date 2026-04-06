@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+
+  # uranai_controller.rbのルーティング
+  get "uranai/index"
+  # getはHTTPリクエストの種類の一つで、データの取得を意味する。今回は/uranai/indexというURLに対してGETリクエストが送られると、UranaiControllerのindexアクションが呼び出される。
+  
+  post "uranai/predict", to: "uranai#predict"
   # ai_controller.rbのルーティング
   #namespaceとはURLの前に共通のパスをつけるためのもの。今回は/api/ai/recommendというURLになる。
   #getはHTTPリクエストの種類の一つで、データの取得を意味する。postはデータの送信を意味する。
@@ -10,6 +17,8 @@ Rails.application.routes.draw do
   namespace :api do
     post 'ai/recommend'
   end
+
+
   # Devise
   devise_for :users, controllers: {
     registrations: "users/registrations",
