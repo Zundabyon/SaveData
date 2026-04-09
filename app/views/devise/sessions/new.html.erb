@@ -295,16 +295,16 @@
     </div>
 
         <!-- ================= 冒険をはじめる ================= -->
-    <div id="adventure-start" class="rpg-side-window rounded-lg py-2 px-4 mb-6">
+    <div id="adventure-start-bottom" class="rpg-side-window rounded-lg py-2 px-4 mb-6">
       <button type="button"
-              onclick="showCommandSelect()"
+              onclick="showCommandSelectBottom()"
               class="rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
         ぼうけんをはじめる
       </button>
     </div>
 
     <!-- ================= コマンド選択 ================= -->
-    <div id="command-select" class="rpg-side-window rounded-lg py-2 px-4 mb-6" style="display:none;">
+    <div id="command-select-bottom" class="rpg-side-window rounded-lg py-2 px-4 mb-6" style="display:none;">
 
       <!-- Googleでログイン -->
       <%= button_to user_google_oauth2_omniauth_authorize_path,
@@ -332,7 +332,7 @@
 
       <!-- つづきから -->
       <button type="button"
-              onclick="document.getElementById('command-select').style.display='none'; document.getElementById('login-form').style.display='block';"
+              onclick="document.getElementById('command-select-bottom').style.display='none'; document.getElementById('login-form-bottom').style.display='block';"
               class="rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
         つづきから（メール）
       </button>
@@ -340,11 +340,11 @@
     </div>
 
     <!-- ================= ログインフォーム（つづきから） ================= -->
-    <div id="login-form" style="display:<%= resource.errors.any? ? 'block' : 'none' %>;">
+    <div id="login-form-bottom" style="display:none;">
 
       <!-- もどるボタン -->
       <button type="button"
-              onclick="document.getElementById('login-form').style.display='none'; document.getElementById('command-select').style.display='block';"
+              onclick="document.getElementById('login-form-bottom').style.display='none'; document.getElementById('command-select-bottom').style.display='block';"
               class="text-blue-200 text-xs hover:text-white mb-4 block">
         ← もどる
       </button>
@@ -422,6 +422,15 @@
   function showCommandSelect() {
     document.getElementById('adventure-start').style.display = 'none';
     var el = document.getElementById('command-select');
+    el.style.display = 'block';
+    el.classList.remove('rpg-modal');
+    void el.offsetWidth;
+    el.classList.add('rpg-modal');
+  }
+
+  function showCommandSelectBottom() {
+    document.getElementById('adventure-start-bottom').style.display = 'none';
+    var el = document.getElementById('command-select-bottom');
     el.style.display = 'block';
     el.classList.remove('rpg-modal');
     void el.offsetWidth;
