@@ -294,6 +294,117 @@
       </div>
     </div>
 
+        <!-- ================= 冒険をはじめる ================= -->
+    <div id="adventure-start" class="rpg-side-window rounded-lg py-2 px-4 mb-6">
+      <button type="button"
+              onclick="showCommandSelect()"
+              class="rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
+        ぼうけんをはじめる
+      </button>
+    </div>
+
+    <!-- ================= コマンド選択 ================= -->
+    <div id="command-select" class="rpg-side-window rounded-lg py-2 px-4 mb-6" style="display:none;">
+
+      <!-- Googleでログイン -->
+      <%= button_to user_google_oauth2_omniauth_authorize_path,
+            method: :post,
+            form: { "data-turbo" => "false" },
+            class: "rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition text-left" do %>
+        <svg class="w-4 h-4 mr-2 inline-block flex-shrink-0" viewBox="0 0 24 24">
+          <path fill="#ffffff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#ffffff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#ffffff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+          <path fill="#ffffff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Googleではじめる
+      <% end %>
+
+      <div class="border-t border-blue-400/30 mx-2"></div>
+
+      <!-- はじめから -->
+      <%= link_to new_registration_path(resource_name),
+            class: "rpg-menu-item flex items-center py-3 px-4 text-white text-sm hover:bg-white/10 rounded transition block" do %>
+        はじめから（メール）
+      <% end %>
+
+      <div class="border-t border-blue-400/30 mx-2"></div>
+
+      <!-- つづきから -->
+      <button type="button"
+              onclick="document.getElementById('command-select').style.display='none'; document.getElementById('login-form').style.display='block';"
+              class="rpg-menu-item flex items-center w-full py-3 px-4 text-white text-sm text-left hover:bg-white/10 rounded transition">
+        つづきから（メール）
+      </button>
+
+    </div>
+
+    <!-- ================= ログインフォーム（つづきから） ================= -->
+    <div id="login-form" style="display:<%= resource.errors.any? ? 'block' : 'none' %>;">
+
+      <!-- もどるボタン -->
+      <button type="button"
+              onclick="document.getElementById('login-form').style.display='none'; document.getElementById('command-select').style.display='block';"
+              class="text-blue-200 text-xs hover:text-white mb-4 block">
+        ← もどる
+      </button>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h2 class="text-2xl text-gray-900 mb-4 text-center">ぼうけんの続き</h2>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+
+          <% if resource.errors.any? %>
+            <div class="mb-6 p-4 bg-red-100 border border-red-400 rounded-md text-xs">
+              <ul class="space-y-1 text-red-700">
+                <% resource.errors.full_messages.each do |message| %>
+                  <li>・<%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <!-- メールアドレス -->
+          <div class="mb-5">
+            <%= f.label :email, "メールアドレス",
+                  class: "block text-xs font-semibold text-gray-700 mb-1" %>
+            <%= f.email_field :email,
+                  autofocus: true,
+                  autocomplete: "email",
+                  class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+          </div>
+
+          <!-- パスワード -->
+          <div class="mb-5">
+            <%= f.label :password, "パスワード",
+                  class: "block text-xs font-semibold text-gray-700 mb-1" %>
+            <%= f.password_field :password,
+                  autocomplete: "current-password",
+                  class: "w-full px-3 py-2 bg-gray-100 border border-gray-400 rounded-md" %>
+          </div>
+
+          <!-- デバイスで記憶 -->
+          <% if devise_mapping.rememberable? %>
+            <div class="mb-6">
+              <label class="flex items-center">
+                <%= f.check_box :remember_me,
+                      class: "w-4 h-4 border-gray-400 rounded" %>
+                <span class="ml-2 text-xs text-gray-700">このデバイスで覚えておく</span>
+              </label>
+            </div>
+          <% end %>
+         <!-- パスワードをお忘れの方向け -->
+          <%= f.submit "START",
+                class: "w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition font-pixel" %>
+            <div class="text-center text-xs">
+              <%= link_to "パスワードをお忘れですか？",
+                    new_password_path(resource_name),class: "text-gray-700" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
     <!-- 利用規約・プライバシーポリシー -->
     <div class="mt-6 text-center text-xs text-blue-200 opacity-80">
       <%= link_to "利用規約", terms_path, class: "underline hover:opacity-100" %>
