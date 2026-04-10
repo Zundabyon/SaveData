@@ -1,20 +1,13 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+【Feature 機能追加】
 
----
+## 概要 ：どんな機能を追加したいか
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## 背景・目的　　：なぜこの機能が必要か
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## 提案する解決策　：どのように解決していくか
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+-
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## 代替案　　：他に検討した方法があればここに記入
+
+## 補足　　：参考リンクやモックアップなどがあれば記載しておく

@@ -10,13 +10,13 @@ class UranaiController < ApplicationController
   def index
   end
 
-  # predictアクションは占いの結果を予測するためのアクション
-  # faradayを使って、AIサービスにリクエストを送るためのコードが書かれている
-  # f.requestとf.responseは、リクエストとレスポンスのフォーマットをJSONにするためのもの
-  # |f|では、faradayの設定を行うためのブロックが始まる
+# predictアクションは占いの結果を予測するためのアクション
+# faradayを使って、AIサービスにリクエストを送るためのコードが書かれている
+# f.requestとf.responseは、リクエストとレスポンスのフォーマットをJSONにするためのもの
+# |f|では、faradayの設定を行うためのブロックが始まる
 def predict
   ai_url = ENV.fetch("AI_SERVICE_URL", "http://ai_service:8000")
-  
+
   connection = Faraday.new(url: ai_url) do |f|
     f.request :json
     f.response :json

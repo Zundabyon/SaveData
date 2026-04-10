@@ -21,8 +21,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
 
-      # パスワード変更なしの更新
-      # current_password も除外する
+        # パスワード変更なしの更新
+        # current_password も除外する
         resource.update_without_password(
           params.except(:current_password, :password, :password_confirmation)
         )
