@@ -1,20 +1,29 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+## 概要
 
----
+<!-- どんな機能を追加したいかをここに記入する -->
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+ゲームにプレイ時間を記録できる機能を追加したい
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## 背景・目的
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+<!-- なぜこの機能が必要かをここに記入する -->
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+ユーザーがどのくらいそのゲームに費やしたかを振り返れるようにしたい
+
+## 提案する解決策
+
+- Gameモデルにplay_hoursカラムを追加する
+- ゲーム登録・編集フォームに入力欄を追加する
+- ゲームカードにプレイ時間を表示する
+
+## 代替案
+
+<!-- 他に検討した方法があればここに記入する -->
+
+外部APIからプレイ時間を取得することも検討したが、対応APIがないため手動入力とする
+
+## 補足
+
+<!-- 参考リンクやモックアップなどがあればここに記入する -->
+
+Steam的なプレイ時間表示をイメージしている

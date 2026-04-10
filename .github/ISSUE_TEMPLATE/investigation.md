@@ -1,3 +1,11 @@
+---
+name: 🔍 調査・スパイク
+about: 技術調査や検討をする
+title: "[Investigation] "
+labels: investigation
+assignees: ""
+---
+
 ## 概要
 
 <!-- 何を調査・検討するかをここに記入する -->
