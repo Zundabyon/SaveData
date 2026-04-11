@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  birthday               :date
+#  crypted_password       :integer
+#  email                  :string
+#  encrypted_password     :string           default(""), not null
+#  gender                 :integer
+#  job                    :string
+#  name                   :string
+#  provider               :string
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  uid                    :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_provider_and_uid      (provider,uid) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
 class User < ApplicationRecord
   # ユーザーがパスワードを変更する際に、現在のパスワードを入力する必要があるため
   # attr_accessorは、モデルに仮想的な属性を追加するためのメソッドで、current_passwordはデータベースには保存されないが、フォームからの入力を受け取るために使用される
