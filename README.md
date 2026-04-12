@@ -11,7 +11,6 @@ https://savedata.quest
 ## テストアカウント
 
 | Email         | Password     |
-| ------------- | ------------ |
 | test@test.com | password1029 |
 
 ## アプリ開発記録
@@ -49,6 +48,7 @@ SaveData は、**いつ・何歳の頃に・どんなゲームを遊んでいた
 > ※ 本アプリは現在も制作中のため、UI / UX が README 内の画像と一部異なる場合があります。
 > ver.1.0.0 4/4 ゲーム登録画面にて検索の際に日本語対応しました。
 > ver.1.1.0 4/5 ゲームタイトルを元におすすめを表示する機能の追加
+> テスト手法にWEBモック、SimpleCov導入　カバレッジ率93%
 
 ## 使い方
 
@@ -104,22 +104,6 @@ SaveData は、**いつ・何歳の頃に・どんなゲームを遊んでいた
 ゲーム体験の幅が広く、SNS や Web サービスへのリテラシーも比較的高いため、本サービスとの親和性が高いと考えました。
 
 また、**過去を振り返ること自体に価値を感じやすい世代**でもあり、SaveData の体験価値を最も感じてもらいやすいと考えています。
-
----
-
-## サービス利用イメージ
-
-1. ユーザー登録
-2. 生年を入力
-3. 遊んだゲームを登録
-4. 「何歳のときに遊んだか」「印象に残った感情」などを記録
-5. 年齢軸の年表として可視化
-
-X（旧 Twitter）へのシェア機能もあり、以下のような価値を提供します。
-
-- 自分のゲーム人生から、人生そのものを俯瞰できる
-- 「みんなもこの時期に遊んでいた」という共感を得られる
-- 世代差による体験の違いを発見できる
 
 ---
 
@@ -231,9 +215,9 @@ SaveData では、**「懐かしい。あの頃はこのゲームにこんな思
 | インフラ         | Render                 |
 | 開発環境         | Docker                 |
 | 進捗管理         | GitHub Issue / Project |
-| テスト / CI・CD  | RSpec + GitHub Actions |
+| テスト / CI・CD  | RSpec + GitHub Actions + WEBモック導入 |
 | アクセス解析     | Google アナリティクス  |
-| その他使用ツール | Figma Canva Draw.ai    |
+| その他使用ツール | Figma Canva Draw.ai   |
 
 ### 設計フロー
 
@@ -290,11 +274,98 @@ Rails の MVC パターンや設計哲学（DRY / CoC）も非常に好ましく
 - 無料枠で十分な送信数を確保できる
 - カスタムドメインに対応
 
-### テスト自動化：GitHub Actions
+### テスト関連
 
+自動化：GitHub Actions
 - PR ごとに RSpec テストを自動実行し、コード品質とデプロイの安全性を確保
 - CI 実行中に他の開発・作業を並行して進められ、時間効率が向上
 
+その他テスト関連
+- Webモック導入、SimpleCov　Gem導入によりテスト範囲見直し
+　テストカバレッジ率93%
+
+---
+
+## ER図
+
+```mermaid
+erDiagram
+  users["users ユーザー"] {
+    int id PK "ID"
+    string email "メールアドレス"
+    string name "ユーザー名"
+    date birthday "生年月日"
+    integer gender "性別 0:male 1:female"
+    string job "職業"
+    string encrypted_password "暗号化パスワード"
+    string reset_password_token "パスワードリセットトークン"
+    datetime reset_password_sent_at "リセット送信日時"
+    datetime remember_created_at "ログイン記憶日時"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
+  oauth_accounts["oauth_accounts OAuthアカウント"] {
+    int id PK "ID"
+    int user_id FK "ユーザーID"
+    string provider "プロバイダー 例:google_oauth2"
+    string uid "OAuthユーザーID"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
+  igdb_categories["igdb_categories IGDBカテゴリマスター"] {
+    int id PK "ID"
+    string name "カテゴリ名 例:RPG / Nintendo Switch"
+    string category_type "種別 hardware or genre"
+    string igdb_id "IGDB上のID"
+  }
+  games["games 登録ゲーム"] {
+    int id PK "ID"
+    int user_id FK "ユーザーID"
+    int hardware_category_id FK "ハードウェアカテゴリID"
+    int genre_category_id FK "ジャンルカテゴリID"
+    string title "登録ゲームタイトル"
+    string recommended "おすすめ度"
+    integer difficulty "難しさ 5段階評価"
+    integer fun "楽しさ 5段階評価"
+    integer played_age "プレイした年齢"
+    integer played_year "プレイ年"
+    integer ended_year "クリア年"
+    string igdb_cover_url "IGDBカバー画像URL"
+    text memo "ゲームの思い出"
+    datetime created_at "作成日時"
+    datetime updated_at "更新日時"
+  }
+  active_storage_attachments["active_storage_attachments ファイル添付"] {
+    int id PK "ID"
+    string name "添付名"
+    string record_type "レコード種別"
+    int record_id "レコードID"
+    int blob_id FK "BlobID"
+    datetime created_at "作成日時"
+  }
+  active_storage_blobs["active_storage_blobs ファイル本体"] {
+    int id PK "ID"
+    string key "ストレージキー"
+    string filename "ファイル名"
+    string content_type "コンテンツタイプ"
+    text metadata "メタデータ"
+    string service_name "ストレージサービス名"
+    integer byte_size "ファイルサイズ"
+    string checksum "チェックサム"
+    datetime created_at "作成日時"
+  }
+  active_storage_variant_records["active_storage_variant_records リサイズ済み画像"] {
+    int id PK "ID"
+    int blob_id FK "BlobID"
+    string variation_digest "バリアントダイジェスト"
+  }
+  users ||--o{ oauth_accounts : "1対多"
+  users ||--o{ games : "1対多"
+  igdb_categories ||--o{ games : "1対多"
+  games ||--o| active_storage_attachments : "cover_image"
+  active_storage_attachments }o--|| active_storage_blobs : "1対1"
+  active_storage_blobs ||--o{ active_storage_variant_records : "1対多"
+```
 ---
 
 ## その他リンク
@@ -313,9 +384,8 @@ Rails の MVC パターンや設計哲学（DRY / CoC）も非常に好ましく
 - **機能の継続的なアップデート**
   フィードバックを頂きながら反映させていく
 - **アクセス数増加施策**
-  現在の主な流入動線は X のみのため、他媒体への波及も含め、月 5 件以上のフィードバックを継続的に得られる仕組みを整えていきます。
-- **チーム開発を意識したコード設計**
-  現在、コントローラーおよび一部モデルに処理が偏りがちなため、ヘルパーメソッドへの切り出しなどにより、可読性の高いコードを心がけます。
+  現在の主な流入動線は X のみのため、
+  他媒体への波及も含め、月 5 件以上のフィードバックを継続的に得られる仕組みを整えていきます。
 
 ---
 

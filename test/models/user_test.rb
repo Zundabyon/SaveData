@@ -4,7 +4,6 @@
 #
 #  id                     :bigint           not null, primary key
 #  birthday               :date
-#  crypted_password       :integer
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  gender                 :integer
