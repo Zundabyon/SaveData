@@ -11,8 +11,6 @@ require 'rspec/rails'
 # コントローラーテストでassignsを使うためのgem
 require 'rails-controller-testing'
 
-
-
 begin
   # データベースのマイグレーションが保留中でないことを確認するための行。これにより、テストが実行される前にデータベースが最新の状態であることが保証されます。
   # もしマイグレーションが保留中の場合、エラーが発生し、テストは中止されます。
@@ -21,11 +19,10 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
-
 # RSpecの設定を行うためのブロック
 RSpec.configure do |config|
   config.before(:each, type: :request) do
-  host! 'localhost'
+    host! 'localhost'
   end
   # テストで使用するフィクスチャのパスを指定します。これにより、テストデータを定義したファイルが正しく読み込まれるようになります。
   config.fixture_paths = [ Rails.root.join('spec/fixtures') ]

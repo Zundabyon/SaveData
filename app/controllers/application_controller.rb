@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  allow_browser versions: :modern
-
   # Deviseのストロングパラメータ設定
   before_action :configure_permitted_parameters, if: :devise_controller?
 

@@ -54,5 +54,50 @@ RSpec.describe Game, type: :model do
         end
       end
     end
+    describe 'played_age_label' do
+    it 'PLAYED_AGE_OPTIONSに対応するラベルを返すこと' do
+      game = build(:game, played_age: 5)
+      expect(game.played_age_label).to eq('ちっちゃい頃')
+    end
+
+    it 'PLAYED_AGE_OPTIONSにない値のときは数値を文字列で返すこと' do
+      game = build(:game, played_age: 99)
+      expect(game.played_age_label).to eq('99')
+    end
+  end
+
+  describe 'hardwareのカスタムバリデーション' do
+    context 'hardwareがHARDWARE_OPTIONSにない値で11文字以上のとき' do
+      it '無効であること' do
+        game = build(:game, hardware: 'あいうえおかきくけこさ')
+        expect(game).not_to be_valid
+        expect(game.errors[:hardware]).to be_present
+      end
+    end
+
+    context 'hardwareがHARDWARE_OPTIONSにない値で10文字以内のとき' do
+      it '有効であること' do
+        game = build(:game, hardware: 'カスタム機')
+        expect(game).to be_valid
+      end
+    end
+  end
+
+  describe 'genreのカスタムバリデーション' do
+    context 'genreがGENRE_OPTIONSにない値で11文字以上のとき' do
+      it '無効であること' do
+        game = build(:game, genre: 'あいうえおかきくけこさ')
+        expect(game).not_to be_valid
+        expect(game.errors[:genre]).to be_present
+      end
+    end
+
+    context 'genreがGENRE_OPTIONSにない値で10文字以内のとき' do
+      it '有効であること' do
+        game = build(:game, genre: 'カスタム')
+        expect(game).to be_valid
+      end
+    end
+  end
   end
 end
