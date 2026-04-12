@@ -19,12 +19,6 @@ class User < ApplicationRecord
          :rememberable,
          :validatable,
          :omniauthable, omniauth_providers: [ :google_oauth2 ]
-
-  def current_chapter
-    game_count = games.count
-    CHAPTERS.find { |c| game_count.between?(c[:min], c[:max]) }
-  end
-
   # Devise helper
   # パスワード未入力でもユーザー情報を更新できるようにする
   def update_without_current_password(params, *options)
