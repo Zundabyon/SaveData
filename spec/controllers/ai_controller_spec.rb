@@ -3,17 +3,15 @@ require 'rails_helper'
 RSpec.describe "Api::Ais", type: :request do
   let(:user) { create(:user) }
 
-  # コントローラーに skip_before_action :verify_authenticity_token があるため
-  # CSRF無効化は不要
   before { sign_in user, scope: :user }
 
   describe "POST /api/ai/recommend" do
-    # コントローラーと同じURLを指定
+    # FastAPIのURL（コントローラーと同じ値）
     let(:ai_url) { "http://ai_service:8000" }
 
     before do
-      # game_titleとreviewの両方が正しく送られているか .with で検証できる
-      # パラメータが欠けていたらWebMockがエラーを出す
+      # FastAPIへのリクエストをモック化
+      # .with でgame_titleとreviewの両方が送られているか検証できる
       stub_request(:post, "#{ai_url}/api/recommend")
         .with(
           body: {
@@ -39,6 +37,8 @@ RSpec.describe "Api::Ais", type: :request do
         game_title: "ファイナルファンタジーVII",
         review: "最高のRPGです"
       }
+      # WebMockが .with のパラメータと一致しないとエラーになる
+      # → パラメータが正しく送られている証明になる
       expect(response).to have_http_status(:success)
     end
 

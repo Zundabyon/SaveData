@@ -107,7 +107,8 @@ group :test do
   gem "database_cleaner-active_record" # テスト後にDBをきれいにリセット
   gem "simplecov", require: false     # テストカバレッジを計測
   gem "rails-controller-testing"      # コントローラーテストでassignsを使うため
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 5.25"          # RSpecと併用しても問題ない軽量なテストフレームワーク
+  gem "webmock"                       # 外部APIへのリクエストをテスト中にブロックするためのツール
 end
 # === 開発環境のみで適用 ===
 group :development do

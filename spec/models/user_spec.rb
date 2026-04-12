@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
 
     context 'passwordがあるとき' do
       it '有効であること' do
-        user = build(:user, password: "password")
+        user = build(:user, password: "password", password_confirmation: "password")
         expect(user).to be_valid
       end
     end

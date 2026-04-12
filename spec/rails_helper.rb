@@ -24,6 +24,9 @@ end
 
 # RSpecの設定を行うためのブロック
 RSpec.configure do |config|
+  config.before(:each, type: :request) do
+  host! 'localhost'
+  end
   # テストで使用するフィクスチャのパスを指定します。これにより、テストデータを定義したファイルが正しく読み込まれるようになります。
   config.fixture_paths = [ Rails.root.join('spec/fixtures') ]
   # buildはFactoryBotのメソッドなのに、RSPECにFactoryBot使うよ！って教えてなかったから怒られた感じなので追加
@@ -41,4 +44,12 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   # RSpecのマッチャーやモックの設定を行うためのブロック。ここでは、RSpecの期待値とモックの設定をカスタマイズしています。
   config.filter_rails_from_backtrace!
+  # request specでsign_inが使えるようになる
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end
+
+require 'webmock/rspec'
+# WebMockを使用して、テスト中に外部APIへのリクエストをブロックする設定。
+# これにより、テストが外部サービスに依存せず、安定して実行できるようになります。
+WebMock.disable_net_connect!(allow_localhost: true)
+# WebMockを使用して、特定の外部APIへのリクエストを許可する設定。ここでは、ResendのAPIへのリクエストを許可しています。
