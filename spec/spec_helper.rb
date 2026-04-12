@@ -1,6 +1,11 @@
 # テストのカバレッジ率を測定するための設定
+# add_filterでテストの除外ファイル指定
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter '/channels/'
+  add_filter '/jobs/'
+  add_filter 'app/controllers/users/omniauth_callbacks_controller.rb'
+end
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
