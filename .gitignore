@@ -41,4 +41,4 @@
 /node_modules
 
 # SimpleCovのカバレッジレポートは除外（ローカル確認用のHTMLなのでGit不要）
-/coverage
+/coveragebuild.log
