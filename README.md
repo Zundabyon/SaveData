@@ -1,6 +1,8 @@
 # SaveData
 
-![demo](app/assets/images/readme/top.png)
+<p align="center">
+  <img src="app/assets/images/readme/top.png" width="800">
+</p>
 
 **SaveData** は、ゲームの思い出を **「年齢 × 時間軸」** で記録・共有できる、ノスタルジー特化型サービスです。
 
@@ -50,7 +52,9 @@ SaveData は、**いつ・何歳の頃に・どんなゲームを遊んでいた
 
 「ゲーム登録」から、以下の情報を入力できます。
 
-![demo](app/assets/images/readme/game_howto.gif)
+<p align="center">
+  <img src="app/assets/images/readme/game_howto.gif" width="800">
+</p>
 
 - ゲームタイトル
 - プレイした年齢
@@ -63,7 +67,9 @@ SaveData は、**いつ・何歳の頃に・どんなゲームを遊んでいた
 
 登録したゲームは、**年齢順のタイムライン**として表示されます。自分のゲーム体験を、人生の流れに沿って振り返ることができます。
 
-![demo](app/assets/images/readme/topdemo.gif)
+<p align="center">
+  <img src="app/assets/images/readme/topdemo.gif" width="800">
+</p>
 
 ### 4. 詳細の確認・編集
 
@@ -190,7 +196,8 @@ end
 
 ### CI / CD
 
-GitHub Actions により、**PR ごとに RSpec テストを自動実行**し、コード品質とデプロイの安全性を確保しています。
+GitHub Actions により、**PR ごとに RSpec テストを自動実行**し、
+コード品質とデプロイの安全性を確保しています。
 
 ---
 
