@@ -219,7 +219,6 @@
   // IGDBプラットフォーム名をハードウェア選択肢にマッピング
   function mapIgdbPlatformToHardware(igdbPlatform) {
     const platformMap = {
-      // Nintendo
       'Nintendo Switch': 'Nintendo Switch',
       'Nintendo 3DS': 'Nintendo 3DS',
       'Nintendo DS': 'Nintendo DS',
@@ -232,8 +231,6 @@
       'Game Boy Advance': 'ゲームボーイアドバンス',
       'Game Boy Color': 'ゲームボーイ',
       'Game Boy': 'ゲームボーイ',
-      
-      // PlayStation
       'PlayStation 5': 'プレステ５',
       'PlayStation 4': 'プレステ４',
       'PlayStation 3': 'プレステ３',
@@ -241,23 +238,24 @@
       'PlayStation': 'プレステ',
       'PlayStation Vita': 'PS Vita',
       'PSP': 'PSP',
-      
-      // Sega
       'Sega Saturn': 'セガサターン',
       'Sega Mega Drive/Genesis': 'メガドライブ',
-      
-      // Other
-      'PC': 'PC',
+      'PC (Microsoft Windows)': 'PC',
+      'Mac': 'PC',
       'Android': 'スマートフォン',
       'iOS': 'スマートフォン',
       'Arcade': 'アーケード機',
-      'Neo Geo': 'ネオジオ'
+      'Neo Geo': 'ネオジオ',
+      'Xbox': 'その他',
+      'Xbox 360': 'その他',
+      'Xbox One': 'その他',
+      'Xbox Series X|S': 'その他',
+      'Dreamcast': 'その他',
+      'PC Engine': 'その他'
     };
-    
     return platformMap[igdbPlatform] || null;
   }
 
-  // IGDBジャンル名をジャンル選択肢にマッピング
   function mapIgdbGenreToGenre(igdbGenre) {
     const genreMap = {
       'Role-playing (RPG)': 'RPG',
@@ -267,44 +265,44 @@
       'Fighting': '格闘',
       'Sport': 'スポーツ',
       'Racing': 'レース',
-      'shooter': 'シューティング',
       'Strategy': 'ストラテジー',
+      'Real Time Strategy (RTS)': 'ストラテジー',
+      'Turn-based strategy (TBS)': 'ストラテジー',
+      'Tactical': 'ストラテジー',
       'Puzzle': 'パズル',
-      'Platform': 'その他',
+      'Quiz/Trivia': 'パズル',
+      'Platform': 'アクション',
       'Simulator': 'シミュレーション',
-      'Indie': 'その他',
+      'Indie': 'インディゲーム',
       'Arcade': 'アクション',
       'Visual Novel': 'ノベル',
       'Card & Board Game': 'ボードゲーム',
       'MOBA': 'アクション',
       'Point-and-click': 'アドベンチャー',
-      'Tactical': 'ストラテジー',
-      'Hack and slash': 'ハクスラ',
-      'Quiz/Trivia': 'パズル',
+      'Hack and slash/Beat \'em up': 'ハクスラ',
       'Pinball': 'その他',
-      'Music': '音ゲー'
+      'Music': 'リズムゲーム'
     };
-    
     return genreMap[igdbGenre] || null;
   }
 
-// IGDB検索
-function setupIgdbSearch() {
-  console.log('Setting up IGDB search...');
-  
-  const searchBtnMobile = document.getElementById('search_title');
-  const searchBtnDesktop = document.getElementById('search_title_desktop');
-  
-  if (searchBtnMobile) {
-    searchBtnMobile.removeEventListener('click', handleIgdbSearchClick);
-    searchBtnMobile.addEventListener('click', handleIgdbSearchClick);
+  // IGDB検索
+  function setupIgdbSearch() {
+    console.log('Setting up IGDB search...');
+    
+    const searchBtnMobile = document.getElementById('search_title');
+    const searchBtnDesktop = document.getElementById('search_title_desktop');
+    
+    if (searchBtnMobile) {
+      searchBtnMobile.removeEventListener('click', handleIgdbSearchClick);
+      searchBtnMobile.addEventListener('click', handleIgdbSearchClick);
+    }
+    
+    if (searchBtnDesktop) {
+      searchBtnDesktop.removeEventListener('click', handleIgdbSearchClick);
+      searchBtnDesktop.addEventListener('click', handleIgdbSearchClick);
+    }
   }
-  
-  if (searchBtnDesktop) {
-    searchBtnDesktop.removeEventListener('click', handleIgdbSearchClick);
-    searchBtnDesktop.addEventListener('click', handleIgdbSearchClick);
-  }
-}
   
   // IGDB検索のクリックハンドラー関数
   function handleIgdbSearchClick() {
