@@ -1,109 +1,133 @@
-activerecord:
-  models:
-    user: ユーザー
-    game: ゲーム
-  attributes:
-    user:
-      name: プレイヤー名
-      email: メールアドレス
-      password: パスワード
-      password_confirmation: パスワード（確認）
-      birthday: 誕生日
-      gender: 性別
-      job: 職業
-    game:
-      title: ゲームタイトル
-      hardware: ハード
-      genre: ジャンル
-      played_age: プレイした大体の年齢
-      fun: 楽しさ
-      difficulty: 難しさ
-      memo: ひとことメモ
-      cover_image: カバー画像
+ja:
+  activerecord:
+    models:
+      user: 冒険者
+      game: ゲーム記録
+    attributes:
+      user:
+        name: プレイヤー名
+        email: メールアドレス
+        password: 合言葉
+        password_confirmation: 合言葉（確認）
+      game:
+        title: タイトル
+        hardware: ゲーム機
+        genre: ジャンル
+        played_age: プレイした頃の年齢
+        fun: 楽しさ
+        difficulty: 難しさ
+        memo: ひとことメモ
+        cover_image: カバー画像
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "はすでに 使われて います。▼"
+              blank: "を 入力して ください。▼"
+              invalid: "の 形式が 正しくありません。▼"
+            password:
+              blank: "を 入力して ください。▼"
+              too_short: "は %{count}文字以上で 入力して ください。▼"
+            password_confirmation:
+              confirmation: "が 一致しません。▼"
+            name:
+              blank: "を 入力して ください。▼"
+        game:
+          attributes:
+            title:
+              blank: "を 入力して ください。▼"
+              too_long: "は %{count}文字以内で 入力して ください。▼"
+            played_age:
+              blank: "を 選択して ください。▼"
+              not_a_number: "は 数値で 入力して ください。▼"
+              not_an_integer: "は 整数で 入力して ください。▼"
+              greater_than_or_equal_to: "は %{count}以上で 入力して ください。▼"
+              less_than_or_equal_to: "は %{count}以下で 入力して ください。▼"
+            fun:
+              not_a_number: "は 数値で 入力して ください。▼"
+              not_an_integer: "は 整数で 入力して ください。▼"
+              greater_than_or_equal_to: "は %{count}以上で 選択して ください。▼"
+              less_than_or_equal_to: "は %{count}以下で 選択して ください。▼"
+            difficulty:
+              not_a_number: "は 数値で 入力して ください。▼"
+              not_an_integer: "は 整数で 入力して ください。▼"
+              greater_than_or_equal_to: "は %{count}以上で 選択して ください。▼"
+              less_than_or_equal_to: "は %{count}以下で 選択して ください。▼"
 
   errors:
-    models:
-      user:
-        attributes:
-          email:
-            taken: "はすでに使用されています"
-            blank: "を入力してください"
-            invalid: "の形式が正しくありません"
-          password:
-            blank: "を入力してください"
-            too_short: "は%{count}文字以上で入力してください"
-          password_confirmation:
-            confirmation: "が一致しません"
-          name:
-            blank: "を入力してください"
-          birthday:
-            blank: "を入力してください"
-          gender:
-            blank: "を選択してください"
-          job:
-            blank: "を選択してください"
-      game:
-        attributes:
-          title:
-            blank: "を入力してください"
-            too_long: "は%{count}文字以内で入力してください"
-          played_age:
-            blank: "を入力してください"
-            not_a_number: "は数値で入力してください"
-            not_an_integer: "は整数で入力してください"
-            greater_than_or_equal_to: "は%{count}以上で入力してください"
-            less_than_or_equal_to: "は%{count}以下で入力してください"
-          fun:
-            not_a_number: "は数値で入力してください"
-            not_an_integer: "は整数で入力してください"
-            greater_than_or_equal_to: "は%{count}以上で選択してください"
-            less_than_or_equal_to: "は%{count}以下で選択してください"
-          difficulty:
-            not_a_number: "は数値で入力してください"
-            not_an_integer: "は整数で入力してください"
-            greater_than_or_equal_to: "は%{count}以上で選択してください"
-            less_than_or_equal_to: "は%{count}以下で選択してください"
+    format: "%{attribute}%{message}"
+    messages:
+      blank: "を 入力して ください。▼"
+      taken: "はすでに 使われて います。▼"
+      invalid: "が 正しくありません。▼"
+      too_short: "は %{count}文字以上で 入力して ください。▼"
+      too_long: "は %{count}文字以内で 入力して ください。▼"
+      confirmation: "が 一致しません。▼"
+      not_a_number: "は 数値で 入力して ください。▼"
+      not_an_integer: "は 整数で 入力して ください。▼"
+      greater_than_or_equal_to: "は %{count}以上で 入力して ください。▼"
+      less_than_or_equal_to: "は %{count}以下で 入力して ください。▼"
+      inclusion: "は 一覧に ありません。▼"
+      wrong_length: "は %{count}文字で 入力して ください。▼"
+      already_confirmed: "はすでに 登録済み です。▼\nログイン して ください。▼"
+      confirmation_period_expired: "の 期限が 切れました。▼\n%{period} までに 確認 する 必要が あります。▼\n新しく リクエスト して ください。▼"
+      expired: "の 有効期限が 切れました。▼\n新しく リクエスト して ください。▼"
+      not_found: "は 見つかりませんでした。▼"
+      not_locked: "は 凍結 されて いません。▼"
+      not_saved:
+        one: "エラーが 発生 したため\n%{resource} は 保存 されませんでした。▼"
+        other: "%{count}件の エラーが 発生 したため\n%{resource} は 保存 されませんでした。▼"
 
-errors:
-  format: "%{attribute}%{message}"
-
-  template:
-    header:
-      one: "入力内容に1件のエラーがあります"
-      other: "入力内容に%{count}件のエラーがあります"
-    body: "以下の項目を確認してください:"
-
-  messages:
-    blank: "を入力してください"
-    too_short: "は%{count}文字以上で入力してください"
-    too_long: "は%{count}文字以内で入力してください"
-    invalid: "が正しくありません"
-    confirmation: "が一致しません"
-    taken: "はすでに使用されています"
-    required: "を入力してください"
-    not_a_number: "は数値で入力してください"
-    not_an_integer: "は整数で入力してください"
-    greater_than_or_equal_to: "は%{count}以上で入力してください"
-    less_than_or_equal_to: "は%{count}以下で入力してください"
-    greater_than: "は%{count}より大きい値にしてください"
-    less_than: "は%{count}より小さい値にしてください"
-    equal_to: "は%{count}にしてください"
-    other_than: "は%{count}以外の値にしてください"
-    inclusion: "は一覧にありません"
-    exclusion: "は予約されています"
-    wrong_length: "は%{count}文字で入力してください"
-    not_saved:
-      one: "エラーが発生したため %{resource} は保存されませんでした:"
-      other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした:"
-
-devise:
-  failure:
-    invalid: "メールアドレスまたはパスワードが違います"
-    not_found_in_database: "メールアドレスまたはパスワードが違います"
-    unauthenticated: "ログインしてください"
-  registrations:
-    signed_up: "アカウントを作成しました"
-    updated: "アカウント情報を更新しました"
-  sessions:
-    signed_in: "ログインしました"
-    signed_out: "ログアウトしました"
+  devise:
+    confirmations:
+      confirmed: "メールアドレスが 確認 できました！▼"
+      send_instructions: "確認メールを 送信 しました！▼\nポストを チェックしてください。▼"
+      send_paranoid_instructions: "メールアドレスが 登録済みの 場合、\n本人確認用の メールが 送信 されます。▼"
+    failure:
+      already_authenticated: "すでに 冒険中 です！▼"
+      inactive: "アカウントが 有効化 されて いません。▼\nメールの 手順に したがって\n有効化 してください。▼"
+      invalid: "その名前と 合言葉は 違うようです…▼"
+      locked: "あなたの アカウントは 凍結 されています。▼"
+      last_attempt: "もう一度 間違えると\nアカウントが 凍結 されます！▼"
+      not_found_in_database: "その名前と 合言葉は 違うようです…▼"
+      timeout: "セッションが 切れて しまいました。▼\nもう一度 ログイン してください。▼"
+      unauthenticated: "ログイン もしくは\nアカウント登録 してください。▼"
+      unconfirmed: "メールアドレスの 本人確認が 必要 です。▼"
+    mailer:
+      confirmation_instructions:
+        subject: "【SaveData】メールアドレス 確認"
+      reset_password_instructions:
+        subject: "【SaveData】合言葉の 再設定 について"
+      unlock_instructions:
+        subject: "【SaveData】アカウントの 凍結解除 について"
+      email_changed:
+        subject: "【SaveData】メールアドレス 変更 完了"
+      password_change:
+        subject: "【SaveData】合言葉の 変更 について"
+    omniauth_callbacks:
+      failure: "%{kind} アカウントによる 認証に\n失敗 しました。▼\n理由:（%{reason}）"
+      success: "%{kind} アカウントで ログイン しました！▼"
+    passwords:
+      no_token: "このページには アクセス できません。▼\n合言葉再設定 メールの リンクから\nアクセス してください。▼"
+      send_instructions: "合言葉の 再設定方法を\nメールで 送りました。▼"
+      send_paranoid_instructions: "メールアドレスが 登録済みの 場合、\n合言葉再設定用の メールが 送信 されます。▼"
+      updated: "合言葉が 新しく なりました！▼"
+      updated_not_active: "合言葉が 新しく なりました。▼"
+    registrations:
+      destroyed: "アカウントを 削除 しました。▼\nまたの ご利用を お待ち しております。▼"
+      signed_up: "新しい 冒険者が登録されました！▼\nさあ、思い出の旅へ 出かけましょう！▼"
+      signed_up_but_inactive: "ログイン するためには、\nアカウントを 有効化 してください。▼"
+      signed_up_but_locked: "アカウントが 凍結 されているため\nログイン できません。▼"
+      signed_up_but_unconfirmed: "本人確認用の メールを 送信 しました。▼\nメール内の リンクから\nアカウントを 有効化 させてください。▼"
+      update_needs_confirmation: "アカウント情報を 変更 しました。▼\n変更された メールアドレスの 確認のため、\n本人確認用 メールを チェックしてください。▼"
+      updated: "冒険者情報が 更新 されました！▼"
+      updated_but_not_signed_in: "あなたの アカウントは 更新 されましたが、\n合言葉が 変更されたため、\n再度 ログイン してください。▼"
+    sessions:
+      signed_in: "さあ！冒険者よ\n旅の 続きを 始めましょう！▼"
+      signed_out: "おやすみ冒険者様、また 会いましょう！▼"
+      already_signed_out: "すでに ログアウト済み です。▼"
+    unlocks:
+      send_instructions: "アカウントの 凍結解除方法を\nメールで 送りました。▼"
+      send_paranoid_instructions: "アカウントが 見つかった 場合、\n凍結解除方法を メールで 送ります。▼"
+      unlocked: "アカウントを 凍結解除 しました！▼"

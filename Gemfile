@@ -47,6 +47,10 @@ gem "turbo-rails"
 # APIリクエストを簡単にするHTTPクライアント
 gem "faraday", "~> 2.0"
 
+# === 国際化（i18n）===
+gem "rails-i18n"    # Railsの標準エラーメッセージを日本語化
+gem "devise-i18n"   # Deviseのエラーメッセージを日本語化
+
 # === 画像処理・Active Storage拡張機能 ===
 gem "image_processing", "~> 1.2"
 gem "active_storage_validations"
@@ -83,6 +87,7 @@ gem "rails_admin"
 # === ユーティリティ ===
 # 日付や時間でデータを集計（月別売上等）
 gem "groupdate"
+
 
 # === 環境変数管理 ===
 # パスワードやAPIキーを安全に管理
