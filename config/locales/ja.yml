@@ -9,6 +9,9 @@ ja:
         email: メールアドレス
         password: 合言葉
         password_confirmation: 合言葉（確認）
+        job: 職業
+        gender: 性別
+        birthday: 誕生日
       game:
         title: タイトル
         hardware: ゲーム機
