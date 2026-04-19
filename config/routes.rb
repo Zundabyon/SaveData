@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   end
 
 
-  # 静的ページ
+  # プライバシーポリシー、使い方、利用規約ページ
   get "/terms", to: "pages#terms", as: :terms
   get "/privacy_policy", to: "pages#privacy_policy", as: :privacy_policy
   get "/how_to", to: "pages#how_to", as: :how_to

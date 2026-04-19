@@ -12,8 +12,8 @@ class IgdbService
     if contains_japanese?(query)
       results = search_by_alternative_names(query, token)
 
-      # 日本語→英語に変換して英語検索も実行（IGDBに日本語alternative_nameが
-      # 登録されていないゲームを拾うための補完）
+      # 日本語→英語に変換して英語検索も実行
+      # （IGDBに日本語alternative_nameが登録されていないゲームを拾うための補完）
       english_query = translate_to_english(query)
       results += search_games_directly(english_query, token) if english_query
 
@@ -46,7 +46,7 @@ class IgdbService
   # 英語検索：複数の戦略を組み合わせてヒット率を上げる
   #
   # 【戦略の組み合わせ理由】
-  #   IGDB にはファジー検索がないため、以下3戦略の結果をマージして補完する。
+  #   IGDB にはファジー検索がないため、以下3戦略の結果を組み合わせて対応させる。
   #
   #   戦略1: 部分一致 (name ~ *"query"*)
   #     → 入力がタイトルの一部でもヒット。
@@ -195,7 +195,7 @@ class IgdbService
 
   # クエリ文字列のサニタイズ（許可リスト方式）
   # 許可: 日本語・英数字・スペース
-  # 除去: 記号類（クエリインジェクション対策）
+  # 除去: 記号類（ここでクエリインジェクション対策をしています）
   private_class_method def self.sanitize(query)
     query.gsub(/[^\p{Hiragana}\p{Katakana}\p{Han}a-zA-Z0-9\s]/, "").strip
   end
