@@ -1,5 +1,6 @@
 <% content_for :title, "ログイン - Savedata" %>
 
+
 <div class="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 px-4 py-12">
   <div class="w-full max-w-md mx-auto">
 
@@ -148,114 +149,91 @@
     </div>
   </div>
 
-  <!-- ================= このアプリでできること） ================= -->
   <div class="w-full max-w-2xl mx-auto mt-16">
+<!-- ================= このアプリでできること ================= -->
+<div class="border-t border-blue-400/40 pt-4 pb-8">
+  <h2 class="text-xl text-white text-center mb-6">このアプリでできること</h2>
 
-    <!-- FEATURES -->
-    <div class="border-t border-blue-400/40 pt-4 pb-8">
-      <h2 class="text-xl text-white text-center mb-6">このアプリでできること</h2>
+  <div class="relative px-10">
+    <!-- 左矢印 -->
+    <button class="carousel-3d-btn carousel-3d-btn-left" id="feat-prev">◀</button>
 
-      <!-- Book Carousel: CSS Sprite + Scroll-Timeline (Chrome 115+/134+) -->
-      <div class="feat-book-container">
-        <div class="feat-book">
+    <!-- カルーセル本体 -->
+    <div class="carousel-3d-wrapper">
+      <div class="carousel-3d-track" id="feat-track">
 
-          <!-- Sprite: page-flip animation driven by scroll-timeline -->
-          <div class="feat-sprite"></div>
+        <div class="carousel-3d-item"
+             data-icon="🎮"
+             data-label="機能 01"
+             data-title="ゲームを登録"
+             data-desc="ゲームタイトルを検索するだけで、カバー画像・ジャンル・対応ハードを自動取得。プレイした年齢・面白さ・難易度（5段階）・思い出メモも記録できます。">
+          <p class="carousel-3d-icon">🎮</p>
+          <p class="carousel-3d-label">機能 01</p>
+          <p class="carousel-3d-title">ゲームを<br>登録</p>
+        </div>
 
-          <!-- Carousel -->
-          <div class="feat-carousel">
+        <div class="carousel-3d-item"
+             data-icon="📅"
+             data-label="機能 02"
+             data-title="年表タイムライン"
+             data-desc="登録したゲームが「プレイした年齢順」のタイムラインとして並びます。幼少期から現在まで、自分だけの人生の年表を一画面で振り返れます。">
+          <p class="carousel-3d-icon">📅</p>
+          <p class="carousel-3d-label">機能 02</p>
+          <p class="carousel-3d-title">年表<br>タイムライン</p>
+        </div>
 
-            <!-- ── 機能 01: ゲームを登録 ── -->
-            <div class="feat-carousel-item">
-              <div class="feat-page-container">
-                <div class="feat-page feat-left-page">
-                  <p class="feat-page-icon">🎮</p>
-                  <p class="feat-page-label">機能 01</p>
-                  <p class="feat-page-title">ゲームを<br>登録</p>
-                </div>
-                <div class="feat-page feat-right-page">
-                  <p class="feat-page-desc">
-                    タイトル・プレイした年齢・ハード・ジャンル・面白さ・難易度・思い出メモを記録できます。<br><br>
-                    あの頃のゲーム体験を、あらゆる角度から記録して永久に保存しましょう。
-                  </p>
-                </div>
-              </div>
-            </div>
+        <div class="carousel-3d-item"
+             data-icon="💬"
+             data-label="機能 03"
+             data-title="思い出メモ"
+             data-desc="「あの頃どんな気持ちで遊んだか」を感情とともに記録。感動・興奮・悔しさ・達成感――あの瞬間の気持ちを、未来の自分へ。">
+          <p class="carousel-3d-icon">💬</p>
+          <p class="carousel-3d-label">機能 03</p>
+          <p class="carousel-3d-title">思い出<br>メモ</p>
+        </div>
 
-            <!-- ── 機能 02: 年表タイムライン ── -->
-            <div class="feat-carousel-item">
-              <div class="feat-page-container">
-                <div class="feat-page feat-left-page">
-                  <p class="feat-page-icon">📅</p>
-                  <p class="feat-page-label">機能 02</p>
-                  <p class="feat-page-title">年表<br>タイムライン</p>
-                </div>
-                <div class="feat-page feat-right-page">
-                  <p class="feat-page-desc">
-                    登録ゲームが年齢順のタイムラインとして並び、自分のゲーム人生を一覧で振り返れます。<br><br>
-                    幼少期から現在まで、ゲームとともに歩んだ軌跡が一目でわかります。
-                  </p>
-                </div>
-              </div>
-            </div>
+        <div class="carousel-3d-item"
+             data-icon="🔍"
+             data-label="機能 04"
+             data-title="詳細カード"
+             data-desc="ゲームカードをクリックすると思い出の詳細が表示され、編集・削除も行えます。新しい視点で昔のゲームを振り返ってみましょう。">
+          <p class="carousel-3d-icon">🔍</p>
+          <p class="carousel-3d-label">機能 04</p>
+          <p class="carousel-3d-title">詳細<br>カード</p>
+        </div>
 
-            <!-- ── 機能 03: 思い出メモ ── -->
-            <div class="feat-carousel-item">
-              <div class="feat-page-container">
-                <div class="feat-page feat-left-page">
-                  <p class="feat-page-icon">💬</p>
-                  <p class="feat-page-label">機能 03</p>
-                  <p class="feat-page-title">思い出<br>メモ</p>
-                </div>
-                <div class="feat-page feat-right-page">
-                  <p class="feat-page-desc">
-                    「あの頃どんな気持ちで遊んだか」を感情とともに記録。ゲームを人生の記憶として残せます。<br><br>
-                    感動・興奮・悔しさ・達成感――あの瞬間の気持ちを未来の自分へ。
-                  </p>
-                </div>
-              </div>
-            </div>
+        <div class="carousel-3d-item"
+             data-icon="🌐"
+             data-label="機能 05"
+             data-title="シェア機能"
+             data-desc="お気に入りのゲームをカード画像として生成し、X（旧Twitter）に投稿できます。世代を超えた共感が生まれます。">
+          <p class="carousel-3d-icon">🌐</p>
+          <p class="carousel-3d-label">機能 05</p>
+          <p class="carousel-3d-title">シェア機能</p>
+        </div>
 
-            <!-- ── 機能 04: 詳細カード ── -->
-            <div class="feat-carousel-item">
-              <div class="feat-page-container">
-                <div class="feat-page feat-left-page">
-                  <p class="feat-page-icon">🔍</p>
-                  <p class="feat-page-label">機能 04</p>
-                  <p class="feat-page-title">詳細<br>カード</p>
-                </div>
-                <div class="feat-page feat-right-page">
-                  <p class="feat-page-desc">
-                    ゲームカードをクリックすると思い出の詳細が表示され、編集・削除も行えます。<br><br>
-                    記録はいつでも更新できます。新しい視点で昔のゲームを振り返ってみましょう。
-                  </p>
-                </div>
-              </div>
-            </div>
+        <div class="carousel-3d-item"
+             data-icon="🔮"
+             data-label="機能 06"
+             data-title="占いおばばの部屋"
+             data-desc="謎の占いおばばが、あなたに合ったゲームを占います。神秘的な視点からのゲーム提案をお楽しみください。さて、運命のゲームとは……？">
+          <p class="carousel-3d-icon">🔮</p>
+          <p class="carousel-3d-label">機能 06</p>
+          <p class="carousel-3d-title">占いおばばの部屋</p>
+        </div>
 
-            <!-- ── 機能 05: シェア機能 ── -->
-            <div class="feat-carousel-item">
-              <div class="feat-page-container">
-                <div class="feat-page feat-left-page">
-                  <p class="feat-page-icon">🌐</p>
-                  <p class="feat-page-label">機能 05</p>
-                  <p class="feat-page-title">シェア機能</p>
-                </div>
-                <div class="feat-page feat-right-page">
-                  <p class="feat-page-desc">
-                    お気に入りのゲームをカード化してSNSに投稿できます。<br><br>
-                    「あのゲーム知ってる！」という新しいつながりが生まれます。
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /feat-carousel -->
-        </div><!-- /feat-book -->
-      </div><!-- /feat-book-container -->
-
+      </div>
     </div>
 
+    <!-- 右矢印 -->
+    <button class="carousel-3d-btn carousel-3d-btn-right" id="feat-next">▶</button>
+  </div>
+
+  <!-- 説明文エリア -->
+  <div class="carousel-3d-desc" id="feat-desc">
+    ゲームタイトルを検索するだけで、カバー画像・ジャンル・対応ハードを自動取得。プレイした年齢・面白さ・難易度（5段階）・思い出メモも記録できます。
+  </div>
+</div>
     <!--アプリの使い方-->
     <div class="border-t border-blue-400/40 pt-10 pb-8">
       <h2 class="text-xl text-white text-center mb-8">アプリの使い方</h2>
@@ -418,7 +396,88 @@
   </div>
 </div>
 
+// ================= CSS関連（ここにしか反映させない為切り分けなし） =================
+<style>
+.carousel-3d-wrapper { position: relative; width: 100%; height: 220px; perspective: 900px; }
+.carousel-3d-track { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.carousel-3d-item { position: absolute; width: 140px; height: 180px; left: 50%; top: 50%; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94); background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); user-select: none; text-align: center; padding: 12px; box-sizing: border-box; }
+.carousel-3d-item.level-0 { transform: translateX(-50%) translateY(-50%) translateZ(0px) scale(1); background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.7); box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 10; opacity: 1; }
+.carousel-3d-item.level-1 { transform: translateX(calc(-50% + 160px)) translateY(-50%) translateZ(-80px) scale(0.85); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); z-index: 5; opacity: 0.7; }
+.carousel-3d-item.level-m1 { transform: translateX(calc(-50% - 160px)) translateY(-50%) translateZ(-80px) scale(0.85); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); z-index: 5; opacity: 0.7; }
+.carousel-3d-item.level-2 { transform: translateX(calc(-50% + 280px)) translateY(-50%) translateZ(-160px) scale(0.7); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); z-index: 1; opacity: 0.4; }
+.carousel-3d-item.level-m2 { transform: translateX(calc(-50% - 280px)) translateY(-50%) translateZ(-160px) scale(0.7); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); z-index: 1; opacity: 0.4; }
+.carousel-3d-item.level-hidden { opacity: 0; pointer-events: none; z-index: 0; }
+.carousel-3d-icon { font-size: 2.8rem; margin-bottom: 6px; }
+.carousel-3d-label { font-size: 0.55rem; color: rgba(200,220,255,0.9); margin-bottom: 4px; font-family: 'DotGothic16', monospace; }
+.carousel-3d-title { font-size: 0.8rem; font-weight: bold; color: #fff; font-family: 'DotGothic16', monospace; line-height: 1.5; }
+.carousel-3d-desc { min-height: 80px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 14px 18px; margin-top: 16px; color: #e0eeff; font-size: 0.78rem; line-height: 1.8; font-family: 'DotGothic16', monospace; text-align: center; transition: opacity 0.3s ease; }
+.carousel-3d-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; color: rgba(255,255,255,0.9); font-size: 0.85rem; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.carousel-3d-btn:hover { background: rgba(0,0,0,0.65); }
+.carousel-3d-btn-left { left: 0; }
+.carousel-3d-btn-right { right: 0; }
+@media (max-width: 640px) {
+  .carousel-3d-wrapper { height: 180px; }
+  .carousel-3d-item { width: 110px; height: 150px; }
+  .carousel-3d-item.level-1 { transform: translateX(calc(-50% + 120px)) translateY(-50%) translateZ(-60px) scale(0.8); }
+  .carousel-3d-item.level-m1 { transform: translateX(calc(-50% - 120px)) translateY(-50%) translateZ(-60px) scale(0.8); }
+  .carousel-3d-item.level-2 { transform: translateX(calc(-50% + 210px)) translateY(-50%) translateZ(-120px) scale(0.65); }
+  .carousel-3d-item.level-m2 { transform: translateX(calc(-50% - 210px)) translateY(-50%) translateZ(-120px) scale(0.65); }
+  .carousel-3d-icon { font-size: 2rem; }
+  .carousel-3d-title { font-size: 0.65rem; }
+}
+</style>
+
 <script>
+// ── 3Dカルーセル ──
+(function() {
+  const items   = Array.from(document.querySelectorAll('.carousel-3d-item'));
+  const desc    = document.getElementById('feat-desc');
+  const total   = items.length;
+  let active    = 0;
+
+  const levels  = ['level-m2','level-m1','level-0','level-1','level-2'];
+
+  function getLevel(index) {
+    const diff = ((index - active) % total + total) % total;
+    const d    = diff > total / 2 ? diff - total : diff;
+    if (d === 0)  return 'level-0';
+    if (d === 1)  return 'level-1';
+    if (d === -1) return 'level-m1';
+    if (d === 2)  return 'level-2';
+    if (d === -2) return 'level-m2';
+    return 'level-hidden';
+  }
+
+  function render() {
+    items.forEach((el, i) => {
+      el.className = 'carousel-3d-item ' + getLevel(i);
+    });
+    desc.style.opacity = '0';
+    setTimeout(() => {
+      desc.textContent   = items[active].dataset.desc;
+      desc.style.opacity = '1';
+    }, 150);
+  }
+
+  document.getElementById('feat-prev').addEventListener('click', function() {
+    active = (active - 1 + total) % total;
+    render();
+  });
+
+  document.getElementById('feat-next').addEventListener('click', function() {
+    active = (active + 1) % total;
+    render();
+  });
+
+  items.forEach((el, i) => {
+    el.addEventListener('click', function() {
+      active = i;
+      render();
+    });
+  });
+
+  render();
+})();
   function showCommandSelect() {
     document.getElementById('adventure-start').style.display = 'none';
     var el = document.getElementById('command-select');

@@ -39,8 +39,6 @@
 /* ============================================================
    フォントユーティリティ
    ============================================================ */
-
-/* Press Start 2P（ピクセルフォント） */
 .font-pixel {
   font-family: 'Press Start 2P', monospace !important;
 }
@@ -49,8 +47,8 @@
    アニメーション: RPGウィンドウ開閉
    ============================================================ */
 @keyframes rpgOpen {
-  0% { transform: scaleY(0.05); opacity: 0; }
-  60% { transform: scaleY(1.05); opacity: 1; }
+  0%   { transform: scaleY(0.05); opacity: 0; }
+  60%  { transform: scaleY(1.05); opacity: 1; }
   100% { transform: scaleY(1); }
 }
 
@@ -104,8 +102,6 @@
 /* ============================================================
    RPGウィンドウ共通
    ============================================================ */
-
-/* コマンドボタン */
 .rpg-command {
   border: 3px solid rgba(220,235,255,0.95);
   padding: 12px 24px;
@@ -137,7 +133,7 @@
 }
 
 /* ============================================================
-   RPGサイドウィンドウ（年齢ナビ等）
+   RPGサイドウィンドウ
    ============================================================ */
 .rpg-side-window {
   border: 3px solid rgba(230, 240, 255, 0.95);
@@ -158,7 +154,7 @@
    ============================================================ */
 @layer utilities {
   @keyframes fill {
-    0% { width: 0%; }
+    0%   { width: 0%; }
     100% { width: 100%; }
   }
   .animate-fill {
@@ -167,7 +163,7 @@
 }
 
 /* ============================================================
-   カードフロートアニメーション（ログイン画面のドラゴンカード）
+   カードフロートアニメーション
    ============================================================ */
 .card-float-wrapper {
   display: flex;
@@ -182,262 +178,176 @@
 }
 
 @keyframes floatCard {
-  0%   { transform: translateY(0px)  rotateY(0deg);   }
-  25%  { transform: translateY(-8px) rotateY(90deg);  }
+  0%   { transform: translateY(0px)   rotateY(0deg);   }
+  25%  { transform: translateY(-8px)  rotateY(90deg);  }
   50%  { transform: translateY(-10px) rotateY(180deg); }
-  75%  { transform: translateY(-8px) rotateY(270deg); }
-  100% { transform: translateY(0px)  rotateY(360deg); }
+  75%  { transform: translateY(-8px)  rotateY(270deg); }
+  100% { transform: translateY(0px)   rotateY(360deg); }
 }
 
 /* ============================================================
-   FEATURES Book Carousel — CSS Sprite + Scroll-Timeline
-   Chrome 115+ (scroll-driven), Chrome 134+ (::scroll-button)
+   3D Carousel（このアプリでできること）
    ============================================================ */
-
-/* CSS カスタムプロパティの型定義（アニメーション補間に必要） */
-@property --feat-sprite-fs {
-  syntax: "<integer>";
-  initial-value: 0;
-  inherits: true;
-}
-
-@property --feat-progress {
-  syntax: "<percentage>";
-  inherits: false;
-  initial-value: 0%;
-}
-
-/* コンテナ: スプライト計算変数をまとめて定義 */
-.feat-book-container {
-  /* はみ出し防止（スプライトが画面幅を超えるのを隠す） */
-  overflow-x: hidden;
-  overflow-y: hidden;
-  /* スライド枚数 */
-  --slides: 5;
-
-  /* スプライトシート定数（book.webp: 9600×3000px, 7フレーム, 5列） */
-  --sprite-c:  5;
-  --sprite-h:  3000;
-  --sprite-w:  9600;
-  --sprite-f:  7;
-  --sprite-fr: 12;
-  --sprite-as: calc(var(--sprite-f) / var(--sprite-fr) * 1s);
-
-  /* スプライト幾何計算 */
-  --sprite-r:  round(up, calc(var(--sprite-f) / var(--sprite-c)), 1);
-  --sprite-sh: calc(var(--sprite-h) / var(--sprite-r));
-  --sprite-th: calc(var(--sprite-sh) / 2.8); /* 全体スケール */
-
-  --sprite-ar: calc(var(--sprite-th) / var(--sprite-sh));
-  --sprite-uh: calc(var(--sprite-h) * var(--sprite-ar));
-  --sprite-uw: calc(var(--sprite-w) * var(--sprite-ar));
-  --sprite-tw: calc(var(--sprite-uw) / var(--sprite-c));
-
+.carousel-3d-wrapper {
   position: relative;
   width: 100%;
+  height: 220px;
+  perspective: 900px;
 }
 
-/* 本ラッパー: scroll-timeline をスプライトに公開 */
-.feat-book {
+.carousel-3d-track {
   position: relative;
-  text-align: center;
-  timeline-scope: --feat-carousel-timeline;
-}
-
-/* スプライト（本のページめくりアニメーション画像） */
-.feat-sprite {
-  position: absolute;
-  max-width: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: calc(-1px * ((var(--sprite-th) - var(--sprite-th) * 0.6107) / 2));
-  height: calc(1px * var(--sprite-th));
-  width:  calc(1px * var(--sprite-tw));
-
-  background-image: url(https://assets.codepen.io/36869/book.webp);
-  background-repeat: no-repeat;
-  background-size: calc(1px * var(--sprite-uw)) calc(1px * var(--sprite-uh));
-  z-index: 0;
-  pointer-events: none;
-
-  /* フレーム計算 */
-  --feat-sprite-fe:    calc(var(--sprite-f) * (var(--slides) - 1));
-  --feat-sprite-fs-n:  mod(var(--feat-sprite-fs), var(--sprite-f));
-  --feat-row: calc(
-    round(down, calc(var(--sprite-tw) * var(--feat-sprite-fs-n) / var(--sprite-uw)), 1)
-    * var(--sprite-th)
-  );
-  --feat-col: mod(calc(var(--sprite-tw) * var(--feat-sprite-fs-n)), var(--sprite-uw));
-
-  background-position: calc(-1px * var(--feat-col)) calc(-1px * var(--feat-row));
-  animation: feat-frame var(--sprite-as) linear 0s normal none running;
-  animation-timeline: --feat-carousel-timeline;
-}
-
-/* カルーセル本体: 横スクロールコンテナ */
-.feat-carousel {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  display: grid;
-  margin: 0 auto;
-  /* min() でスプライト計算幅と100%の小さい方を使う → スマホではみ出さない */
-  width: min(calc(1px * (var(--sprite-tw) * 0.7042)), 100%);
-  height: calc(1px * (var(--sprite-th) * 0.6107));
-  grid: 1fr / auto-flow 100%;
-  scroll-timeline: --feat-carousel-timeline x;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  scroll-marker-group: after;
-  position: relative;
-  z-index: 1;
-}
-
-/* ネイティブスクロールボタン（Chrome 134+） */
-.feat-carousel::scroll-button(*) {
-  position: absolute;
-  bottom: 10px;
-  z-index: 3;
-  inline-size: 30px;
-  aspect-ratio: 1;
-  border: 1px solid rgba(255,255,255,0.3);
-  background: rgba(0,0,0,0.35);
-  border-radius: 3px;
-  cursor: pointer;
-  color: rgba(255,255,255,0.9);
-  font-size: 0.75rem;
-}
-.feat-carousel::scroll-button(*):disabled             { opacity: 0.2; }
-.feat-carousel::scroll-button(*):not(:disabled):hover { background: rgba(0,0,0,0.55); filter: drop-shadow(0 0 5px rgba(150,200,255,0.9)); }
-.feat-carousel::scroll-button(left)  { content: "◀" / "前へ"; left:  8px; }
-.feat-carousel::scroll-button(right) { content: "▶" / "次へ"; right: 8px; }
-
-/* プログレスバー */
-.feat-carousel::scroll-marker-group {
-  content: "";
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 38%;
-  max-width: 160px;
-  height: 4px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 2px;
-  background: linear-gradient(90deg, rgba(96,165,250,0.85) 0%) no-repeat left center;
-  background-size: var(--feat-progress, calc(100% / var(--slides))) 100%;
-  animation: feat-progress linear both;
-  animation-timeline: --feat-carousel-timeline;
-}
-
-/* カルーセルアイテム */
-.feat-carousel-item {
-  scroll-snap-stop: always;
-  scroll-snap-align: start;
-  position: relative;
-  box-sizing: border-box;
-  color: #1e293b;
-  animation: feat-count-before linear forwards;
-  animation-range: exit;
-  animation-timeline: view(x);
-}
-.feat-carousel-item::scroll-marker {
-  content: '';
-  width: 100%; height: 100%;
-  display: block;
-  box-sizing: border-box;
-  box-shadow: 2px 0 0 rgba(180,200,255,0.3);
-}
-.feat-carousel-item:last-of-type::scroll-marker { box-shadow: none; }
-
-/* ページレイアウト */
-.feat-page-container {
-  display: flex;
+  width: 100%;
   height: 100%;
-  animation: feat-stay-centered linear both;
-  animation-timeline: view(x);
+  transform-style: preserve-3d;
 }
 
-.feat-page {
-  flex: 1;
-  overflow: hidden;
+.carousel-3d-item {
+  position: absolute;
+  width: 140px;
+  height: 180px;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.3);
+  user-select: none;
+  text-align: center;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.carousel-3d-item.level-0 {
+  transform: translateX(-50%) translateY(-50%) translateZ(0px) scale(1);
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.7);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 10;
+  opacity: 1;
+}
+
+.carousel-3d-item.level-1 {
+  transform: translateX(calc(-50% + 160px)) translateY(-50%) translateZ(-80px) scale(0.85);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.3);
+  z-index: 5;
+  opacity: 0.7;
+}
+
+.carousel-3d-item.level-m1 {
+  transform: translateX(calc(-50% - 160px)) translateY(-50%) translateZ(-80px) scale(0.85);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.3);
+  z-index: 5;
+  opacity: 0.7;
+}
+
+.carousel-3d-item.level-2 {
+  transform: translateX(calc(-50% + 280px)) translateY(-50%) translateZ(-160px) scale(0.7);
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+  z-index: 1;
+  opacity: 0.4;
+}
+
+.carousel-3d-item.level-m2 {
+  transform: translateX(calc(-50% - 280px)) translateY(-50%) translateZ(-160px) scale(0.7);
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+  z-index: 1;
+  opacity: 0.4;
+}
+
+.carousel-3d-item.level-hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.carousel-3d-icon {
+  font-size: 2.8rem;
+  margin-bottom: 6px;
+}
+
+.carousel-3d-label {
+  font-size: 0.55rem;
+  color: rgba(200,220,255,0.9);
+  margin-bottom: 4px;
+  font-family: 'DotGothic16', monospace;
+}
+
+.carousel-3d-title {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'DotGothic16', monospace;
+  line-height: 1.5;
+}
+
+.carousel-3d-desc {
+  min-height: 80px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  color: #e0eeff;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  font-family: 'DotGothic16', monospace;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-3d-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  cursor: pointer;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s;
 }
 
-.feat-left-page {
-  padding: 16px 10px 40px 18px;
-  border-right: 1px solid rgba(0,0,0,0.12);
-  flex-direction: column;
-  text-align: center;
-}
+.carousel-3d-btn:hover  { background: rgba(0,0,0,0.65); }
+.carousel-3d-btn-left   { left: 0; }
+.carousel-3d-btn-right  { right: 0; }
 
-.feat-right-page {
-  padding: 16px 18px 40px 10px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-}
-
-.feat-page-icon  { font-size: 3.5rem; line-height: 1; margin: 0 0 10px; }
-.feat-page-label {
-  font-size: 0.7rem;
-  color: #64748b;
-  letter-spacing: 0.05em;
-  font-family: 'DotGothic16', monospace;
-  margin: 0 0 8px;
-}
-.feat-page-title {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #0f172a;
-  font-family: 'DotGothic16', monospace;
-  line-height: 2;
-  margin: 0;
-}
-.feat-page-desc {
-  font-size: 0.85rem;
-  color: #1e293b;
-  line-height: 1.9;
-  font-family: 'DotGothic16', monospace;
-  text-align: justify;
-  hyphens: auto;
-  margin: 0;
-}
-
-/* ── キーフレーム ── */
-@keyframes feat-stay-centered {
-  entry   0% { opacity: 0; translate: -100%; }
-  entry  75% { opacity: 0; translate:  -25%; }
-  entry 100% { opacity: 1; translate:    0%; }
-  exit    0% { opacity: 1; translate:    0%; }
-  exit   50% { opacity: 0; translate:   50%; }
-  exit  100% { opacity: 0; translate:  100%; }
-}
-
-@keyframes feat-count-before {
-  1%, 100% { counter-increment: page; }
-}
-
-@keyframes feat-progress {
-  100% { --feat-progress: 100%; }
-}
-
-@keyframes feat-frame {
-  to { --feat-sprite-fs: var(--feat-sprite-fe); }
-}
-
-/* ── レスポンシブ（スマホ） ── */
 @media (max-width: 640px) {
-  /* スプライトを小さくスケールダウン */
-  .feat-book-container { --sprite-th: calc(var(--sprite-sh) / 4.5); }
-  .feat-page-icon      { font-size: 2.4rem; }
-  .feat-page-label     { font-size: 0.4rem; }
-  .feat-page-title     { font-size: 0.5rem; }
-  .feat-page-desc      { font-size: 0.5rem; }
+  .carousel-3d-wrapper { height: 180px; }
+  .carousel-3d-item    { width: 110px; height: 150px; }
+
+  .carousel-3d-item.level-1 {
+    transform: translateX(calc(-50% + 120px)) translateY(-50%) translateZ(-60px) scale(0.8);
+  }
+  .carousel-3d-item.level-m1 {
+    transform: translateX(calc(-50% - 120px)) translateY(-50%) translateZ(-60px) scale(0.8);
+  }
+  .carousel-3d-item.level-2 {
+    transform: translateX(calc(-50% + 210px)) translateY(-50%) translateZ(-120px) scale(0.65);
+  }
+  .carousel-3d-item.level-m2 {
+    transform: translateX(calc(-50% - 210px)) translateY(-50%) translateZ(-120px) scale(0.65);
+  }
+
+  .carousel-3d-icon  { font-size: 2rem; }
+  .carousel-3d-title { font-size: 0.65rem; }
 }
 
 /* ============================================================
@@ -497,25 +407,13 @@
 }
 
 @keyframes wipeIn {
-  from {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  to {
-    transform: scaleX(1);
-    opacity: 1;
-  }
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
 }
 
 @keyframes wipeOut {
-  from {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  to {
-    transform: scaleX(0);
-    opacity: 0;
-  }
+  from { transform: scaleX(1); opacity: 1; }
+  to   { transform: scaleX(0); opacity: 0; }
 }
 
 .menu-wipe.is-open {
