@@ -411,4 +411,3 @@ Rails のデファクトスタンダードであり、Google 認証との統合�
 | Email         | Password     |
 | ------------- | ------------ |
 | test@test.com | password1029 |
-# update
