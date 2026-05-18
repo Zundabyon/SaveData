@@ -45,7 +45,7 @@ gem "stimulus-rails"
 gem "turbo-rails"
 
 # APIリクエストを簡単にするHTTPクライアント
-gem "faraday", "~> 2.0"
+gem "faraday", "~> 2.14"
 
 # === 国際化（i18n）===
 gem "rails-i18n"    # Railsの標準エラーメッセージを日本語化
