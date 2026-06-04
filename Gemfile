@@ -52,7 +52,7 @@ gem "rails-i18n"    # Railsの標準エラーメッセージを日本語化
 gem "devise-i18n"   # Deviseのエラーメッセージを日本語化
 
 # === 画像処理・Active Storage拡張機能 ===
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 2.0"
 gem "active_storage_validations"
 gem "sassc-rails"
 
