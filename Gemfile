@@ -23,7 +23,7 @@ gem "puma", ">= 5.0"
 gem "cssbundling-rails"
 
 # Tailwind CSS：見た目を簡単に作れるツール
-gem "tailwindcss-rails", "~> 2.7"
+gem "tailwindcss-rails", "~> 4.5"
 
 # Sass/SCSS：CSSを書きやすくする言語
 gem "dartsass-rails"
